@@ -1,0 +1,57 @@
+/* STARTING PRODUCT MODAL STYLINGS */
+.addProductModalContainter {
+  display: "flex";
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.addProductModalContainter .addProductBtn {
+  height: 40px;
+  width: 150px;
+}
+.addProductModalContainter .addProductModal .addProductForm {
+  max-width: 600px;
+}
+.sizeItemContainer :nth-child(3) {
+  position: relative;
+}
+.sizeItemContainer .ant-space-item .ant-btn {
+  background-color: red;
+  position: absolute;
+  transform: translateY(46%);
+}
+.sizeItemContainer .ant-space-item .ant-btn span {
+  width: 25px !important;
+  color: white !important;
+}
+.addProductForm .addSizeBtn {
+  margin-bottom: 18px;
+}
+.addProductModalContainter
+  .addProductModal
+  .addProductForms
+  .productFileContainer
+  img {
+  height: 60px;
+  width: 60px;
+  border-radius: "50%";
+  object-fit: "cover";
+  margin-left: 10px;
+}
+/* ENDING PRODUCT MODAL STYLINGS */
+
+/* STARTING PRODUCT LIST STYLINGS */
+.productActions .edit {
+  color: orange;
+  font-size: 30px;
+  cursor: pointer;
+  padding-right: 20px;
+}
+.productActions .delete {
+  color: red;
+  font-size: 30px;
+  cursor: pointer;
+}
+/* ENDING PRODUCT LIST STYLINGS */
+
+/* STARTING PRODUCT DETAILS STYLINGS */
+/* ENDING PRODUCT DETAILS STYLINGS */

@@ -1,0 +1,146 @@
+const {
+  mutipleMongooseToObject,
+  mongooseToObject,
+} = require("../middlerware/Mongoose");
+const fs = require("fs");
+const baseUrl = "http://localhost:3001";
+
+const typeProduct = require("../model/typeProductSchema");
+const Product = require("../model/productSchema");
+
+class productController {
+  async getAllProduct(req, res) {
+    try {
+      const total = await Product.count();
+      let { limit, page, filter } = req.query;
+      limit = Number(limit) || 8;
+      page = Number(page) || 0;
+      if (filter) {
+        const label = filter[0];
+        const allObjectFilters = await Product.find({
+          [label]: { $regex: filter[1] },
+        })
+          .limit(limit)
+          .skip(limit * page);
+        allObjectFilters.forEach((allObjectFilter) => {
+          allObjectFilter.image = baseUrl + allObjectFilter.image;
+        });
+        return res.status(200).send({
+          status: "true",
+          message: "All products lists",
+          total,
+          products: mutipleMongooseToObject(allObjectFilters),
+          pageCurrent: Number(page) + 1,
+          totalPage: Math.ceil(total / Number(limit)),
+        });
+      }
+
+      const products = await Product.find({})
+        .limit(limit)
+        .skip(limit * page)
+        .populate("type");
+      products.forEach((product) => {
+        product.image = baseUrl + product.image;
+      });
+      const modifiedProducts = products.map((product) => ({
+        ...product._doc,
+        type: product.type.type_name, // Thay thế ID bằng tên loại sản phẩm
+      }));
+
+      if (!products) {
+        return res.status(200).send({
+          status: "false",
+          message: "No product found",
+        });
+      }
+      return res.status(200).send({
+        status: true,
+        message: "All products lists",
+        total,
+        products: mutipleMongooseToObject(modifiedProducts),
+        pageCurrent: Number(page) + 1,
+        totalPage: Math.ceil(total / Number(limit)),
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while getting product",
+        error,
+      });
+    }
+  }
+  async getOne(req, res) {
+    try {
+      const { id } = req.params;
+      const product = await Product.findById(id).populate("type");
+      product.image = baseUrl + product.image;
+      if (!product) {
+        return res.status(404).send({
+          status: "false",
+          message: "product not found",
+        });
+      }
+      const modifiedProducts = {
+        ...product._doc,
+        type: product.type.type_name, // Thay thế ID bằng tên loại sản phẩm
+      };
+      return res.status(200).send({
+        status: true,
+        message: "fetch single product",
+        product: mongooseToObject(modifiedProducts),
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while get single product",
+        error,
+      });
+    }
+  }
+
+  async getAllType(req, res) {
+    try {
+      const type = await typeProduct.find({});
+      console.log(type);
+      return res.status(200).send({
+        status: true,
+        message: "",
+        type,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while get type",
+        error,
+      });
+    }
+  }
+
+  async getofType(req, res) {
+    try {
+      const typeId = req.params.id;
+      // console.log(id);
+      const products = await typeProduct
+        .findById({ _id: typeId })
+        .populate("Product");
+
+      return res.status(200).send({
+        status: true,
+        message: "",
+        products: products,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while get product",
+        error,
+      });
+    }
+  }
+}
+
+module.exports = new productController();

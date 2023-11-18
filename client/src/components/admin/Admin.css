@@ -1,0 +1,14 @@
+/* STARTING ADMIN MENU STYLINGS */
+.adminMenuContainer {
+  display: "flex";
+}
+.adminMenuContainer .adminMenu {
+  width: 265px;
+  box-shadow: "1px 1px 3px #ccc";
+  height: "100vh";
+}
+.adminMenuContainer .adminMenuContent {
+  flex: 1;
+  padding: "15px";
+}
+/* ENDING ADMIN MENU STYLINGS */
