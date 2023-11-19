@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { WrapperButtonMore, WrapperProducts, WrapperType } from "./HomeWrapper";
-import TypeProduct from "../../shared-components/TypeProduct";
-import SliderComponent from "../../shared-components/Slider";
 import slider1 from "../../../assets/slides/slider_2.webp";
 import slider2 from "../../../assets/slides/slider_3.webp";
+import SliderComponent from "../../shared-components/Slider";
+import { WrapperButtonMore, WrapperProducts, WrapperType } from "./HomeWrapper";
+import TypeProduct from "../../shared-components/TypeProduct";
 import CardProduct from "./Card";
 import "./Home.css";
 import { PRODUCT_TYPES } from "../../../services/constants";
+import {
+  getAllProducts,
+  handleError,
+} from "../../../services/endpoint-services";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
   // const [limit, setLimit] = useState(4);
+
+  useEffect(() => {
+    getAllProducts()
+      .then((res) => {
+        if (res.data && res.data.products) {
+          const productData = res.data.products;
+          setProducts(productData);
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  }, []);
 
   return (
     <>
@@ -28,15 +45,14 @@ export const HomePage = () => {
 
       <div className="body">
         <div className="container">
-          <SliderComponent arrImg={[slider1, slider2]} />
+          {/* <SliderComponent arrImg={[slider1, slider2]} /> */}
 
           <WrapperProducts>
             {products?.map((product) => {
               return (
                 <CardProduct
-                  key={product._id}
                   image={product.image_path}
-                  name={product.productname}
+                  name={product.productName}
                   price={product.basicPrice}
                   rating={product.rating}
                   id={product._id}
@@ -45,7 +61,7 @@ export const HomePage = () => {
             })}
           </WrapperProducts>
 
-          <div className="buttonLoadMore">
+          {/* <div className="buttonLoadMore">
             <WrapperButtonMore
               textButton="Xem thêm"
               type="outline"
@@ -78,7 +94,7 @@ export const HomePage = () => {
                 // setLimit((prev) => prev + 6);
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

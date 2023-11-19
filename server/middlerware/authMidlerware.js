@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 dotenv.config();
 
-const authMidlerware = (req, res, next) => {
+exports.authMidlerware = (req, res, next) => {
   console.log(req.headers.token);
   const token = req.headers.token.split(" ")[1];
 
@@ -25,28 +25,18 @@ const authMidlerware = (req, res, next) => {
   });
 };
 
-const authUserMiddleWare = (req, res, next) => {
+exports.authCurrentUser = (req, res, next) => {
   const token = req.headers.token.split(" ")[1];
-  const userId = req.params.id;
   jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
+    console.log("user:", user);
     if (err) {
       return res.status(404).json({
-        message: "The authemtication",
+        message: "Token authentication failed",
         status: "ERROR",
       });
-    }
-    if (user?.isAdmin || user?.id === userId) {
-      next();
     } else {
-      return res.status(404).json({
-        message: "The authemtication",
-        status: "ERROR",
-      });
+      req.userId = user.id;
+      next();
     }
   });
-};
-
-module.exports = {
-  authMidlerware,
-  authUserMiddleWare,
 };

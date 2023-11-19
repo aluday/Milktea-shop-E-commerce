@@ -73,7 +73,8 @@ class productController {
   async getOne(req, res) {
     try {
       const { id } = req.params;
-      const product = await Product.findById(id).populate("type");
+      console.log(req);
+      const product = await Product.findById(id);
       product.image = baseUrl + product.image;
       if (!product) {
         return res.status(404).send({
@@ -81,14 +82,10 @@ class productController {
           message: "product not found",
         });
       }
-      const modifiedProducts = {
-        ...product._doc,
-        type: product.type.type_name, // Thay thế ID bằng tên loại sản phẩm
-      };
       return res.status(200).send({
         status: true,
         message: "fetch single product",
-        product: mongooseToObject(modifiedProducts),
+        product: mongooseToObject(product),
       });
     } catch (error) {
       console.log(error);

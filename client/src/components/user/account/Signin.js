@@ -6,12 +6,46 @@ import InputForm from "../../shared-components/InputForm";
 import ButtonComponent from "../../shared-components/Button";
 import logo from "../../../assets/logo.png";
 import "./Account.css";
+import * as messages from "../../../services/messages";
+import {
+  signin,
+  getCurrentUser,
+  handleError,
+} from "../../../services/endpoint-services";
 
 export const SigninPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleSignin = () => {
+    signin({ username, password })
+      .then((res) => {
+        if (res && res.status === 200 && res.data && res.data.access_token) {
+          localStorage.setItem("access_token", res.data.access_token);
+          // call authorize to verify the token again to get the current user who logged in
+          getCurrentUser(res.data.access_token)
+            .then((res) => {
+              if (res && res.data && res.data.currentUser) {
+                localStorage.setItem(
+                  "current_user",
+                  JSON.stringify(res.data.currentUser)
+                );
+                navigate("/");
+              }
+            })
+            .catch((err) => {
+              handleError(err);
+              messages.error();
+            });
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+        messages.error();
+      });
+  };
 
   return (
     <div className="accountContainer">
@@ -45,7 +79,7 @@ export const SigninPage = () => {
           disabled={!username || !password}
           size={40}
           textButton="ĐĂNG NHẬP"
-          onClick={() => {}}
+          onClick={handleSignin}
         />
         <p>
           Chưa có tài khoản?

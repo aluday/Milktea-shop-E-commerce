@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const e = require("express");
 dotenv.config();
 
 const genneralAccessToken = async (payload) => {
@@ -10,7 +9,7 @@ const genneralAccessToken = async (payload) => {
       ...payload,
     },
     process.env.ACCESS_TOKEN,
-    { expiresIn: "30s" }
+    { expiresIn: process.env.JWT_EXP }
   );
 
   return access_token;

@@ -1,22 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WrapperHeader, WrapperUploadFile } from "./ProductWrapper";
-import { Button, Form, Input, Select, Space } from "antd";
+import { WrapperHeader } from "./ProductWrapper";
+import { Button, Form, Space } from "antd";
 import {
-  PlusOutlined,
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import TableComponent from "../../shared-components/Table";
 import InputComponent from "../../shared-components/Input";
 import ModalComponent from "../../shared-components/Modal";
-import DrawerComponent from "../../shared-components/Drawer";
-import { AddProduct } from "./AddProduct";
+import { ProductForm } from "./ProductForm";
 import { ProductList } from "./ProductList";
 import * as messages from "../../../services/messages";
-import { PRODUCT_TYPES } from "../../../services/constants";
 import "./Product.css";
-import { createProduct } from '../../../services/endpoint-services';
+import {
+  createProduct,
+  getAllProducts,
+  getProductDetails,
+  updateProduct,
+  deleteProduct,
+  handleError,
+} from "../../../services/endpoint-services";
 
 export const Product = () => {
   /* Starting variables for AddProduct component */
@@ -38,30 +41,138 @@ export const Product = () => {
   /* Ending variables for ProductList component */
 
   /* Starting variables for ProductDetails component */
-  const [isOpenProductDetailsDrawer, setIsOpenProductDetailsDrawer] =
+  const [isOpenProductDetailsModal, setIsOpenProductDetailsModal] =
     useState(false);
   const [productDetailsForm] = Form.useForm();
+  const [productId, setProductId] = useState("");
   /* Ending variables for ProductDetails component */
 
-  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
+  const searchInput = useRef(null);
+  const [forceRerender, setForceRerender] = useState(1);
 
-  const renderActions = () => {
+  const renderActions = (_, record) => {
     return (
       <div className="productActions">
-        <EditOutlined className="edit" onClick={() => {}} />
+        <EditOutlined
+          className="edit"
+          onClick={() => {
+            handleUpdateProduct(record._id);
+            setProductId(record._id);
+          }}
+        />
         <DeleteOutlined
           className="delete"
-          onClick={() => setIsModalOpenDelete(true)}
+          onClick={() => {
+            setShowConfirmDeleteDialog(true);
+            setProductId(record._id);
+          }}
         />
       </div>
     );
   };
 
+  const handleUpdateProduct = (productId) => {
+    getProductDetails(productId)
+      .then((res) => {
+        if (res.data && res.data.product) {
+          const productData = res.data.product;
+          // set product form data
+          productDetailsForm.setFieldValue(
+            "productName",
+            productData.productName
+          );
+          setProductName(productData.productName);
+          productDetailsForm.setFieldValue(
+            "basicPrice",
+            productData.basicPrice
+          );
+          setBasicPrice(productData.basicPrice);
+          productDetailsForm.setFieldValue(
+            "countInStock",
+            productData.countInStock
+          );
+          setCountInStock(productData.countInStock);
+          productDetailsForm.setFieldValue("type", productData.type);
+          setType(productData.type);
+          productDetailsForm.setFieldValue("size", productData.size);
+          productDetailsForm.setFieldValue("image", productData.image);
+          setImage(productData.image);
+          setIsOpenProductDetailsModal(true);
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+        resetProductFormData();
+        messages.error();
+      });
+  };
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div className="searchContainer" onKeyDown={(e) => e.stopPropagation()}>
+        <InputComponent
+          className="searchInput"
+          ref={searchInput}
+          placeholder={`Tìm kiếm tên sản phẩm`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => {
+            confirm();
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => {
+              confirm();
+            }}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters();
+            }}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? "#1890ff" : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+  });
+
   const displayedColumns = [
     {
       title: "Name",
       dataIndex: "productName",
-      // ...getColumnSearchProps('productName')
+      ...getColumnSearchProps("productName"),
     },
     {
       title: "Price",
@@ -82,19 +193,50 @@ export const Product = () => {
     },
   ];
 
-  const handleCreateProduct = async () => {
+  const handleCreateUpdateProduct = (action) => {
+    const sizeData =
+      action === "add"
+        ? productForm.getFieldValue("size")
+        : productDetailsForm.getFieldValue("size");
     const formData = new FormData();
-    formData.append('productName', productName);
-    formData.append('basicPrice', basicPrice);
-    formData.append('discount', discount);
-    formData.append('type', type);
-    formData.append('countInStock', countInStock);
-    formData.append('size', productForm.getFieldValue("size"));
-    formData.append('image', image);
-    await createProduct(formData);
+    formData.append("productName", productName);
+    formData.append("basicPrice", basicPrice);
+    formData.append("discount", discount);
+    formData.append("type", type);
+    formData.append("countInStock", countInStock);
+    formData.append("size", JSON.stringify(sizeData));
+    formData.append("image", image);
+
+    if (action === "add") {
+      createProduct(formData)
+        .then((res) => {
+          if (res.status === 200) {
+            resetProductFormData("add");
+            setForceRerender((cur) => cur + 1);
+            messages.success();
+          }
+        })
+        .catch((err) => {
+          handleError(err);
+          resetProductFormData("add");
+          messages.error();
+        });
+    } else if (action === "update") {
+      updateProduct(formData, productId)
+        .then(() => {
+          resetProductFormData("update");
+          setForceRerender((cur) => cur + 1);
+          messages.success();
+        })
+        .catch((err) => {
+          handleError(err);
+          resetProductFormData("update");
+          messages.error();
+        });
+    }
   };
 
-  const handleCreateProductFormChange = (e) => {
+  const handleCreateUpdateProductFormChange = (e) => {
     if (e && e.target) {
       const { name, value } = e.target;
       if (name === "productName") {
@@ -105,6 +247,10 @@ export const Product = () => {
         setDiscount(value);
       } else if (name === "countInStock") {
         setCountInStock(value);
+      } else if (name === "sizeValue") {
+        setSizeValue(value);
+      } else if (name === "price") {
+        setPrice(value);
       }
     } else if (typeof e === "object") {
       setImage(e.file.originFileObj);
@@ -113,12 +259,68 @@ export const Product = () => {
     }
   };
 
+  const handleSelectRow = (record, index) => {
+    // console.log("record", index);
+  };
+
+  const handleDeleteProduct = () => {
+    deleteProduct(productId)
+      .then((res) => {
+        if (res.status === 200) {
+          messages.success();
+          setShowConfirmDeleteDialog(false);
+          setForceRerender((cur) => cur + 1);
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+        resetProductFormData("update");
+        messages.error();
+      });
+  };
+
+  const resetProductFormData = (action) => {
+    if (action === "add") {
+      productForm.resetFields();
+      setIsProductModalOpen(false);
+    } else if (action === "update") {
+      productDetailsForm.resetFields();
+      setIsOpenProductDetailsModal(false);
+    }
+    setProductName("");
+    setBasicPrice("");
+    setDiscount("");
+    setType("");
+    setCountInStock(0);
+    setSizeValue("");
+    setPrice("");
+    setImage("");
+  };
+
+  useEffect(() => {
+    getAllProducts()
+      .then((res) => {
+        if (res.data && res.data.products) {
+          const productData = res.data.products.map((obj) => ({
+            key: obj._id,
+            ...obj,
+          }));
+          setProductList(productData);
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  }, [forceRerender]);
+
   return (
     <div>
       <WrapperHeader>Quản lý sản phẩm</WrapperHeader>
 
-      {/* Starting Add Product modal */}
-      <AddProduct
+      {/* Starting Add Product Form modal */}
+      <ProductForm
+        title="Thêm sản phẩm"
+        isShowAddBtn
         productForm={productForm}
         productName={productName}
         basicPrice={basicPrice}
@@ -129,187 +331,64 @@ export const Product = () => {
         price={price}
         image={image}
         isProductModalOpen={isProductModalOpen}
-        handleChange={handleCreateProductFormChange}
+        handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
           setIsProductModalOpen(true);
         }}
         handleCloseProductModal={() => {
           setIsProductModalOpen(false);
         }}
-        handleCreateProduct={handleCreateProduct}
+        handleCreateProduct={() => {
+          handleCreateUpdateProduct("add");
+        }}
       />
-      {/* Ending Add Product modal */}
+      {/* Ending Add Product Form modal */}
 
       {/* Starting Product list */}
       <ProductList
         columns={displayedColumns}
         dataTable={productList}
-        setRowSelected={setRowSelected}
+        handleSelectRow={handleSelectRow}
       />
       {/* Ending Product list */}
 
-      {/* Starting Update Product modal */}
-      {/* <div className="productDetailsContainer">
-        <DrawerComponent
-          forceRender
-          title="Chi tiết sản phẩm"
-          isOpen={isOpenProductDetailsDrawer}
-          onClose={() => setIsOpenProductDetailsDrawer(false)}
-          width="38%"
-        >
-          <Form
-            name="basic"
-            layout="vertical"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            onFinish={() => {}}
-            autoComplete="off"
-            form={productDetailsForm}
-            encType="multipart/form-data"
-          >
-            <Form.Item label="Tên sản phẩm" name="productname">
-              <Input
-                value={stateProductDetails.productname}
-                onChange={(e) => handleDetailsProduct(e, "productname")}
-                name="productname"
-              />
-            </Form.Item>
-            <Form.Item label="Giá cơ bản" name="basicPrice">
-              <Input
-                value={stateProductDetails.basicPrice}
-                onChange={(e) => handleOnChangeDetails(e, "basicPrice")}
-                name="basicPrice"
-              />
-            </Form.Item>
+      {/* Starting Update Product Form modal */}
+      <ProductForm
+        title="Sửa sản phẩm"
+        isShowAddBtn={false}
+        productForm={productDetailsForm}
+        productName={productName}
+        basicPrice={basicPrice}
+        discount={discount}
+        type={type}
+        countInStock={countInStock}
+        sizeValue={sizeValue}
+        price={price}
+        image={image}
+        isProductModalOpen={isOpenProductDetailsModal}
+        handleChange={handleCreateUpdateProductFormChange}
+        handleOpenProductModal={() => {
+          setIsOpenProductDetailsModal(true);
+        }}
+        handleCloseProductModal={() => {
+          setIsOpenProductDetailsModal(false);
+        }}
+        handleCreateProduct={() => {
+          handleCreateUpdateProduct("update");
+        }}
+      />
+      {/* Ending Update Product Form modal */}
 
-            <Form.Item label="Khuyến mãi" name="discount">
-              <Input
-                value={stateProductDetails.discount}
-                onChange={(e) => handleOnChangeDetails(e, "discount")}
-                name="discount"
-              />
-            </Form.Item>
-
-            <Form.Item label="Type" name="type">
-              <Select
-                name="type"
-                value={stateProductDetails.type}
-                onChange={handleChangeSelectDetails}
-                options={arrType.map((type) => ({ value: type, label: type }))}
-              />
-            </Form.Item>
-            <Form.Item label="Hàng trong kho" name="countInStock">
-              <Input
-                value={stateProductDetails.countInStock}
-                onChange={(e) => handleOnChangeDetails(e, "countInStock")}
-                name="countInStock"
-              />
-            </Form.Item>
-
-            <Form.List name="size">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(
-                    ({ key, name, fieldKey, ...restField }, index) => (
-                      <Space
-                        key={key}
-                        style={{ display: "flex", marginBottom: 8 }}
-                        align="baseline"
-                      >
-                        <Form.Item
-                          {...restField}
-                          label="Size"
-                          name={[name, "sizeValue"]}
-                          fieldKey={[fieldKey, "sizeValue"]}
-                        >
-                          <Input
-                            value={
-                              stateProductDetails.size[index]
-                                ? stateProductDetails.size[index].sizeValue
-                                : ""
-                            }
-                            onChange={(e) => handleOnChangeDetails(e, index)}
-                            name="sizeValue"
-                          />
-                        </Form.Item>
-                        <Form.Item
-                          {...restField}
-                          label="Giá"
-                          name={[name, "price"]}
-                          fieldKey={[fieldKey, "price"]}
-                        >
-                          <Input
-                            value={
-                              stateProductDetails.size[index]
-                                ? stateProductDetails.size[index].price
-                                : ""
-                            }
-                            onChange={(e) => handleOnChangeDetails(e, index)}
-                            name="price"
-                          />
-                        </Form.Item>
-
-                        <Button
-                          onClick={() => handleRemoveSize(index)}
-                          style={{ background: "red" }}
-                        >
-                          <span
-                            onClick={() => {
-                              remove(name);
-                            }}
-                            style={{ width: "25px", color: "white" }}
-                          >
-                            {" "}
-                            XÓA{" "}
-                          </span>
-                        </Button>
-                      </Space>
-                    )
-                  )}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      icon={<PlusOutlined />}
-                    >
-                      Add Size
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-
-            <Form.Item label="Hình ảnh" name="image" type="file">
-              <WrapperUploadFile
-                onChange={handleOnchangeAvatarDetails}
-                maxCount={1}
-              >
-                <Button>Select File</Button>
-                {stateProduct?.image && (
-                  <img
-                    src={stateProductDetails?.image}
-                    style={{
-                      height: "60px",
-                      width: "60px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      marginLeft: "10px",
-                    }}
-                    alt="avt"
-                  />
-                )}
-              </WrapperUploadFile>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </DrawerComponent>
-      </div> */}
-      {/* Ending Update Product modal */}
+      <ModalComponent
+        title="Xóa sản phẩm"
+        open={showConfirmDeleteDialog}
+        onCancel={() => {
+          setShowConfirmDeleteDialog(false);
+        }}
+        onOk={handleDeleteProduct}
+      >
+        <div>Bạn có chắc xóa sản phẩm này không?</div>
+      </ModalComponent>
     </div>
   );
 };

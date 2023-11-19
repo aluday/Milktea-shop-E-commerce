@@ -7,8 +7,6 @@ import {
   WrapperPriceText,
 } from "./CardWrapper";
 import image from "../../../assets/test.png";
-import logo from "../../../assets/logo.png";
-import "./Home.css";
 
 export const CardProduct = ({ key, name, price, id }) => {
   const navigate = useNavigate();
@@ -25,7 +23,6 @@ export const CardProduct = ({ key, name, price, id }) => {
       }}
     >
       <div className="card">
-        <img className="cardImg" src={logo} alt="Logo" />
         <StyleNameProduct> {name} </StyleNameProduct>
         <WrapperPriceText style={{ padding: "5px" }}>
           <span style={{ marginRight: "8px" }}>

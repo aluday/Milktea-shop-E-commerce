@@ -31,8 +31,8 @@ const ProductSchema = new Schema({
     },
   ],
   type: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "typeProduct",
+    type: String,
+    require: true,
   },
 });
 
