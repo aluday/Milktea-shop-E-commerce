@@ -12,7 +12,7 @@ router.post(
   store.single("image"),
   adminController.addProduct
 );
-router.put("/updateProduct/:id", authMidlerware, adminController.updateProduct);
+router.put("/updateProduct/:id", adminController.updateProduct);
 router.delete(
   "/deleteProduct/:id",
   authMidlerware,

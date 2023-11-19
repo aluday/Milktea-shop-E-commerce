@@ -36,7 +36,7 @@ export const HomePage = () => {
                 <CardProduct
                   key={product._id}
                   image={product.image_path}
-                  name={product.productname}
+                  name={product.productName}
                   price={product.basicPrice}
                   rating={product.rating}
                   id={product._id}

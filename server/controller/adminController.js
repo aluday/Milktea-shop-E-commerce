@@ -39,49 +39,34 @@ class adminController {
 
   async addProduct(req, res) {
     try {
-      if (req && req.body) {
-        const pathToFile =
-          req.body.image && req.body.image.name
-            ? `/uploads/${req.body.image.name}`
-            : "";
-        const { productName, size, type, basicPrice, countInStock } = req.body;
+      const pathToFile =
+        req.file && req.file.filename ? `/uploads/${req.file.filename}` : "";
+      const { productName, size, type, basicPrice, countInStock } = req.body;
 
-        const existingType = await typeProduct.findOne({ type_name: type });
-        const checkProduct = await Product.findOne({
-          productName: productName,
-        });
-
-        if (!existingType) {
-          return res.status(404).send({
-            status: "false",
-            message: "Type not found",
-          });
-        }
-        if (checkProduct) {
-          return res.status(200).send({
-            status: "false",
-            message: "Product is existed",
-          });
-        }
-
-        const newProduct = new Product({
-          productname,
-          image: pathToFile,
-          basicPrice,
-          countInStock,
-          size,
-          type: existingType,
-        });
-        await typeProduct.findByIdAndUpdate(existingType._id, {
-          $push: { product: newProduct._id },
-        });
-        await newProduct.save();
+      const checkProduct = await Product.findOne({
+        productName: productName,
+      });
+      if (checkProduct) {
         return res.status(200).send({
-          status: "true",
-          message: "Create product statusfully",
-          newProduct,
+          status: "false",
+          message: "Product is existed",
         });
       }
+
+      const newProduct = new Product({
+        productName,
+        image: pathToFile,
+        basicPrice,
+        countInStock,
+        size: JSON.parse(size),
+        type,
+      });
+      await newProduct.save();
+
+      return res.status(200).send({
+        status: "true",
+        message: "Create product statusfully",
+      });
     } catch (error) {
       console.log(error);
       return res.status(500).send({
@@ -94,13 +79,13 @@ class adminController {
 
   async updateProduct(req, res) {
     try {
+      console.log("req:", req);
       const productId = req.params.id;
       const product = await Product.findByIdAndUpdate(
         { _id: productId },
         { ...req.body },
         { new: "true" }
       );
-      console.log(product);
       return res.status(201).send({
         status: "true",
         message: "Update product statusfully",

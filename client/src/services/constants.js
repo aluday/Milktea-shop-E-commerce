@@ -11,9 +11,12 @@ export const EndpointConstants = {
   USER: {
     SIGN_IN: "/sign-in",
     SIGN_UP: "/sign-up",
+    PRODUCT_DETAILS: "/product-detail",
   },
   ADMIN: {
     CREATE_PRODUCT: "/admin/createProduct",
+    UPDATE_PRODUCT: "/admin/updateProduct",
+    DELETE_PRODUCT: "/admin/deleteProduct"
   },
 };
 /* ENDING ENDPOINT URL DEFINITIONS */

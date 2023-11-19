@@ -1,14 +1,14 @@
 /* STARTING PRODUCT MODAL STYLINGS */
-.addProductModalContainter {
-  display: "flex";
+.productFormModalContainter {
+  display: flex;
   margin-top: 10px;
   margin-bottom: 30px;
 }
-.addProductModalContainter .addProductBtn {
+.productFormModalContainter .addProductBtn {
   height: 40px;
   width: 150px;
 }
-.addProductModalContainter .addProductModal .addProductForm {
+.productFormModalContainter .productModal .productForm {
   max-width: 600px;
 }
 .sizeItemContainer :nth-child(3) {
@@ -23,32 +23,36 @@
   width: 25px !important;
   color: white !important;
 }
-.addProductForm .addSizeBtn {
+.productForm .addSizeBtn {
   margin-bottom: 18px;
 }
-.addProductModalContainter
-  .addProductModal
-  .addProductForms
-  .productFileContainer
-  img {
+.productImg {
   height: 60px;
   width: 60px;
-  border-radius: "50%";
-  object-fit: "cover";
+  border-radius: 50%;
+  object-fit: cover;
   margin-left: 10px;
+}
+.searchContainer {
+  padding: 12px;
+  margin: 5px;
+}
+.searchContainer .searchInput {
+  margin-bottom: 8px;
+  display: block;
 }
 /* ENDING PRODUCT MODAL STYLINGS */
 
 /* STARTING PRODUCT LIST STYLINGS */
 .productActions .edit {
   color: orange;
-  font-size: 30px;
+  font-size: 18px;
   cursor: pointer;
   padding-right: 20px;
 }
 .productActions .delete {
   color: red;
-  font-size: 30px;
+  font-size: 18px;
   cursor: pointer;
 }
 /* ENDING PRODUCT LIST STYLINGS */

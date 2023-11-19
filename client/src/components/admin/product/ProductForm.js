@@ -6,8 +6,10 @@ import ModalComponent from "../../shared-components/Modal";
 import { PRODUCT_TYPES } from "../../../services/constants";
 import "./Product.css";
 
-export const AddProduct = (props) => {
+export const ProductForm = (props) => {
   const {
+    title,
+    isShowAddBtn,
     productForm,
     productName,
     basicPrice,
@@ -25,24 +27,26 @@ export const AddProduct = (props) => {
   } = props;
 
   return (
-    <div className="addProductModalContainter">
-      <Button
-        className="addProductBtn"
-        type="primary"
-        onClick={handleOpenProductModal}
-      >
-        Thêm sản phẩm
-      </Button>
+    <div className="productFormModalContainter">
+      {isShowAddBtn && (
+        <Button
+          className="addProductBtn"
+          type="primary"
+          onClick={handleOpenProductModal}
+        >
+          Thêm sản phẩm
+        </Button>
+      )}
       <ModalComponent
-        title="Thêm sản phẩm"
-        className="addProductModal"
-        forceRender="Thêm sản phẩm"
+        title={title}
+        className="productModal"
+        forceRender={title}
         open={isProductModalOpen}
         onCancel={handleCloseProductModal}
         footer={null}
       >
         <Form
-          className="addProductForm"
+          className="productForm"
           name="basic"
           layout="vertical"
           labelCol={{ span: 8 }}
