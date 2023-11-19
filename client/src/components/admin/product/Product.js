@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WrapperHeader, WrapperUploadFile } from "./ProductWrapper";
-import { Button, Form, Input, Select, Space } from "antd";
+import { WrapperHeader } from "./ProductWrapper";
+import { Button, Form, Space } from "antd";
 import {
-  PlusOutlined,
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import TableComponent from "../../shared-components/Table";
 import InputComponent from "../../shared-components/Input";
 import ModalComponent from "../../shared-components/Modal";
-import DrawerComponent from "../../shared-components/Drawer";
 import { ProductForm } from "./ProductForm";
 import { ProductList } from "./ProductList";
 import * as messages from "../../../services/messages";
-import { PRODUCT_TYPES } from "../../../services/constants";
 import "./Product.css";
 import {
   createProduct,
@@ -52,7 +48,6 @@ export const Product = () => {
   /* Ending variables for ProductDetails component */
 
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-
   const searchInput = useRef(null);
 
   const renderActions = (_, record) => {
@@ -123,7 +118,7 @@ export const Product = () => {
         <InputComponent
           className="searchInput"
           ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Tìm kiếm tên sản phẩm`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])

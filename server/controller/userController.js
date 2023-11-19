@@ -203,6 +203,25 @@ class userController {
     }
   }
 
+  async getCurrentUser(req, res) {
+    try {
+      const userId = req.userId;
+      const currentUser = await Customer.findById({ _id: userId }, "-password");
+      return res.status(200).send({
+        status: "true",
+        messeage: "User detail",
+        currentUser,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        messeage: "Error while get user",
+        error,
+      });
+    }
+  }
+
   async getDetailUser(req, res) {
     try {
       const userId = req.params.id;

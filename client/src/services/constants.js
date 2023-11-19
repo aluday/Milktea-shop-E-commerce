@@ -11,6 +11,7 @@ export const EndpointConstants = {
   USER: {
     SIGN_IN: "/sign-in",
     SIGN_UP: "/sign-up",
+    AUTHORIZE: "/authorize",
     PRODUCT_DETAILS: "/product-detail",
   },
   ADMIN: {

@@ -17,6 +17,25 @@ export const signup = async (data) => {
   const res = await axios.post(endpoint, data);
   return res;
 };
+export const getCurrentUser = async (accessToken) => {
+  const endpoint = getBaseURL() + EndpointConstants.USER.AUTHORIZE;
+  const res = await axios.get(endpoint, {
+    headers: {
+      token: `Bearer ${accessToken}`,
+    },
+  });
+  return res;
+}
+export const getUserDetail = async (id) => {
+  const accessToken = localStorage.getItem("access_token");
+  const endpoint = getBaseURL() + `/detail-user/${id}`;
+  const res = await axios.get(endpoint, {
+    headers: {
+      token: `Bearer ${accessToken}`,
+    },
+  });
+  return res;
+};
 /* ENDING USER REST DEFINATIONS */
 
 /* STARTING ADMIN REST DEFINATIONS */

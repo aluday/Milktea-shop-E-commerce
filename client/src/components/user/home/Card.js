@@ -8,7 +8,6 @@ import {
 } from "./CardWrapper";
 import image from "../../../assets/test.png";
 import logo from "../../../assets/logo.png";
-import "./Home.css";
 
 export const CardProduct = ({ key, name, price, id }) => {
   const navigate = useNavigate();

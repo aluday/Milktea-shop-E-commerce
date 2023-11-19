@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WrapperTextLight } from "./AccountWrapper";
 import ButtonComponent from "../../shared-components/Button";
 import InputForm from "../../shared-components/InputForm";
 import logo from "../../../assets/logo.png";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
-import * as messeages from "../../../services/messages";
+import * as messages from "../../../services/messages";
+import { signup, handleError } from "../../../services/endpoint-services";
 import "./Account.css";
 
 export const SignupPage = () => {
@@ -19,6 +20,28 @@ export const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
+
+  const hanleRegisterAccount = () => {
+    const preparedUserData = {
+      name,
+      email,
+      phone,
+      username,
+      password,
+      confirmPassword,
+    };
+    signup(preparedUserData)
+      .then((res) => {
+        if (res.status === 200) {
+          messages.success();
+          navigate("/sign-in");
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+        messages.error();
+      });
+  };
 
   return (
     <div className="accountContainer">
@@ -102,7 +125,7 @@ export const SignupPage = () => {
           }
           size={40}
           textButton="ĐĂNG KÝ"
-          onClick={() => {}}
+          onClick={hanleRegisterAccount}
         />
         <p>
           Bạn đã có tài khoản?
