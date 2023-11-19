@@ -27,9 +27,12 @@ export const SigninPage = () => {
           // call authorize to verify the token again to get the current user who logged in
           getCurrentUser(res.data.access_token)
             .then((res) => {
-              if(res && res.data && res.data.currentUser) {
-                localStorage.setItem("current_user", res.data.currentUser);
-                navigate('/')
+              if (res && res.data && res.data.currentUser) {
+                localStorage.setItem(
+                  "current_user",
+                  JSON.stringify(res.data.currentUser)
+                );
+                navigate("/");
               }
             })
             .catch((err) => {

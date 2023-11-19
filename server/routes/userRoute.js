@@ -17,15 +17,7 @@ router.post("/log-out", userController.logoutUser);
 
 router.put("/update-user/:id", userController.updateUser);
 
-router.get(
-  "/authorize",
-  auth.authCurrentUser,
-  userController.getCurrentUser
-);
-
-router.get(
-  "/detail-user/:id",
-  userController.getDetailUser
-);
+router.get("/authorize", auth.authCurrentUser, userController.getCurrentUser);
+router.get("/detail-user/:id", userController.getDetailUser);
 
 module.exports = router;

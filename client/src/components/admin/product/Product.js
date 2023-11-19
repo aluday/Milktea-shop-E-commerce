@@ -47,8 +47,9 @@ export const Product = () => {
   const [productId, setProductId] = useState("");
   /* Ending variables for ProductDetails component */
 
-  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
   const searchInput = useRef(null);
+  const [forceRerender, setForceRerender] = useState(1);
 
   const renderActions = (_, record) => {
     return (
@@ -63,7 +64,7 @@ export const Product = () => {
         <DeleteOutlined
           className="delete"
           onClick={() => {
-            setIsModalOpenDelete(true);
+            setShowConfirmDeleteDialog(true);
             setProductId(record._id);
           }}
         />
@@ -211,6 +212,7 @@ export const Product = () => {
         .then((res) => {
           if (res.status === 200) {
             resetProductFormData("add");
+            setForceRerender((cur) => cur + 1);
             messages.success();
           }
         })
@@ -223,6 +225,7 @@ export const Product = () => {
       updateProduct(formData, productId)
         .then(() => {
           resetProductFormData("update");
+          setForceRerender((cur) => cur + 1);
           messages.success();
         })
         .catch((err) => {
@@ -265,6 +268,8 @@ export const Product = () => {
       .then((res) => {
         if (res.status === 200) {
           messages.success();
+          setShowConfirmDeleteDialog(false);
+          setForceRerender((cur) => cur + 1);
         }
       })
       .catch((err) => {
@@ -306,7 +311,7 @@ export const Product = () => {
       .catch((err) => {
         handleError(err);
       });
-  }, []);
+  }, [forceRerender]);
 
   return (
     <div>
@@ -376,9 +381,9 @@ export const Product = () => {
 
       <ModalComponent
         title="Xóa sản phẩm"
-        open={isModalOpenDelete}
+        open={showConfirmDeleteDialog}
         onCancel={() => {
-          setIsModalOpenDelete(false);
+          setShowConfirmDeleteDialog(false);
         }}
         onOk={handleDeleteProduct}
       >

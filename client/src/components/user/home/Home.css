@@ -4,17 +4,14 @@
   margin: 10px;
   align-items: center;
 }
-
 .body {
   width: 100%;
 }
-
 .body .container {
   height: 1000px;
   width: 1270px;
   margin: 0 auto;
 }
-
 .body .container .buttonLoadMore {
   width: 100%;
   display: flex;
@@ -26,14 +23,5 @@
 /* STARTING CARD COMPONENT STYLINGS */
 .card {
   text-align: center;
-}
-
-.card .cardImg {
-  width: 68px;
-  height: 14px;
-  position: absolute;
-  top: -1;
-  left: -1;
-  border-top-left-radius: 3px;
 }
 /* ENDING CARD COMPONENT STYLINGS */

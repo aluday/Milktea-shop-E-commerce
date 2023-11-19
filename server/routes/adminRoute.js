@@ -13,10 +13,7 @@ router.post(
   adminController.addProduct
 );
 router.put("/updateProduct/:id", adminController.updateProduct);
-router.delete(
-  "/deleteProduct/:id",
-  adminController.deleteProduct
-);
+router.delete("/deleteProduct/:id", adminController.deleteProduct);
 
 router.delete("/delete-user/:id", userController.deleteUser);
 router.get("/getAll", userController.getAllUser);

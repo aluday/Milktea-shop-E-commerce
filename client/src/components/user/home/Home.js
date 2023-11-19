@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { WrapperButtonMore, WrapperProducts, WrapperType } from "./HomeWrapper";
-import TypeProduct from "../../shared-components/TypeProduct";
-import SliderComponent from "../../shared-components/Slider";
 import slider1 from "../../../assets/slides/slider_2.webp";
 import slider2 from "../../../assets/slides/slider_3.webp";
+import SliderComponent from "../../shared-components/Slider";
+import { WrapperButtonMore, WrapperProducts, WrapperType } from "./HomeWrapper";
+import TypeProduct from "../../shared-components/TypeProduct";
 import CardProduct from "./Card";
 import "./Home.css";
 import { PRODUCT_TYPES } from "../../../services/constants";

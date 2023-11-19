@@ -79,7 +79,6 @@ class adminController {
 
   async updateProduct(req, res) {
     try {
-      console.log("req:", req);
       const productId = req.params.id;
       const product = await Product.findByIdAndUpdate(
         { _id: productId },
@@ -99,16 +98,7 @@ class adminController {
   async deleteProduct(req, res) {
     try {
       const productId = req.params.id;
-      const product = await Product.findById({ _id: productId });
-
-      const typePd = await String(product.type);
-
-      await typeProduct.findByIdAndUpdate(
-        { _id: typePd },
-        { $pull: { product: productId } }
-      );
       await Product.findByIdAndDelete({ _id: productId });
-
       return res.status(200).send({
         status: "true",
         message: "Delete product statusfully",
