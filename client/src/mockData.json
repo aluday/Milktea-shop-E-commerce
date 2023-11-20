@@ -1,0 +1,16 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "productName": "test 1",
+      "basicPrice": "123",
+      "image_path": "./assets/test.png"
+    },
+    {
+      "id": 2,
+      "productName": "test 2",
+      "basicPrice": "456",
+      "image_path": "./assets/test.png"
+    }
+  ]
+}

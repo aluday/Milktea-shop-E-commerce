@@ -39,7 +39,7 @@ export const AdminPage = () => {
 
   return (
     <>
-      <Header isHiddenSearch isHiddenCart />
+      <Header />
       <div className="adminMenuContainer">
         <Menu
           className="adminMenu"

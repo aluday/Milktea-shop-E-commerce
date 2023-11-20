@@ -11,6 +11,8 @@ import {
   getAllProducts,
   handleError,
 } from "../../../services/endpoint-services";
+// using mockData when do not running server
+import mockData from '../../../mockData.json';
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -31,7 +33,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <div className="productType">
+      {/* <div className="productType">
         <WrapperType
           style={{
             alignItems: "center",
@@ -41,24 +43,36 @@ export const HomePage = () => {
             return <TypeProduct name={item.value} key={item.type} />;
           })}
         </WrapperType>
-      </div>
+      </div> */}
 
       <div className="body">
         <div className="container">
-          {/* <SliderComponent arrImg={[slider1, slider2]} /> */}
-
+          <SliderComponent arrImg={[slider1, slider2]} />
           <WrapperProducts>
-            {products?.map((product) => {
-              return (
-                <CardProduct
-                  image={product.image_path}
-                  name={product.productName}
-                  price={product.basicPrice}
-                  rating={product.rating}
-                  id={product._id}
-                />
-              );
-            })}
+            {products && products.length > 0 ? (
+              products?.map((product) => {
+                return (
+                  <CardProduct
+                    image={product.image_path}
+                    name={product.productName}
+                    price={product.basicPrice}
+                    rating={product.rating}
+                    id={product._id}
+                  />
+                );
+              })
+            ) : (
+              mockData.products.map((product) => {
+                return (
+                  <CardProduct
+                    image={product.image_path}
+                    name={product.productName}
+                    price={product.basicPrice}
+                    id={product.id}
+                  />
+                );
+              })
+            )}
           </WrapperProducts>
 
           {/* <div className="buttonLoadMore">

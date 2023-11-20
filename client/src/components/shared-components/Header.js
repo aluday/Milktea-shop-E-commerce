@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Badge, Col, Popover } from "antd";
+import React, { useState, useContext } from "react";
+import { Col, Row, Input, Space, Tabs, Button, Flex, Popover, Badge, Segmented } from "antd";
 import { WrapperHeader, WrapperAccount, WrapperContentPopup } from "./Wrapper";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo-removebg.png";
 import {
   UserOutlined,
   CaretDownOutlined,
   ShoppingCartOutlined,
+  SearchOutlined
 } from "@ant-design/icons";
-import Loading from "./Loading";
-import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
+import { UserContext } from '../../providers/UserProvider';
 
-export const Header = ({ isHiddenSearch = false, isHiddenCart = false }) => {
+const { Search } = Input;
+
+export const Header = () => {
   const navigate = useNavigate();
-
-  // const [userName, setUserName] = useState("");
-  // const [search, setSearch] = useState("");
+  const { currentUser } = useContext(UserContext);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -59,77 +59,62 @@ export const Header = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
   return (
     <div className="headerWrapper">
-      <WrapperHeader
-        gutter={30}
-        style={{
-          justifyContent:
-            isHiddenSearch && isHiddenSearch ? "space-between" : "unset",
-        }}
-      >
-        <Col span={5}>
-          <img
-            alt="logo"
-            width="130px"
-            height="40px"
-            src={logo}
-            onClick={() => {
-              navigate('/');
-            }}
-          />
-        </Col>
-        {!isHiddenSearch && (
-          <Col span={13}>
-            <SearchBar
-              size="large"
-              textbutton="Tìm kiếm"
-              placeholder="Tìm sản phẩm"
-              onChange={() => {}}
+      <Row align="center" justify="center">
+        <Col span={4}>
+          <Flex className="logoContainer" align="center" justify="center">
+            <img
+              className="logo"
+              alt="logo"
+              src={logo}
+              onClick={() => {
+                navigate('/');
+              }}
             />
-          </Col>
-        )}
-        <Col
-          span={6}
-          style={{ display: `flex`, gap: "54px", paddingTop: "6px" }}
-        >
-          <Loading isLoading={isLoading}>
-            <WrapperAccount>
-              <UserOutlined style={{ fontSize: `30px` }} />
-              <Popover content={content} trigger="click" open={isOpenPopup}>
-                <div
-                  style={{
-                    cursor: "pointer",
-                    maxWidth: 100,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  onClick={() => setIsOpenPopup((prev) => !prev)}
-                >
-                  {/* {userName?.length ? userName : user?.email} */}
-                  {/* {user.name} */}
-                  Van Luu
-                </div>
-              </Popover>
-            </WrapperAccount>
-          </Loading>
-          {!isHiddenCart && (
-            <div style={{ cursor: "pointer" }}>
-              <Badge
-                // count={order?.orderItems?.length}
-                count="4"
-                size="small"
-              >
-                <ShoppingCartOutlined
-                  style={{ fontSize: "30px", color: `#8B7D6B` }}
-                />
-              </Badge>
-              {/* <ShoppingCartOutlined style={{ fontSize: `30px` }} /> */}
-              <span style={{ fontSize: `12px`, color: `#8B7D6B` }}>
-                Giỏ hàng
-              </span>
-            </div>
-          )}
+          </Flex>
         </Col>
-      </WrapperHeader>
+        <Col span={12}>
+          <Flex align="center" justify="space-between">
+            <div className="catalogContainer">
+              <Space className="catalogText"><p>Trang chủ</p></Space>
+              <Space className="catalogText"><p>Menu</p></Space>
+              <Space className="catalogText"><p>Liên hệ</p></Space>
+            </div>
+            <div className="searchContainer">
+              {/* <Search placeholder="Tìm kiếm..." allowClear /> */}
+              <Input
+                placeholder="Tìm kiếm..."
+                suffix={<SearchOutlined />}
+              />
+            </div>
+          </Flex>
+        </Col>
+        <Col span={4}>
+          {/* {currentUser ? ( */}
+            <Flex className="accountGroupContainer" gap="small" align="center" justify="center">
+              <Space className="userContainer">
+                <UserOutlined />
+                <Popover content={content} trigger="click" open={isOpenPopup}>
+                  <div onClick={() => setIsOpenPopup((prev) => !prev)}>
+                    <span className="currentUserText">Van Luu</span>
+                  </div>
+                </Popover>
+              </Space>
+              <Space className="shoppingCartContainer">
+                <Badge count="4" size="small">
+                  <ShoppingCartOutlined />
+                </Badge>
+                <span className="shoppingCartText"> Giỏ hàng </span>
+              </Space>
+            </Flex>
+          {/* ) : (
+            <Flex className="accountGroupContainer" gap="small" align="center" justify="center">
+              <Space className="accountText"><p>Đăng nhập</p></Space>
+              <Space className="accountText"><p>/</p></Space>
+              <Space className="accountText"><p>Đăng ký</p></Space>
+            </Flex>
+          )} */}
+        </Col>
+      </Row>
     </div>
   );
 };

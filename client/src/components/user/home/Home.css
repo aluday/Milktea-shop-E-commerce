@@ -6,12 +6,17 @@
 }
 .body {
   width: 100%;
+  background-color: #F3EEEA;
 }
 .body .container {
-  height: 1000px;
-  width: 1270px;
+  width: 80%;
   margin: 0 auto;
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
+/* .body .container .slick-slider {
+  margin-top: 48px;
+} */
 .body .container .buttonLoadMore {
   width: 100%;
   display: flex;
