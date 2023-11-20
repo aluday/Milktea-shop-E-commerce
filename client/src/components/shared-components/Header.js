@@ -41,7 +41,7 @@ export const Header = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
   const handleClickNavigate = (type) => {
     if (type === "profile") {
-      navigate("/profile-user");
+      navigate("/profile");
     } else if (type === "admin") {
       navigate("/system/admin");
     } else if (type === "my-order") {

@@ -2,6 +2,7 @@ import { HomePage } from "./components/user/home/Home";
 import { AdminPage } from "./components/admin/Admin";
 import { SigninPage } from "./components/user/account/Signin";
 import { SignupPage } from "./components/user/account/Signup";
+import { Profile } from './components/user/account/Profile';
 
 export const appRoutes = [
   {
@@ -18,6 +19,11 @@ export const appRoutes = [
     path: "/sign-in",
     page: SigninPage,
     isShowHeader: false,
+  },
+  {
+    path: "/profile",
+    page: Profile,
+    isShowHeader: true
   },
   {
     path: "/system/admin",
