@@ -2,10 +2,8 @@ const {
   mutipleMongooseToObject,
   mongooseToObject,
 } = require("../middlerware/Mongoose");
-const fs = require("fs");
-const baseUrl = "http://localhost:3001";
 
-const typeProduct = require("../model/typeProductSchema");
+const baseUrl = "http://localhost:3001";
 const Product = require("../model/productSchema");
 
 class productController {
@@ -38,13 +36,12 @@ class productController {
       const products = await Product.find({})
         .limit(limit)
         .skip(limit * page)
-        .populate("type");
+        
       products.forEach((product) => {
         product.image = baseUrl + product.image;
       });
       const modifiedProducts = products.map((product) => ({
-        ...product._doc,
-        type: product.type.type_name, // Thay thế ID bằng tên loại sản phẩm
+        ...product._doc
       }));
 
       if (!products) {
@@ -99,45 +96,44 @@ class productController {
 
   async getAllType(req, res) {
     try {
-      const type = await typeProduct.find({});
-      console.log(type);
+      const types = await Product.find({}).distinct('type');
       return res.status(200).send({
-        status: true,
-        message: "",
-        type,
+          status: true,
+          message: 'All Type Product',
+          data: types
       });
     } catch (error) {
       console.log(error);
       return res.status(500).send({
-        status: "false",
-        message: "Error while get type",
-        error,
+          status: 'false',
+          message: 'Error while get type',
+          error
       });
     }
   }
 
-  async getofType(req, res) {
-    try {
-      const typeId = req.params.id;
-      // console.log(id);
-      const products = await typeProduct
-        .findById({ _id: typeId })
-        .populate("Product");
+  // async getofType(req, res) {
+  //   try {
+  //     const typeId = req.params.id;
+  //     // console.log(id);
+  //     const products = await typeProduct
+  //       .findById({ _id: typeId })
+  //       .populate("Product");
 
-      return res.status(200).send({
-        status: true,
-        message: "",
-        products: products,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while get product",
-        error,
-      });
-    }
-  }
+  //     return res.status(200).send({
+  //       status: true,
+  //       message: "",
+  //       products: products,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).send({
+  //       status: "false",
+  //       message: "Error while get product",
+  //       error,
+  //     });
+  //   }
+  // }
 }
 
 module.exports = new productController();

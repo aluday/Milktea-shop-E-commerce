@@ -6,7 +6,7 @@ const store = require("../middlerware/multer");
 const userController = require("../controller/userController");
 // const { authMidlerware } = require("../middlerware/authMidlerware");
 
-router.post("/createType", adminController.storeType);
+// router.post("/createType", adminController.storeType);
 router.post(
   "/createProduct",
   store.single("image"),
