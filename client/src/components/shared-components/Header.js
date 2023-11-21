@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Col, Row, Input, Space, Tabs, Button, Flex, Popover, Badge, Segmented } from "antd";
 import { WrapperHeader, WrapperAccount, WrapperContentPopup } from "./Wrapper";
-import logo from "../../assets/cute-bubble-tea-logo.jpg";
+import logo from "../../assets/cute-bubble-tea-logo-removebg.png";
 import {
   UserOutlined,
   CaretDownOutlined,
@@ -10,26 +10,21 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
-import { UserContext } from '../../providers/UserProvider';
 
-const { Search } = Input;
-
-export const Header = () => {
+export const Header = ({ isAdminPage, currentUser }) => {
   const navigate = useNavigate();
-  const { currentUser } = useContext(UserContext);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const content = (
     <div>
       <WrapperContentPopup onClick={() => handleClickNavigate("profile")}>
         Thông tin người dùng
       </WrapperContentPopup>
-      {/* {user?.isAdmin && (
+      {currentUser && currentUser.isAdmin && (
         <WrapperContentPopup onClick={() => handleClickNavigate("admin")}>
           Quản lí hệ thống
         </WrapperContentPopup>
-      )} */}
+      )}
       <WrapperContentPopup onClick={() => handleClickNavigate(`my-order`)}>
         Đơn hàng của tôi
       </WrapperContentPopup>
@@ -58,8 +53,24 @@ export const Header = () => {
   };
 
   return (
-    <div className="headerWrapper">
-      <Row gutter={{ sm: 8, md: 16, lg: 24 }} align="center" justify="center">
+    <>
+      {isAdminPage ? (
+        <div className="adminHeaderWrapper">
+          <Flex className="logoContainer" align="center" justify="center">
+            <img
+              className="logo"
+              alt="logo"
+              src={logo}
+              onClick={() => {
+                navigate('/');
+              }}
+            />
+          </Flex>
+          <div className="rest"></div>
+        </div>
+      ) : (
+        <div className="headerWrapper">
+        <Row gutter={{ sm: 8, md: 16, lg: 24 }} align="center" justify="center">
         <Col className="gutter-row" sm={{ span: 2 }} md={{ span: 2 }} lg={{ span: 4 }}>
           <Flex className="logoContainer" align="center" justify="center">
             <img
@@ -112,7 +123,9 @@ export const Header = () => {
           </Flex>
         </Col>
       </Row>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

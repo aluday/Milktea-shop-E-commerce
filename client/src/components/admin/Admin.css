@@ -3,12 +3,14 @@
   display: flex;
 }
 .adminMenuContainer .adminMenu {
-  width: 265px;
-  box-shadow: 1px 1px 3px #ccc;
+  width: 260px;
+  /* box-shadow: 1px 1px 3px #ccc; */
   height: 100vh;
+  background-color: #C58940;
 }
 .adminMenuContainer .adminMenuContent {
   flex: 1;
   padding: 15px;
+  background-color: #FAF8F1;
 }
 /* ENDING ADMIN MENU STYLINGS */

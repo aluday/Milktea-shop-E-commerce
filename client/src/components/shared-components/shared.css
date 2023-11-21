@@ -18,9 +18,6 @@
 .headerWrapper .logoContainer .logo {
   width: 18%;
 }
-/* .headerWrapper .catalogContainer {
-  width: 50%;
-} */
 .headerWrapper .catalogText {
   color: #303841;
   font-weight: bold;
@@ -57,3 +54,23 @@
   font-size: 22px;
 }
 /* END HEADER STYLINGS */
+
+
+/* START ADMIN HEADER STYLINGS */
+.adminHeaderWrapper {
+  height: 86px;
+  background-color: #E5BA73;
+}
+.adminHeaderWrapper .logoContainer {
+  width: 260px;
+  height: 100%;
+  background-color: #FAEAB1;
+}
+.adminHeaderWrapper .logoContainer img {
+  width: 58px;
+}
+.headerWrapper .logoContainer .logo:hover,
+.adminHeaderWrapper .logoContainer img:hover {
+  cursor: pointer;
+}
+/* END ADMIN HEADER STYLINGS */

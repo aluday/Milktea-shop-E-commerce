@@ -8,27 +8,21 @@ export const appRoutes = [
   {
     path: "/",
     page: HomePage,
-    isShowHeader: true,
   },
   {
     path: "/sign-up",
     page: SignupPage,
-    isShowHeader: false,
   },
   {
     path: "/sign-in",
     page: SigninPage,
-    isShowHeader: false,
   },
   {
     path: "/profile",
     page: Profile,
-    isShowHeader: true
   },
   {
     path: "/system/admin",
     page: AdminPage,
-    isShowHeader: false,
-    isPrivate: true,
   },
 ];

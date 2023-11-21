@@ -39,7 +39,7 @@ export const AdminPage = () => {
 
   return (
     <>
-      <Header />
+      <Header isAdminPage />
       <div className="adminMenuContainer">
         <Menu
           className="adminMenu"
