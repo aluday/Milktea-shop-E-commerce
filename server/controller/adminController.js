@@ -40,7 +40,7 @@ class adminController {
     try {
       const pathToFile =
         req.file && req.file.filename ? `/uploads/${req.file.filename}` : "";
-      const { productName, size, type, basicPrice, countInStock } = req.body;
+      const { productName, discount, size, type, basicPrice, countInStock } = req.body;
 
       const checkProduct = await Product.findOne({
         productName: productName,
@@ -57,6 +57,7 @@ class adminController {
         image: pathToFile,
         basicPrice,
         countInStock,
+        discount,
         size: JSON.parse(size),
         type,
       });
