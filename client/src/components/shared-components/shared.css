@@ -1,56 +1,59 @@
 /* START HEADER STYLINGS */
 .headerWrapper {
   width: 100%;
-  height: 100px;
-  position: relative;
-  background-color: #B0A695;
+  height: fit-content;
+  background-color: #ffffff;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 .headerWrapper .ant-row {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 .headerWrapper .logoContainer,
-.headerWrapper .accountGroupContainer {
+.headerWrapper .accountGroupContainer,
+.headerWrapper .ant-row .ant-col .ant-flex {
   height: 100%;
 }
 .headerWrapper .logoContainer .logo {
-  height: 48px;
+  width: 18%;
 }
-.headerWrapper .catalogContainer {
+/* .headerWrapper .catalogContainer {
   width: 50%;
-}
+} */
 .headerWrapper .catalogText {
-  color: #ffffff;
+  color: #303841;
   font-weight: bold;
   font-size: 18px;
   min-width: 120px;
   height: 48px;
   justify-content: center;
 }
-.headerWrapper .accountGroupContainer .accountText,
-.accountGroupContainer .currentUserText,
-.accountGroupContainer .shoppingCartText {
-  color:#8c8c8c;
+.headerWrapper .ant-space {
+  width: 120px;
+  height: 48px;
+  justify-content: center;
+}
+.headerWrapper .ant-space:hover,
+.headerWrapper .catalogText:hover {
+  cursor: pointer;
+  background-color: #FF6F3C;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 48px;
+}
+.headerWrapper .accountText {
+  color: #303841;
   font-weight: bold;
 }
-.headerWrapper .accountGroupContainer .accountText:hover,
-.accountGroupContainer .currentUserText:hover {
-  cursor: pointer;
-}
-.headerWrapper .catalogText:hover {
-  background-color: #F3EEEA;
-  color: #776B5D;
-  opacity: 0.8;
-  border-radius: 28px;
+.headerWrapper .ant-space:hover .anticon-shopping-cart {
+  color: #ffffff;
 }
 .searchContainer .ant-input-affix-wrapper {
   border-radius: 18px;
   height: 36px;
 }
-.accountGroupContainer .anticon {
+.headerWrapper .anticon {
   font-size: 22px;
 }
 /* END HEADER STYLINGS */

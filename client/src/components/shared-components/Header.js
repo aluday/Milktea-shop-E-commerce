@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Col, Row, Input, Space, Tabs, Button, Flex, Popover, Badge, Segmented } from "antd";
 import { WrapperHeader, WrapperAccount, WrapperContentPopup } from "./Wrapper";
-import logo from "../../assets/logo-removebg.png";
+import logo from "../../assets/cute-bubble-tea-logo.jpg";
 import {
   UserOutlined,
   CaretDownOutlined,
@@ -59,8 +59,8 @@ export const Header = () => {
 
   return (
     <div className="headerWrapper">
-      <Row align="center" justify="center">
-        <Col span={4}>
+      <Row gutter={{ sm: 8, md: 16, lg: 24 }} align="center" justify="center">
+        <Col className="gutter-row" sm={{ span: 2 }} md={{ span: 2 }} lg={{ span: 4 }}>
           <Flex className="logoContainer" align="center" justify="center">
             <img
               className="logo"
@@ -72,47 +72,44 @@ export const Header = () => {
             />
           </Flex>
         </Col>
-        <Col span={12}>
-          <Flex align="center" justify="space-between">
+        <Col className="gutter-row" sm={{ span: 4 }} md={{ span: 8 }} lg={{ span: 12 }}>
+          <Flex align="center">
             <div className="catalogContainer">
               <Space className="catalogText"><p>Trang chủ</p></Space>
               <Space className="catalogText"><p>Menu</p></Space>
               <Space className="catalogText"><p>Liên hệ</p></Space>
             </div>
-            <div className="searchContainer">
-              {/* <Search placeholder="Tìm kiếm..." allowClear /> */}
-              <Input
-                placeholder="Tìm kiếm..."
-                suffix={<SearchOutlined />}
-              />
-            </div>
           </Flex>
         </Col>
-        <Col span={4}>
-          {/* {currentUser ? ( */}
-            <Flex className="accountGroupContainer" gap="small" align="center" justify="center">
-              <Space className="userContainer">
-                <UserOutlined />
-                <Popover content={content} trigger="click" open={isOpenPopup}>
-                  <div onClick={() => setIsOpenPopup((prev) => !prev)}>
-                    <span className="currentUserText">Van Luu</span>
-                  </div>
-                </Popover>
-              </Space>
-              <Space className="shoppingCartContainer">
-                <Badge count="4" size="small">
-                  <ShoppingCartOutlined />
-                </Badge>
-                <span className="shoppingCartText"> Giỏ hàng </span>
-              </Space>
-            </Flex>
-          {/* ) : (
-            <Flex className="accountGroupContainer" gap="small" align="center" justify="center">
-              <Space className="accountText"><p>Đăng nhập</p></Space>
-              <Space className="accountText"><p>/</p></Space>
-              <Space className="accountText"><p>Đăng ký</p></Space>
-            </Flex>
-          )} */}
+        <Col className="gutter-row" sm={{ span: 2 }} md={{ span: 6 }} lg={{ span: 8 }}>
+          <Flex align="center" justify="center">
+            <div className="searchContainer">
+              <Input placeholder="Tìm kiếm..." suffix={<SearchOutlined />} />
+            </div>
+            {currentUser ? (
+              <>
+                <Space className="userContainer">
+                  <UserOutlined />
+                  <Popover content={content} trigger="click" open={isOpenPopup}>
+                    <div onClick={() => setIsOpenPopup((prev) => !prev)}>
+                      <span className="accountText">Van Luu</span>
+                    </div>
+                  </Popover>
+                </Space>
+                <Space className="shoppingCartContainer">
+                  <Badge count="4" size="small">
+                    <ShoppingCartOutlined />
+                  </Badge>
+                  <span className="accountText"> Giỏ hàng </span>
+                </Space>
+              </>
+            ) : (
+              <>
+                <Space className="accountText"><p>Đăng nhập</p></Space>
+                <Space className="accountText"><p>Đăng ký</p></Space>
+              </>
+            )}
+          </Flex>
         </Col>
       </Row>
     </div>

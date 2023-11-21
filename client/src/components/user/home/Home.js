@@ -46,8 +46,8 @@ export const HomePage = () => {
       </div> */}
 
       <div className="body">
+        <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
-          <SliderComponent arrImg={[slider1, slider2]} />
           <WrapperProducts>
             {products && products.length > 0 ? (
               products?.map((product) => {
