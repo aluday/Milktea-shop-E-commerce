@@ -16,7 +16,8 @@
   height: 100%;
 }
 .headerWrapper .logoContainer .logo {
-  width: 18%;
+  min-width: 52px;
+  width: 52px;
 }
 .headerWrapper .catalogText {
   color: #303841;
@@ -34,7 +35,7 @@
 .headerWrapper .ant-space:hover,
 .headerWrapper .catalogText:hover {
   cursor: pointer;
-  background-color: #FF6F3C;
+  background-color: #c58940;
   color: #ffffff;
   font-weight: bold;
   border-radius: 48px;
@@ -55,22 +56,74 @@
 }
 /* END HEADER STYLINGS */
 
-
 /* START ADMIN HEADER STYLINGS */
 .adminHeaderWrapper {
-  height: 86px;
-  background-color: #E5BA73;
+  height: 52px;
+  background-color: #faeab1;
 }
 .adminHeaderWrapper .logoContainer {
   width: 260px;
   height: 100%;
-  background-color: #FAEAB1;
+  background-color: rgba(197, 137, 64, 0.2);
+  gap: 12px;
+  float: left;
 }
-.adminHeaderWrapper .logoContainer img {
-  width: 58px;
+.adminHeaderWrapper .logoContainerCollapsed {
+  width: 48px;
+  height: 100%;
+  background-color: rgba(197, 137, 64, 0.2);
+  float: left;
+}
+.adminHeaderWrapper .logoContainerCollapsed img {
+  display: none;
+}
+.adminHeaderWrapper .logoContainer .logo {
+  width: 36px;
+  min-width: 36px;
+}
+.adminHeaderWrapper .logoContainer .logoText {
+  width: 130px;
 }
 .headerWrapper .logoContainer .logo:hover,
-.adminHeaderWrapper .logoContainer img:hover {
+.adminHeaderWrapper .logoContainer:hover {
   cursor: pointer;
+}
+.adminHeaderWrapper .btnGroup,
+.adminHeaderWrapper .btnGroup .ant-flex {
+  height: 100%;
+}
+.adminHeaderWrapper .btnGroup .ant-flex {
+  padding-left: 16px;
+  padding-right: 28px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon {
+  font-size: 18px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-user {
+  background-color: #faf8f1;
+  padding: 8px;
+  border-radius: 48px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-user:hover {
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-menu {
+  padding: 8px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-menu:hover {
+  cursor: pointer;
+}
+.adminInfoContainer {
+  width: 180px;
+}
+.adminInfoContainer .ant-flex {
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 6px;
+}
+.adminInfoContainer .anticon,
+.adminInfoContainer .username {
+  font-size: 18px;
 }
 /* END ADMIN HEADER STYLINGS */

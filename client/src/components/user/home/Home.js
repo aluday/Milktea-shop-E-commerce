@@ -13,8 +13,8 @@ import {
   handleError,
 } from "../../../services/endpoint-services";
 // using mockData when do not running server
-import mockData from '../../../mockData.json';
-import { UserContext } from '../../../providers/UserProvider';
+import mockData from "../../../mockData.json";
+import { UserContext } from "../../../providers/UserProvider";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -52,30 +52,28 @@ export const HomePage = () => {
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
           <WrapperProducts>
-            {products && products.length > 0 ? (
-              products?.map((product) => {
-                return (
-                  <CardProduct
-                    image={product.image_path}
-                    name={product.productName}
-                    price={product.basicPrice}
-                    rating={product.rating}
-                    id={product._id}
-                  />
-                );
-              })
-            ) : (
-              mockData.products.map((product) => {
-                return (
-                  <CardProduct
-                    image={product.image_path}
-                    name={product.productName}
-                    price={product.basicPrice}
-                    id={product.id}
-                  />
-                );
-              })
-            )}
+            {products && products.length > 0
+              ? products?.map((product) => {
+                  return (
+                    <CardProduct
+                      image={product.image_path}
+                      name={product.productName}
+                      price={product.basicPrice}
+                      rating={product.rating}
+                      id={product._id}
+                    />
+                  );
+                })
+              : mockData.products.map((product) => {
+                  return (
+                    <CardProduct
+                      image={product.image_path}
+                      name={product.productName}
+                      price={product.basicPrice}
+                      id={product.id}
+                    />
+                  );
+                })}
           </WrapperProducts>
 
           {/* <div className="buttonLoadMore">

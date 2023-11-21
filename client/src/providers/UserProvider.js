@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import * as messages from "../services/messages";
 import {
   signin,
@@ -38,15 +38,17 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ 
-      username, 
-      setUsername, 
-      password, 
-      setPassword, 
-      handleSignin, 
-      currentUser 
-    }}>
-      { children }
+    <UserContext.Provider
+      value={{
+        username,
+        setUsername,
+        password,
+        setPassword,
+        handleSignin,
+        currentUser,
+      }}
+    >
+      {children}
     </UserContext.Provider>
   );
 };

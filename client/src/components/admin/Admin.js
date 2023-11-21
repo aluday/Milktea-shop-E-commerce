@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Flex } from "antd";
 import {
   UserOutlined,
   AppstoreOutlined,
@@ -13,12 +13,13 @@ import { Orders } from "./orders/Orders";
 import "./Admin.css";
 
 export const AdminPage = () => {
+  const [keySelected, setKeySelected] = useState("");
+
   const items = [
     getItem("Người dùng", "users", <UserOutlined />),
     getItem("Sản phẩm", "products", <AppstoreOutlined />),
     getItem("Đơn hàng", "orders", <ShoppingCartOutlined />),
   ];
-  const [keySelected, setKeySelected] = useState("");
 
   const renderPage = (key) => {
     switch (key) {

@@ -6,12 +6,13 @@ import InputForm from "../../shared-components/InputForm";
 import ButtonComponent from "../../shared-components/Button";
 import logo from "../../../assets/logo.png";
 import "./Account.css";
-import { UserContext } from '../../../providers/UserProvider';
+import { UserContext } from "../../../providers/UserProvider";
 
 export const SigninPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { username, setUsername, password, setPassword, handleSignin } = useContext(UserContext);
+  const { username, setUsername, password, setPassword, handleSignin } =
+    useContext(UserContext);
 
   return (
     <div className="accountContainer">

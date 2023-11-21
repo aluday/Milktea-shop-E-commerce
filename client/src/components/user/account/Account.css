@@ -52,12 +52,12 @@
 .accountContainer .signupForm .signupBtn {
   border-radius: 4px;
   border: none;
-  background: #EED5B7;
+  background: #eed5b7;
   height: 40px;
   width: 100%;
   margin: 24px 0px 10px;
   font-weight: bold;
   border-color: red;
-  color: #FF0000;
+  color: #ff0000;
 }
 /* ENDING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
