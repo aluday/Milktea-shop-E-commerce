@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Col, Row, Input, Space, Flex, Popover, Badge, Divider } from "antd";
-import { WrapperContentPopup } from "./Wrapper";
+import { Col, Row, Input, Space, Flex, Popover, Badge, Divider, Menu } from "antd";
+import { WrapperContentPopup, WrapperAccountBtnGroup } from "./Wrapper";
 import logo from "../../assets/cute-bubble-tea-logo-removebg.png";
 import logo1 from "../../assets/logo_1-removebg.png";
 import logoText from "../../assets/logo_text-removebg.png";
@@ -9,11 +9,13 @@ import {
   ShoppingCartOutlined,
   SearchOutlined,
   MenuOutlined,
+  LoginOutlined,
+  UserAddOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
 
-export const Header = ({ isAdminPage, currentUser }) => {
+export const Header = ({ isAdminPage, currentUser, homeCatalog, handleOnClickCatalog }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
@@ -32,10 +34,6 @@ export const Header = ({ isAdminPage, currentUser }) => {
           <Divider />
         </>
       )}
-      <WrapperContentPopup onClick={() => handleClickNavigate(`my-order`)}>
-        Đơn hàng của tôi
-      </WrapperContentPopup>
-      <Divider />
       <WrapperContentPopup onClick={() => handleClickNavigate()}>
         Đăng xuất
       </WrapperContentPopup>
@@ -117,16 +115,11 @@ export const Header = ({ isAdminPage, currentUser }) => {
       ) : (
         <div className="headerWrapper">
           <Row
-            gutter={{ sm: 8, md: 16, lg: 24 }}
+            gutter={{ sm: 16, md: 24, lg: 32 }}
             align="center"
-            justify="center"
+            justify="space-between"
           >
-            <Col
-              className="gutter-row"
-              sm={{ span: 2 }}
-              md={{ span: 2 }}
-              lg={{ span: 4 }}
-            >
+            <Col className="gutter-row">
               <Flex className="logoContainer" align="center" justify="center">
                 <img
                   className="logo"
@@ -138,51 +131,33 @@ export const Header = ({ isAdminPage, currentUser }) => {
                 />
               </Flex>
             </Col>
-            <Col
-              className="gutter-row"
-              sm={{ span: 4 }}
-              md={{ span: 8 }}
-              lg={{ span: 12 }}
-            >
-              <Flex align="center">
-                <div className="catalogContainer">
-                  <Space className="catalogText">
-                    <p>Trang chủ</p>
-                  </Space>
-                  <Space className="catalogText">
-                    <p>Menu</p>
-                  </Space>
-                  <Space className="catalogText">
-                    <p>Liên hệ</p>
-                  </Space>
-                </div>
+            <Col className="gutter-row">
+              <Flex align="center" justify="center">
+                <Menu onClick={handleOnClickCatalog} mode="horizontal" items={homeCatalog} />
               </Flex>
             </Col>
-            <Col
-              className="gutter-row"
-              sm={{ span: 2 }}
-              md={{ span: 6 }}
-              lg={{ span: 8 }}
-            >
+            <Col className="gutter-row">
               <Flex align="center" justify="center">
-                <div className="searchContainer">
-                  <Input
-                    placeholder="Tìm kiếm..."
-                    suffix={<SearchOutlined />}
-                  />
-                </div>
-                {currentUser ? (
-                  <>
+                <Input
+                  placeholder="Tìm kiếm..."
+                  suffix={<SearchOutlined />}
+                />
+              </Flex>
+            </Col>
+            <Col className="gutter-row">
+              <Flex align="center" justify="center">
+                {true ? (
+                  <WrapperAccountBtnGroup>
                     <Space className="userContainer">
-                      <UserOutlined />
                       <Popover
                         content={content}
                         trigger="click"
                         open={isOpenPopup}
                       >
-                        <div onClick={() => setIsOpenPopup((prev) => !prev)}>
+                        <Flex align="center" justify="center" gap={8}>
+                          <UserOutlined onClick={() => setIsOpenPopup((prev) => !prev)} />
                           <span className="accountText">Van Luu</span>
-                        </div>
+                        </Flex>
                       </Popover>
                     </Space>
                     <Space className="shoppingCartContainer">
@@ -191,16 +166,18 @@ export const Header = ({ isAdminPage, currentUser }) => {
                       </Badge>
                       <span className="accountText"> Giỏ hàng </span>
                     </Space>
-                  </>
+                  </WrapperAccountBtnGroup>
                 ) : (
-                  <>
-                    <Space className="accountText">
-                      <p>Đăng nhập</p>
+                  <WrapperAccountBtnGroup>
+                    <Space>
+                      <LoginOutlined />
+                      <p className="accountText">Đăng nhập</p>
                     </Space>
-                    <Space className="accountText">
-                      <p>Đăng ký</p>
+                    <Space>
+                      <UserAddOutlined />
+                      <p className="accountText">Đăng ký</p>
                     </Space>
-                  </>
+                  </WrapperAccountBtnGroup>
                 )}
               </Flex>
             </Col>

@@ -16,10 +16,34 @@ import {
 import mockData from "../../../mockData.json";
 import { UserContext } from "../../../providers/UserProvider";
 
+const menuItems = PRODUCT_TYPES.map((item) => ({ label: item.value, key: item.type }));
+
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
   // const [limit, setLimit] = useState(4);
   const { currentUser } = useContext(UserContext);
+
+  const renderHomeCatalog = () => {
+    return [
+      {
+        label: 'Trang chủ',
+        key: 'home',
+      },
+      {
+        label: 'Menu',
+        key: 'menu',
+        children: menuItems
+      },
+      {
+        label: 'Liên hệ',
+        key: 'contact',
+      },
+    ];
+  }
+
+  const handleOnClickCatalog = () => {
+
+  }
 
   useEffect(() => {
     getAllProducts()
@@ -36,18 +60,7 @@ export const HomePage = () => {
 
   return (
     <>
-      {/* <div className="productType">
-        <WrapperType
-          style={{
-            alignItems: "center",
-          }}
-        >
-          {PRODUCT_TYPES.map((item) => {
-            return <TypeProduct name={item.value} key={item.type} />;
-          })}
-        </WrapperType>
-      </div> */}
-      <Header currentUser={currentUser} />
+      <Header currentUser={currentUser}  homeCatalog={renderHomeCatalog()} handleOnClickCatalog={handleOnClickCatalog} />
       <div className="body">
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
