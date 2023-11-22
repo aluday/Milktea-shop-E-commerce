@@ -13,12 +13,18 @@ export const WrapperAccount = styled.div`
 `
 
 export const WrapperContentPopup = styled.p`
-  padding: 8px;
   cursor: pointer;
+  padding: 8px;
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 6px;
-    background-color: rgba(250, 248, 241, 0.5);
+    background-color: #f5f5f5;
+  }
+  .ant-flex {
+    height: 24px;
+  }
+  .ant-flex .anticon {
+    font-size: 16px;
   }
 `
 export const WrapperAccountBtnGroup = styled('ant-space')`
