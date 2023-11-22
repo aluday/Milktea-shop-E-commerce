@@ -1,5 +1,4 @@
 import "./App.css";
-import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { appRoutes } from "./app-routes";
 import { UserProvider } from "./providers/UserProvider";

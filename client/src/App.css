@@ -1,0 +1,51 @@
+.ant-btn-default, .ant-btn-dashed {
+  background-color: #fafafa;
+  border-color: #d9d9d9;
+}
+.ant-btn-default:hover,
+.ant-btn-dashed:hover {
+  border-color: #19647E !important;
+  color: #19647E !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
+.ant-btn-primary {
+  background-color: #19647E;
+}
+.ant-btn-primary:hover {
+  background-color: rgba(25, 100, 126, 0.8) !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+.ant-btn-text {
+  background-color: #8BA6A9;
+}
+.ant-btn-text:hover {
+  background-color: #8BA6A9 !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+.ant-btn-link {
+  background-color: #39A9DB;
+}
+.ant-btn-link:hover {
+  background-color: #39A9DB !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+.ant-btn:focus-visible,
+.ant-btn-primary:focus-visible,
+.ant-btn-text:focus-visible,
+.ant-btn-link:focus-visible,
+.ant-btn-dashed:focus-visible,
+.ant-btn-default:focus-visible {
+  outline: unset !important;
+}
+.bg-success {
+  background-color: #00916E;
+  color: #ffffff;
+}
+.bg-warning {
+  background-color: #FFCF00;
+  color: #000000;
+}
+.bg-danger {
+  background-color: #FA003F;
+  color: #ffffff;
+}
