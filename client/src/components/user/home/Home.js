@@ -2,12 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import slider1 from "../../../assets/slides/slider_2.webp";
 import slider2 from "../../../assets/slides/slider_3.webp";
 import SliderComponent from "../../shared-components/Slider";
-import { WrapperButtonMore, WrapperProducts, WrapperType } from "./HomeWrapper";
-import TypeProduct from "../../shared-components/TypeProduct";
+import { WrapperProducts } from "./HomeWrapper";
 import CardProduct from "./Card";
 import "./Home.css";
 import Header from "../../shared-components/Header";
-import { PRODUCT_TYPES } from "../../../services/constants";
 import {
   getAllProducts,
   handleError,
@@ -16,34 +14,10 @@ import {
 import mockData from "../../../mockData.json";
 import { UserContext } from "../../../providers/UserProvider";
 
-const menuItems = PRODUCT_TYPES.map((item) => ({ label: item.value, key: item.type }));
-
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
   // const [limit, setLimit] = useState(4);
-  const { currentUser } = useContext(UserContext);
-
-  const renderHomeCatalog = () => {
-    return [
-      {
-        label: 'Trang chủ',
-        key: 'home',
-      },
-      {
-        label: 'Menu',
-        key: 'menu',
-        children: menuItems
-      },
-      {
-        label: 'Liên hệ',
-        key: 'contact',
-      },
-    ];
-  }
-
-  const handleOnClickCatalog = () => {
-
-  }
+  const { currentUser, handleOnClickCatalog } = useContext(UserContext);
 
   useEffect(() => {
     getAllProducts()
@@ -60,7 +34,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <Header currentUser={currentUser}  homeCatalog={renderHomeCatalog()} handleOnClickCatalog={handleOnClickCatalog} />
+      <Header currentUser={currentUser}  handleOnClickCatalog={handleOnClickCatalog} />
       <div className="body">
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">

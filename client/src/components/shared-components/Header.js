@@ -16,8 +16,11 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
+import { PRODUCT_TYPES } from "../../services/constants";
 
-export const Header = ({ isAdminPage, currentUser, homeCatalog, handleOnClickCatalog }) => {
+const menuItems = PRODUCT_TYPES.map((item) => ({ label: item.value, key: item.type }));
+
+export const Header = ({ isAdminPage, currentUser, handleOnClickCatalog }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
@@ -45,6 +48,24 @@ export const Header = ({ isAdminPage, currentUser, homeCatalog, handleOnClickCat
       </WrapperContentPopup>
     </div>
   );
+
+  const renderHomeCatalog = () => {
+    return [
+      {
+        label: 'Trang chủ',
+        key: 'home',
+      },
+      {
+        label: 'Menu',
+        key: 'menu',
+        children: menuItems
+      },
+      {
+        label: 'Liên hệ',
+        key: 'contact',
+      },
+    ];
+  }
 
   const renderAdminInfo = () => {
     return (
@@ -139,7 +160,7 @@ export const Header = ({ isAdminPage, currentUser, homeCatalog, handleOnClickCat
             </Col>
             <Col className="gutter-row">
               <Flex align="center" justify="center">
-                <Menu onClick={handleOnClickCatalog} mode="horizontal" items={homeCatalog} />
+                <Menu onClick={handleOnClickCatalog} mode="horizontal" items={renderHomeCatalog()} />
               </Flex>
             </Col>
             <Col className="gutter-row">

@@ -1,10 +1,18 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../../providers/UserProvider";
+import Header from '../../shared-components/Header';
 
 export const Profile = () => {
-  // const { currentUser } = useContext(UserContext);
+  const { currentUser, handleOnClickCatalog } = useContext(UserContext);
 
-  return <div> User profile </div>;
+  return (
+    <div>
+      <Header currentUser={currentUser} handleOnClickCatalog={handleOnClickCatalog} />
+      <div className="userProfileContainer">
+        <div className="userInfo"></div>
+      </div>
+    </div>
+  );
 };
 
 export default Profile;
