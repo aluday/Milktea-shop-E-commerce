@@ -32,3 +32,10 @@ export const WrapperProducts = styled.div`
   flex-wrap: wrap;
   align-items: center;
 `;
+
+export const WrapperModal = styled('ant-modal')`
+  .ant-modal-content .ant-modal-body img {
+    height: 200px;
+    width: 200px;
+  }
+`;

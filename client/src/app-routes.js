@@ -3,6 +3,7 @@ import { AdminPage } from "./components/admin/Admin";
 import { SigninPage } from "./components/user/account/Signin";
 import { SignupPage } from "./components/user/account/Signup";
 import { Profile } from "./components/user/account/Profile";
+import { PaymentDetails } from "./components/user/payment/PaymentDetails";
 
 export const appRoutes = [
   {
@@ -20,6 +21,10 @@ export const appRoutes = [
   {
     path: "/profile",
     page: Profile,
+  },
+  {
+    path: "/payment",
+    page: PaymentDetails,
   },
   {
     path: "/system/admin",

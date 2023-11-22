@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Col, Row, Input, Space, Flex, Popover, Badge, Divider, Menu } from "antd";
+import {
+  Col,
+  Row,
+  Input,
+  Space,
+  Flex,
+  Popover,
+  Badge,
+  Divider,
+  Menu,
+} from "antd";
 import { WrapperContentPopup, WrapperAccountBtnGroup } from "./Wrapper";
 import logo from "../../assets/cute-bubble-tea-logo-removebg.png";
 import logo1 from "../../assets/logo_1-removebg.png";
@@ -12,18 +22,29 @@ import {
   LoginOutlined,
   UserAddOutlined,
   InfoCircleOutlined,
-  LogoutOutlined
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
 import { PRODUCT_TYPES } from "../../services/constants";
 
-const menuItems = PRODUCT_TYPES.map((item) => ({ label: item.value, key: item.type }));
+const menuItems = PRODUCT_TYPES.map((item) => ({
+  label: item.value,
+  key: item.type,
+}));
 
-export const Header = ({ isAdminPage, currentUser, handleOnClickCatalog }) => {
+export const Header = ({ isAdminPage, currentUser }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
+
+  const handleOnClickCatalog = (e) => {
+    switch (e.key) {
+      case "home":
+        navigate("/");
+        break;
+    }
+  };
 
   const content = (
     <div>
@@ -52,20 +73,20 @@ export const Header = ({ isAdminPage, currentUser, handleOnClickCatalog }) => {
   const renderHomeCatalog = () => {
     return [
       {
-        label: 'Trang chủ',
-        key: 'home',
+        label: "Trang chủ",
+        key: "home",
       },
       {
-        label: 'Menu',
-        key: 'menu',
-        children: menuItems
+        label: "Menu",
+        key: "menu",
+        children: menuItems,
       },
       {
-        label: 'Liên hệ',
-        key: 'contact',
+        label: "Liên hệ",
+        key: "contact",
       },
     ];
-  }
+  };
 
   const renderAdminInfo = () => {
     return (
@@ -160,15 +181,16 @@ export const Header = ({ isAdminPage, currentUser, handleOnClickCatalog }) => {
             </Col>
             <Col className="gutter-row">
               <Flex align="center" justify="center">
-                <Menu onClick={handleOnClickCatalog} mode="horizontal" items={renderHomeCatalog()} />
+                <Menu
+                  onClick={handleOnClickCatalog}
+                  mode="horizontal"
+                  items={renderHomeCatalog()}
+                />
               </Flex>
             </Col>
             <Col className="gutter-row">
               <Flex align="center" justify="center">
-                <Input
-                  placeholder="Tìm kiếm..."
-                  suffix={<SearchOutlined />}
-                />
+                <Input placeholder="Tìm kiếm..." suffix={<SearchOutlined />} />
               </Flex>
             </Col>
             <Col className="gutter-row">
@@ -182,16 +204,24 @@ export const Header = ({ isAdminPage, currentUser, handleOnClickCatalog }) => {
                         open={isOpenPopup}
                       >
                         <Flex align="center" justify="center" gap={8}>
-                          <UserOutlined onClick={() => setIsOpenPopup((prev) => !prev)} />
+                          <UserOutlined
+                            onClick={() => setIsOpenPopup((prev) => !prev)}
+                          />
                           <span className="accountText">Van Luu</span>
                         </Flex>
                       </Popover>
                     </Space>
                     <Space className="shoppingCartContainer">
-                      <Badge count="4" size="small">
+                      <Badge
+                        count="4"
+                        size="small"
+                        onClick={() => {
+                          navigate("/payment");
+                        }}
+                      >
                         <ShoppingCartOutlined />
                       </Badge>
-                      <span className="accountText"> Giỏ hàng </span>
+                      <span className="accountText">Giỏ hàng</span>
                     </Space>
                   </WrapperAccountBtnGroup>
                 ) : (

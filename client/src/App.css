@@ -1,32 +1,33 @@
-.ant-btn-default, .ant-btn-dashed {
+.ant-btn-default,
+.ant-btn-dashed {
   background-color: #fafafa;
   border-color: #d9d9d9;
 }
 .ant-btn-default:hover,
 .ant-btn-dashed:hover {
-  border-color: #19647E !important;
-  color: #19647E !important;
+  border-color: #19647e !important;
+  color: #19647e !important;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
 }
 .ant-btn-primary {
-  background-color: #19647E;
+  background-color: #19647e;
 }
 .ant-btn-primary:hover {
   background-color: rgba(25, 100, 126, 0.8) !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
 .ant-btn-text {
-  background-color: #8BA6A9;
+  background-color: #8ba6a9;
 }
 .ant-btn-text:hover {
-  background-color: #8BA6A9 !important;
+  background-color: #8ba6a9 !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
 .ant-btn-link {
-  background-color: #39A9DB;
+  background-color: #39a9db;
 }
 .ant-btn-link:hover {
-  background-color: #39A9DB !important;
+  background-color: #39a9db !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
 .ant-btn:focus-visible,
@@ -38,14 +39,14 @@
   outline: unset !important;
 }
 .bg-success {
-  background-color: #00916E;
+  background-color: #00916e;
   color: #ffffff;
 }
 .bg-warning {
-  background-color: #FFCF00;
+  background-color: #ffcf00;
   color: #000000;
 }
 .bg-danger {
-  background-color: #FA003F;
+  background-color: #fa003f;
   color: #ffffff;
 }

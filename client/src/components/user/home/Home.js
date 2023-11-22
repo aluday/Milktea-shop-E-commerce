@@ -13,11 +13,25 @@ import {
 // using mockData when do not running server
 import mockData from "../../../mockData.json";
 import { UserContext } from "../../../providers/UserProvider";
+import OrderModal from "./OrderModal";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
   // const [limit, setLimit] = useState(4);
-  const { currentUser, handleOnClickCatalog } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+
+  const handleConfirmOrderModal = () => {
+    setOpenOrderModal(false);
+  };
+
+  const handleCancelOrderModal = () => {
+    setOpenOrderModal(false);
+  };
+
+  const handleClickOrderBtn = () => {
+    setOpenOrderModal(true);
+  };
 
   useEffect(() => {
     getAllProducts()
@@ -34,7 +48,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <Header currentUser={currentUser}  handleOnClickCatalog={handleOnClickCatalog} />
+      <Header currentUser={currentUser} />
       <div className="body">
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
@@ -48,6 +62,7 @@ export const HomePage = () => {
                       price={product.basicPrice}
                       rating={product.rating}
                       id={product._id}
+                      handleClick={handleClickOrderBtn}
                     />
                   );
                 })
@@ -58,6 +73,7 @@ export const HomePage = () => {
                       name={product.productName}
                       price={product.basicPrice}
                       id={product.id}
+                      handleClick={handleClickOrderBtn}
                     />
                   );
                 })}
@@ -99,6 +115,13 @@ export const HomePage = () => {
           </div> */}
         </div>
       </div>
+      {openOrderModal && (
+        <OrderModal
+          open={openOrderModal}
+          handleConfirm={handleConfirmOrderModal}
+          handleCancel={handleCancelOrderModal}
+        />
+      )}
     </>
   );
 };

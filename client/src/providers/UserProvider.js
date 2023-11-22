@@ -37,10 +37,6 @@ export const UserProvider = ({ children }) => {
       });
   };
 
-  const handleOnClickCatalog = () => {
-
-  }
-
   return (
     <UserContext.Provider
       value={{
@@ -49,8 +45,7 @@ export const UserProvider = ({ children }) => {
         password,
         setPassword,
         handleSignin,
-        currentUser,
-        handleOnClickCatalog,
+        currentUser
       }}
     >
       {children}
