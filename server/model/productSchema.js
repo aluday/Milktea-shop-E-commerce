@@ -15,6 +15,10 @@ const ProductSchema = new Schema({
     type: Number,
     require: true,
   },
+  discount: {
+    type: Number,
+    require: true
+  },
   countInStock: {
     type: Number,
     require: true,

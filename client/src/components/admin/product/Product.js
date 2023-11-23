@@ -91,6 +91,11 @@ export const Product = () => {
             "countInStock",
             productData.countInStock
           );
+          setDiscount(productData.discount);
+          productDetailsForm.setFieldValue(
+            "discount",
+            productData.discount
+          );
           setCountInStock(productData.countInStock);
           productDetailsForm.setFieldValue("type", productData.type);
           setType(productData.type);

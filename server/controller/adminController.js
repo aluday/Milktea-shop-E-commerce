@@ -6,42 +6,41 @@ const {
 } = require("../middlerware/Mongoose");
 const baseUrl = "http://localhost:3001";
 
-const typeProduct = require("../model/typeProductSchema");
 const Product = require("../model/productSchema");
 
 class adminController {
-  async storeType(req, res) {
-    try {
-      const { type_name } = req.body;
-      const checkType = await typeProduct.findOne({ type_name: type_name });
-      if (checkType) {
-        return res.status(200).send({
-          status: "false",
-          message: "Type is existed",
-        });
-      }
-      const newType = new typeProduct({ type_name });
-      await newType.save();
-      return res.status(200).send({
-        status: "true",
-        message: "Create new type statusfully",
-        newType,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while add type product",
-        error,
-      });
-    }
-  }
+  // async storeType(req, res) {
+  //   try {
+  //     const { type_name } = req.body;
+  //     const checkType = await typeProduct.findOne({ type_name: type_name });
+  //     if (checkType) {
+  //       return res.status(200).send({
+  //         status: "false",
+  //         message: "Type is existed",
+  //       });
+  //     }
+  //     const newType = new typeProduct({ type_name });
+  //     await newType.save();
+  //     return res.status(200).send({
+  //       status: "true",
+  //       message: "Create new type statusfully",
+  //       newType,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).send({
+  //       status: "false",
+  //       message: "Error while add type product",
+  //       error,
+  //     });
+  //   }
+  // }
 
   async addProduct(req, res) {
     try {
       const pathToFile =
         req.file && req.file.filename ? `/uploads/${req.file.filename}` : "";
-      const { productName, size, type, basicPrice, countInStock } = req.body;
+      const { productName, discount, size, type, basicPrice, countInStock } = req.body;
 
       const checkProduct = await Product.findOne({
         productName: productName,
@@ -58,6 +57,7 @@ class adminController {
         image: pathToFile,
         basicPrice,
         countInStock,
+        discount,
         size: JSON.parse(size),
         type,
       });

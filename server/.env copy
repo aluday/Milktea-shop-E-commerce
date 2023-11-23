@@ -1,4 +1,0 @@
-PORT=3001
-ACCESS_TOKEN=access_token
-REFRESH_TOKEN=refresh_token
-JWT_EXP='10m'

@@ -3,12 +3,18 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    orderItem: [
+    orderItems: [
       {
-        name: { type: String, required: true },
-        amount: { type: Number, required: true },
+        productName: { type: String, required: true },
         image: { type: String, required: true },
-        price: { type: Number, required: true },
+        amount: {type: Number, required: true},
+        size: [
+          {
+            sizeValue: {type: String},
+            price: {type: Number,require: true},
+          },
+        ],
+        discount: { type: Number },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
@@ -17,12 +23,12 @@ const orderSchema = new Schema(
       },
     ],
     shippingAddress: {
-      fullname: { type: String, required: true },
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      phone: { type: String, required: true },
+      fullname: { type: String },
+      address: { type: String},
+      city: { type: String },
+      phone: { type: String },
     },
-    itemPrice: { type: String, required: true },
+    itemsPrice: { type: Number, required: true },
     shippingPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     user: {
