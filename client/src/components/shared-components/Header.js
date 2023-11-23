@@ -39,7 +39,8 @@ export const Header = ({ isAdminPage }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
-  const { currentUser } = useContext(UserContext);
+  // const { currentUser } = useContext(UserContext);
+  const currentUser = JSON.parse(localStorage.getItem('current_user'));
   const { countNoOrders } = useContext(OrderContext);
 
   const handleOnClickCatalog = (e) => {
@@ -199,7 +200,7 @@ export const Header = ({ isAdminPage }) => {
             </Col>
             <Col className="gutter-row">
               <Flex align="center" justify="center">
-                {true ? (
+                {currentUser ? (
                   <WrapperAccountBtnGroup>
                     <Space className="userContainer">
                       <Popover
@@ -211,7 +212,7 @@ export const Header = ({ isAdminPage }) => {
                           <UserOutlined
                             onClick={() => setIsOpenPopup((prev) => !prev)}
                           />
-                          <span className="accountText">Van Luu</span>
+                          <span className="accountText">{currentUser.name}</span>
                         </Flex>
                       </Popover>
                     </Space>
@@ -231,11 +232,19 @@ export const Header = ({ isAdminPage }) => {
                 ) : (
                   <WrapperAccountBtnGroup>
                     <Space>
-                      <LoginOutlined />
+                      <LoginOutlined 
+                        onClick={() => {
+                          navigate("/sign-in");
+                        }} 
+                      />
                       <p className="accountText">Đăng nhập</p>
                     </Space>
                     <Space>
-                      <UserAddOutlined />
+                      <UserAddOutlined 
+                        onClick={() => {
+                          navigate("/sign-up");
+                        }} 
+                      />
                       <p className="accountText">Đăng ký</p>
                     </Space>
                   </WrapperAccountBtnGroup>

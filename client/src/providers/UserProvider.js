@@ -23,6 +23,7 @@ export const UserProvider = ({ children }) => {
             .then((res) => {
               if (res && res.data && res.data.currentUser) {
                 setCurrentUser(res.data.currentUser);
+                localStorage.setItem('current_user', JSON.stringify(res.data.currentUser));
               }
             })
             .catch((err) => {
