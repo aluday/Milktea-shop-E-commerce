@@ -24,6 +24,8 @@
   font-weight: bold;
 }
 /* ENDING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
+
+/* STARTING USER PROFILE STYLINGS */
 .userProfileContainer .userInfoWrapper {
   width: 80%;
   height: fit-content;
@@ -32,5 +34,4 @@
 .basicInfoCardContainer p {
   font-size: 16px;
 }
-/* STARTING USER PROFILE STYLINGS */
 /* ENDING USER PROFILE STYLINGS */
