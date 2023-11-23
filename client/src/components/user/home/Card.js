@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../shared-components/Button";
 import {
   StyleNameProduct,
@@ -8,9 +7,7 @@ import {
 } from "./CardWrapper";
 import image from "../../../assets/test.png";
 
-export const CardProduct = ({ key, name, price, id }) => {
-  const navigate = useNavigate();
-
+export const CardProduct = ({ product, handleClick }) => {
   return (
     <WrapperCardStyle
       hoverable
@@ -18,21 +15,14 @@ export const CardProduct = ({ key, name, price, id }) => {
       style={{ width: 300, padding: "10px" }}
       bodyStyle={{ padding: "10px" }}
       cover={<img alt="example" src={image} />}
-      onClick={() => {
-        navigate(`/product-details/${id}`);
-      }}
     >
       <div className="card">
-        <StyleNameProduct> {name} </StyleNameProduct>
+        <StyleNameProduct> {product.productName} </StyleNameProduct>
         <WrapperPriceText style={{ padding: "5px" }}>
-          <span style={{ marginRight: "8px" }}>
-            {price.toLocaleString()} đ{/* {convertPrice(price)} */}
-          </span>
+          <span style={{ marginRight: "8px" }}>{ product.basicPrice.toLocaleString() } đ</span>
         </WrapperPriceText>
-        <ButtonComponent
-          textButton={"Đặt hàng"}
-          // style={{ color: '#fff', fontSize: '15px', fontWeight: '700' }}
-        ></ButtonComponent>
+        <ButtonComponent textButton="Thêm vào giỏ hàng" onClick={handleClick}>
+        </ButtonComponent>
       </div>
     </WrapperCardStyle>
   );

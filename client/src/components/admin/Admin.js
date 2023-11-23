@@ -1,24 +1,28 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Flex } from "antd";
 import {
-  UserOutlined,
-  AppstoreOutlined,
-  ShoppingCartOutlined,
+  IdcardOutlined,
+  RestOutlined,
+  ShoppingOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
 import { getItem } from "../../services/common";
 import Header from "../shared-components/Header";
 import { UserManagement } from "./user-management/UserManagement";
 import { Product } from "./product/Product";
 import { Orders } from "./orders/Orders";
+import { Dashboard } from './dashboard/Dashboard';
 import "./Admin.css";
 
 export const AdminPage = () => {
-  const items = [
-    getItem("Người dùng", "users", <UserOutlined />),
-    getItem("Sản phẩm", "products", <AppstoreOutlined />),
-    getItem("Đơn hàng", "orders", <ShoppingCartOutlined />),
-  ];
   const [keySelected, setKeySelected] = useState("");
+
+  const items = [
+    getItem("Dashboard", "dashboard", <DashboardOutlined />),
+    getItem("Sản phẩm", "products", <RestOutlined />),
+    getItem("Đơn hàng", "orders", <ShoppingOutlined />),
+    getItem("Người dùng", "users", <IdcardOutlined />),
+  ];
 
   const renderPage = (key) => {
     switch (key) {
@@ -29,7 +33,7 @@ export const AdminPage = () => {
       case "orders":
         return <Orders />;
       default:
-        return <></>;
+        return <Dashboard></Dashboard>;
     }
   };
 
@@ -39,7 +43,7 @@ export const AdminPage = () => {
 
   return (
     <>
-      <Header isHiddenSearch isHiddenCart />
+      <Header isAdminPage />
       <div className="adminMenuContainer">
         <Menu
           className="adminMenu"

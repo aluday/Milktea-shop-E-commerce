@@ -3,12 +3,37 @@
   display: flex;
 }
 .adminMenuContainer .adminMenu {
-  width: 265px;
-  box-shadow: 1px 1px 3px #ccc;
-  height: 100vh;
+  width: 260px;
+  height: calc(100vh - 52px);
+  background-color: #e5ba73;
 }
 .adminMenuContainer .adminMenuContent {
   flex: 1;
   padding: 15px;
+  background-color: #faf8f1;
+}
+.adminMenuContainer .ant-menu {
+  padding-top: 16px;
+}
+.adminMenuContainer .ant-menu .ant-menu-item {
+  font-size: 18px;
+  gap: 6px;
+  font-weight: bold;
+  color: #65451f;
+}
+.adminMenuContainer .ant-menu .ant-menu-item .anticon {
+  font-size: 22px;
+}
+.adminMenuContainer .ant-menu > .ant-menu-item:hover,
+.adminMenuContainer .ant-menu > .ant-menu-submenu:hover,
+.adminMenuContainer .ant-menu > .ant-menu-item-active,
+.adminMenuContainer .ant-menu > .ant-menu-submenu-active,
+.adminMenuContainer .ant-menu > .ant-menu-item-open,
+.adminMenuContainer .ant-menu > .ant-menu-submenu-open,
+.adminMenuContainer .ant-menu > .ant-menu-item-selected,
+.adminMenuContainer .ant-menu > .ant-menu-submenu-selected {
+  background-color: #faf8f1;
+  color: black;
+  font-weight: bold;
 }
 /* ENDING ADMIN MENU STYLINGS */

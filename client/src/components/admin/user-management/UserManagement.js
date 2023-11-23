@@ -147,7 +147,7 @@ export const UserManagement = () => {
 
   return (
     <div>
-      <WrapperHeader>Quản lí người dùng</WrapperHeader>
+      <h1>Quản lí người dùng</h1>
       <div style={{ marginTop: "20px" }}>
         <TableComponent
           columns={columns}

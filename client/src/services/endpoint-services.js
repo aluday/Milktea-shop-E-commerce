@@ -25,7 +25,7 @@ export const getCurrentUser = async (accessToken) => {
     },
   });
   return res;
-}
+};
 export const getUserDetail = async (id) => {
   const accessToken = localStorage.getItem("access_token");
   const endpoint = getBaseURL() + `/detail-user/${id}`;

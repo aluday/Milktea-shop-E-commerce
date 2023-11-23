@@ -4,8 +4,8 @@ import styled from "styled-components";
 export const WrapperCardStyle = styled(Card)`
     width: 400px;
     &img {
-        height: 200px;
-        width: 200px;
+      height: 200px;
+      width: 200px;
     },
     justify-content: flex-start;
     position: relative;

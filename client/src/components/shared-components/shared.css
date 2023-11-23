@@ -1,8 +1,128 @@
 /* START HEADER STYLINGS */
 .headerWrapper {
-  height: 100%;
   width: 100%;
-  justify-content: center;
+  height: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
-
+.headerWrapper .ant-row .ant-col {
+  margin: 8px 32px;
+}
+.headerWrapper .ant-row .ant-col .ant-flex {
+  height: 100%;
+}
+.headerWrapper .ant-row .ant-col .ant-input-affix-wrapper {
+  height: 50%;
+  border-radius: 48px;
+}
+.headerWrapper .ant-row .ant-col .ant-menu {
+  width: 360px;
+  min-width: 360px;
+  font-size: 16px;
+  font-weight: bold;
+  justify-content: center;
+  border-bottom-color: #faf8f1;
+  border-bottom-width: 2px;
+}
+.headerWrapper .ant-row .ant-col .ant-menu .ant-menu-item,
+.headerWrapper .ant-row .ant-col .ant-menu .ant-menu-submenu {
+  color: #c58940;
+}
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item:hover,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu:hover,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-active,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-active,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-open,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-open,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-selected,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-selected {
+  color: #753422;
+  background-color: #faf8f1;
+}
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item:hover::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu:hover::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-active::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-active::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-open::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-open::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-item-selected::after,
+.headerWrapper .ant-row .ant-col .ant-menu > .ant-menu-submenu-selected::after {
+  border-bottom-color: #753422;
+}
+.headerWrapper .logoContainer .logo {
+  min-width: 52px;
+  width: 52px;
+}
 /* END HEADER STYLINGS */
+
+/* START ADMIN HEADER STYLINGS */
+.adminHeaderWrapper {
+  height: 52px;
+  background-color: #faeab1;
+}
+.adminHeaderWrapper .logoContainer {
+  width: 260px;
+  height: 100%;
+  background-color: rgba(197, 137, 64, 0.2);
+  gap: 12px;
+  float: left;
+}
+.adminHeaderWrapper .logoContainerCollapsed {
+  width: 48px;
+  height: 100%;
+  background-color: rgba(197, 137, 64, 0.2);
+  float: left;
+}
+.adminHeaderWrapper .logoContainerCollapsed img {
+  display: none;
+}
+.adminHeaderWrapper .logoContainer .logo {
+  width: 36px;
+  min-width: 36px;
+}
+.adminHeaderWrapper .logoContainer .logoText {
+  width: 130px;
+}
+.headerWrapper .logoContainer .logo:hover,
+.adminHeaderWrapper .logoContainer:hover {
+  cursor: pointer;
+}
+.adminHeaderWrapper .btnGroup,
+.adminHeaderWrapper .btnGroup .ant-flex {
+  height: 100%;
+}
+.adminHeaderWrapper .btnGroup .ant-flex {
+  padding-left: 16px;
+  padding-right: 28px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon {
+  font-size: 18px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-user {
+  background-color: #faf8f1;
+  padding: 8px;
+  border-radius: 48px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-user:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-menu {
+  padding: 8px;
+}
+.adminHeaderWrapper .btnGroup .ant-flex .anticon-menu:hover {
+  cursor: pointer;
+}
+.adminInfoContainer {
+  width: 180px;
+}
+.adminInfoContainer .ant-flex {
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 6px;
+}
+.adminInfoContainer .anticon,
+.adminInfoContainer .username {
+  font-size: 18px;
+}
+/* END ADMIN HEADER STYLINGS */

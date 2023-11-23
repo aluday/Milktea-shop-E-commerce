@@ -1,0 +1,53 @@
+.paymentHeading {
+  padding-left: 24px;
+}
+.paymentContainer .paymentStepperContainer {
+  width: 80%;
+  height: fit-content;
+}
+.paymentContainer .paymentStepperContainer .ant-list {
+  margin-top: 24px;
+  margin-left: 32px;
+}
+.paymentContainer .paymentStepperContainer .userInfoForm {
+  max-width: 70%;
+  margin-top: 24px;
+  margin-left: 32px;
+}
+.paymentContainer .paymentStepperContainer .ant-list .ant-list-item-meta .ant-avatar {
+  width: 100px;
+  height: 100px;
+}
+.paymentContainer .paymentStepperContainer .ant-list .anticon-delete {
+  color: red;
+  padding: 6px;
+}
+.paymentContainer .paymentStepperContainer .ant-list .ant-input-group-addon:hover,
+.paymentContainer .paymentStepperContainer .ant-list .anticon-delete:hover {
+  cursor: pointer;
+}
+.paymentContainer .paymentStepperContainer .ant-list .priceText {
+  font-weight: bold;
+}
+.paymentContainer .paymentStepperContainer .ant-list .anticon-delete:hover {
+  background-color: #fafafa;
+  border: 1px solid #f5f5f5;
+  border-radius: 6px;
+}
+.paymentContainer .paymentStepperContainer .ant-list .ant-input {
+  max-width: 32px;
+}
+.paymentContainer .paymentStepperContainer .paymentMethod {
+  height: 48px;
+  border: 1px solid #f5f5f5;
+  border-radius: 8px;
+}
+.paymentContainer .paymentStepperContainer .paymentMethod p {
+  padding-left: 6px;
+}
+.total {
+  margin-left: 32px;
+}
+.total .totalText {
+  color: red;
+}

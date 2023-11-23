@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WrapperHeader } from "./ProductWrapper";
 import { Button, Form, Space } from "antd";
 import {
   DeleteOutlined,
@@ -315,8 +314,7 @@ export const Product = () => {
 
   return (
     <div>
-      <WrapperHeader>Quản lý sản phẩm</WrapperHeader>
-
+      <h1>Quản lý sản phẩm</h1>
       {/* Starting Add Product Form modal */}
       <ProductForm
         title="Thêm sản phẩm"

@@ -17,7 +17,7 @@ export const EndpointConstants = {
   ADMIN: {
     CREATE_PRODUCT: "/admin/createProduct",
     UPDATE_PRODUCT: "/admin/updateProduct",
-    DELETE_PRODUCT: "/admin/deleteProduct"
+    DELETE_PRODUCT: "/admin/deleteProduct",
   },
 };
 /* ENDING ENDPOINT URL DEFINITIONS */
