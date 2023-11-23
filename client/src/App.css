@@ -50,3 +50,8 @@
   background-color: #fa003f;
   color: #ffffff;
 }
+.text-link {
+  color: #39a9db;
+  cursor: pointer;
+  font-weight: bold;
+}

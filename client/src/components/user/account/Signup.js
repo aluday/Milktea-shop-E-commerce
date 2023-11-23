@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { WrapperTextLight } from "./AccountWrapper";
-import ButtonComponent from "../../shared-components/Button";
-import InputForm from "../../shared-components/InputForm";
-import logo from "../../../assets/logo.png";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { Flex, Input, Button } from "antd";
 import * as messages from "../../../services/messages";
 import { signup, handleError } from "../../../services/endpoint-services";
 import "./Account.css";
 
 export const SignupPage = () => {
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -44,101 +39,81 @@ export const SignupPage = () => {
   };
 
   return (
-    <div className="accountContainer">
+    <Flex className="accountContainer" align="center" justify="center">
       <div className="signupForm">
-        <img alt="logo" width="130px" height="40px" src={logo} />
-        <p className="signupText">ĐĂNG KÝ</p>
-
-        <InputForm
-          className="nameField"
-          placeholder="Tên"
-          value={name}
-          onChange={(value) => {
-            setName(value);
-          }}
-        />
-        <InputForm
-          className="emailField"
-          placeholder="Email"
-          value={email}
-          onChange={(value) => {
-            setEmail(value);
-          }}
-        />
-        <InputForm
-          className="phoneNoField"
-          placeholder="Số điện thoại"
-          value={phone}
-          onChange={(value) => {
-            setPhone(value);
-          }}
-        />
-        <InputForm
-          className="usernameField"
-          placeholder="Tên đăng nhập"
-          value={username}
-          onChange={(value) => {
-            setUsername(value);
-          }}
-        />
-        <div className="passwordFieldWrapper">
-          <span onClick={() => setIsShowPassword(!isShowPassword)}>
-            {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-          </span>
-          <InputForm
+        <h2 className="signupText">ĐĂNG KÝ</h2>
+        <Flex vertical justify="center" gap={16}>
+          <Input
+            className="nameField"
+            placeholder="Tên"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <Input
+            className="emailField"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            className="phoneNoField"
+            placeholder="Số điện thoại"
+            value={phone}
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+          <Input
+            className="usernameField"
+            placeholder="Tên đăng nhập"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <Input.Password
             className="passwordField"
             placeholder="Mật khẩu"
             value={password}
-            type={isShowPassword ? "text" : "password"}
-            onChange={(value) => {
-              setPassword(value);
+            onChange={(e) => {
+              setPassword(e.target.value);
             }}
+            iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
           />
-        </div>
-        <div className="confirmPasswordFieldWrapper">
-          <span
-            onClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)}
-          >
-            {isShowConfirmPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-          </span>
-          <InputForm
+          <Input.Password
             className="confirmPasswordField"
             placeholder="Nhập lại mật khẩu"
             value={confirmPassword}
-            type={isShowConfirmPassword ? "text" : "password"}
-            onChange={(value) => {
-              setConfirmPassword(value);
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
             }}
+            iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
           />
-        </div>
-        {/* {data?.status === 'false' && <span style={{ color: 'red' }}>{data?.messeage}</span>} */}
-        <ButtonComponent
-          // bordered="false"
-          className="signupBtn"
-          disabled={
-            !name.length ||
-            !email.length ||
-            !phone.length ||
-            !username.length ||
-            !password.length ||
-            !confirmPassword.length
-          }
-          size={40}
-          textButton="ĐĂNG KÝ"
-          onClick={hanleRegisterAccount}
-        />
-        <p>
-          Bạn đã có tài khoản?
-          <WrapperTextLight
-            onClick={() => {
-              navigate("/sign-in");
-            }}
+          <Button
+            type="primary"
+            className="signupBtn"
+            disabled={
+              !name.length ||
+              !email.length ||
+              !phone.length ||
+              !username.length ||
+              !password.length ||
+              !confirmPassword.length
+            }
+            onClick={hanleRegisterAccount}
           >
-            Đăng nhập?
-          </WrapperTextLight>
-        </p>
+            ĐĂNG KÝ
+          </Button>
+        </Flex>
+        <Flex justify="space-between">
+          <p onClick={() => { navigate("/sign-in") }} className="text-link">Đăng nhập</p>
+        </Flex>
       </div>
-    </div>
+    </Flex>
   );
 };
 

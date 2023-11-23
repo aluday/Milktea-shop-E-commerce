@@ -1,64 +1,27 @@
 /* STARTING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
 .accountContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.53);
   height: 100vh;
-}
-.accountContainer .signinForm .signinText,
-.accountContainer .signupForm .signupText {
-  align-self: center;
-  color: red;
-  font-weight: bold;
-}
-.accountContainer .signinForm img,
-.accountContainer .signupForm img {
-  align-self: center;
+  width: 100vw;
+  background-color: #faf8f1;
 }
 .accountContainer .signinForm,
 .accountContainer .signupForm {
-  width: 450px;
-  height: 350px;
-  border-radius: 6px;
-  background-color: PapayaWhip;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 45px 26px;
+  width: 25%;
+  height: fit-content;
+  padding: 24px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 12px;
+  background-color: #fafafa;
 }
-.accountContainer .signinForm .passwordFieldWrapper,
-.accountContainer .signupForm .passwordFieldWrapper,
-.accountContainer .signupForm .confirmPasswordFieldWrapper {
-  position: relative;
-}
-.accountContainer .signinForm .passwordFieldWrapper span,
-.accountContainer .signupForm .passwordFieldWrapper span,
-.accountContainer .signupForm .confirmPasswordFieldWrapper span {
-  z-index: 10;
-  position: absolute;
-  top: 4px;
-  right: 8px;
-}
-.accountContainer .signinForm .usernameField,
-.accountContainer .signupForm .nameField,
-.accountContainer .signupForm .emailField,
-.accountContainer .signupForm .phoneNoField,
-.accountContainer .signupForm .usernameField,
-.accountContainer .signupForm .passwordField,
-.accountContainer .signupForm .confirmPasswordField {
-  margin-bottom: 10px;
+.accountContainer .signinForm h2,
+.accountContainer .signupForm h2 {
+  width: fit-content;
+  margin: 0 auto;
+  margin-bottom: 18px;
 }
 .accountContainer .signinForm .signinBtn,
 .accountContainer .signupForm .signupBtn {
-  border-radius: 4px;
-  border: none;
-  background: #eed5b7;
-  height: 40px;
-  width: 100%;
-  margin: 24px 0px 10px;
   font-weight: bold;
-  border-color: red;
-  color: #ff0000;
 }
 /* ENDING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
 
