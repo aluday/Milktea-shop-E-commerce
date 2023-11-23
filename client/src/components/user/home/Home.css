@@ -29,4 +29,33 @@
 .card {
   text-align: center;
 }
+.orderModalRow .nameAndPriceWrapper {
+  height: 100%;
+}
+.orderModalRow .nameAndPriceWrapper .productNameText {
+  font-size: 18px;
+}
+.orderModalRow .nameAndPriceWrapper .productNameText, 
+.orderModalRow .nameAndPriceWrapper .priceText {
+  font-weight: bold;
+}
+.orderModalRow .nameAndPriceWrapper .priceText {
+  font-size: 16px;
+  color: red;
+}
+.orderModalRow .ant-space .ant-space-item p {
+  margin: 2px;
+}
+.orderModalRow .nameAndPriceWrapper .inStock {
+  font-style: italic;
+}
+.sizeAndAmountWrapper .ant-space {
+  justify-content: space-between;
+}
+.sizeAndAmountWrapper .orderAmountInput {
+  max-width: 92px;
+}
+.sizeAndAmountWrapper .sizeAndAmountText {
+  font-weight: bold;
+}
 /* ENDING CARD COMPONENT STYLINGS */

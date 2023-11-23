@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState  } from "react";
 import image from "../../../assets/test.png";
-import { Modal, Row, Col, Space, Segmented, Input } from "antd";
+import { Modal, Row, Col, Space, Segmented, Input, Flex, Divider } from "antd";
 import { WrapperModal } from "./HomeWrapper";
 
 export const OrderModal = ({
-  productDetails,
   open,
+  content,
+  selectedSize,
+  amount,
   handleConfirm,
   handleCancel,
+  handleChangeSize,
+  handleIncrease,
+  handleDecrease
 }) => {
+  const [displayedPrice, setdisplayedPrice] = useState(content && content.basicPrice);
+
+  const handleChange = (sizeVal) => {
+    handleChangeSize(sizeVal);
+    setdisplayedPrice(content.size.find((item => item.sizeValue === sizeVal)).price);
+  }
+
   return (
     <WrapperModal>
       <Modal
@@ -18,32 +30,36 @@ export const OrderModal = ({
         onOk={handleConfirm}
         onCancel={handleCancel}
       >
-        <Row>
+        <Row className="orderModalRow">
           <Col>
             <img alt="example" src={image} width={200} height={200} />
           </Col>
           <Col>
-            <Space>
-              <p>Test 1</p>
-            </Space>
-            <br />
-            <Space>
-              <p>123 đ</p>
-            </Space>
-            <br />
+            <Flex className="nameAndPriceWrapper" vertical justify="flex-end">
+              <Space>
+                <p className="productNameText">{content && content.productName}</p>
+              </Space>
+              <Space>
+                <p className="priceText">{displayedPrice} đ</p>
+              </Space>
+              <Space>
+                <p className="inStock">* Còn hàng</p>
+              </Space>
+            </Flex>
           </Col>
         </Row>
-        <div>
+        <Divider />
+        <Flex className="sizeAndAmountWrapper" vertical>
           <Space>
-            <p>Chọn size</p>
-            <Segmented options={["S", "M", "L"]} value="" onChange={() => {}} />
-            ;
+            <p className="sizeAndAmountText">Chọn size</p>
+            <Segmented options={content && content.size && content.size.map(item => item.sizeValue)} value={selectedSize} onChange={handleChange} />
           </Space>
+          <Divider />
           <Space>
-            <p>Số lượng</p>
-            <Input addonBefore={<span>+</span>} addonAfter={<span>-</span>} defaultValue="1" />
+            <p className="sizeAndAmountText">Số lượng</p>
+            <Input className="orderAmountInput" addonBefore={<span onClick={handleIncrease}>+</span>} addonAfter={<span onClick={handleDecrease}>-</span>} value={amount} />
           </Space>
-        </div>
+        </Flex>
       </Modal>
     </WrapperModal>
   );

@@ -3,14 +3,80 @@
     {
       "id": 1,
       "productName": "test 1",
-      "basicPrice": "123",
-      "image_path": "./assets/test.png"
+      "basicPrice": "20000",
+      "image_path": "../../../assets/test.png",
+      "size": [
+        {"sizeValue": "S", "price": "20000"},
+        {"sizeValue": "M", "price": "25000"},
+        {"sizeValue": "L", "price": "30000"}
+      ]
     },
     {
       "id": 2,
       "productName": "test 2",
-      "basicPrice": "456",
-      "image_path": "./assets/test.png"
+      "basicPrice": "25000",
+      "image_path": "../../../assets/test.png",
+      "size": [
+        {"sizeValue": "S", "price": "25000"},
+        {"sizeValue": "M", "price": "30000"},
+        {"sizeValue": "L", "price": "35000"}
+      ]
     }
-  ]
+  ],
+  "listOfOrders": [
+    {
+      "productDetails": {
+        "id": 1,
+        "productName": "test 1",
+        "basicPrice": "123",
+        "image_path": "../../../assets/test.png",
+        "size": [
+          {
+            "sizeValue": "S",
+            "price": "20000"
+          },
+          {
+            "sizeValue": "M",
+            "price": "25000"
+          },
+          {
+            "sizeValue": "S",
+            "price": "30000"
+          }
+        ]
+      },
+      "amount": 1,
+      "selectedSize": "S"
+    },
+    {
+      "productDetails": {
+        "id": 2,
+        "productName": "test 2",
+        "basicPrice": "456",
+        "image_path": "../../../assets/test.png",
+        "size": [
+          {
+            "sizeValue": "S",
+            "price": "25000"
+          },
+          {
+            "sizeValue": "M",
+            "price": "30000"
+          },
+          {
+            "sizeValue": "L",
+            "price": "35000"
+          }
+        ]
+      },
+      "amount": 2,
+      "selectedSize": "L"
+    }
+  ],
+  "currentUser": {
+    "name": "Van Luu",
+    "phone": "0123456789",
+    "email": "abc@gmail.com",
+    "address": ""
+  }
 }

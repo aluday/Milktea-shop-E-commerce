@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Col,
   Row,
@@ -27,16 +27,20 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
 import { PRODUCT_TYPES } from "../../services/constants";
+import { UserContext } from "../../providers/UserProvider";
+import { OrderContext } from "../../providers/OrderProvider";
 
 const menuItems = PRODUCT_TYPES.map((item) => ({
   label: item.value,
   key: item.type,
 }));
 
-export const Header = ({ isAdminPage, currentUser }) => {
+export const Header = ({ isAdminPage }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
+  const { currentUser } = useContext(UserContext);
+  const { countNoOrders } = useContext(OrderContext);
 
   const handleOnClickCatalog = (e) => {
     switch (e.key) {
@@ -213,7 +217,7 @@ export const Header = ({ isAdminPage, currentUser }) => {
                     </Space>
                     <Space className="shoppingCartContainer">
                       <Badge
-                        count="4"
+                        count={countNoOrders}
                         size="small"
                         onClick={() => {
                           navigate("/payment");

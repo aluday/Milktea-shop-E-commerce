@@ -7,7 +7,7 @@ import {
 } from "./CardWrapper";
 import image from "../../../assets/test.png";
 
-export const CardProduct = ({ key, name, price, id, handleClick }) => {
+export const CardProduct = ({ product, handleClick }) => {
   return (
     <WrapperCardStyle
       hoverable
@@ -17,9 +17,9 @@ export const CardProduct = ({ key, name, price, id, handleClick }) => {
       cover={<img alt="example" src={image} />}
     >
       <div className="card">
-        <StyleNameProduct> {name} </StyleNameProduct>
+        <StyleNameProduct> {product.productName} </StyleNameProduct>
         <WrapperPriceText style={{ padding: "5px" }}>
-          <span style={{ marginRight: "8px" }}>{price.toLocaleString()} đ</span>
+          <span style={{ marginRight: "8px" }}>{ product.basicPrice.toLocaleString() } đ</span>
         </WrapperPriceText>
         <ButtonComponent textButton="Thêm vào giỏ hàng" onClick={handleClick}>
         </ButtonComponent>
