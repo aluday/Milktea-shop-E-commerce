@@ -24,25 +24,13 @@
   font-weight: bold;
 }
 /* ENDING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
-
+.userProfileContainer .userInfoWrapper {
+  width: 80%;
+  height: fit-content;
+  margin-top: 82px;
+}
+.basicInfoCardContainer p {
+  font-size: 16px;
+}
 /* STARTING USER PROFILE STYLINGS */
-.userProfileContainer {
-  width: 100vw;
-  height: calc(100vh - 80px);
-}
-.userProfileContainer .userInfo {
-  width: 60%;
-  height: 80%;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-}
-/* .userProfileContainer .userInfo .ant-space {
-  width: 100%;
-  border: 1px solid;
-} */
-.userProfileContainer .userInfo .ant-col,
-.userProfileContainer .userInfo .ant-list {
-  width: 100%;
-  border: 1px solid red;
-}
 /* ENDING USER PROFILE STYLINGS */
