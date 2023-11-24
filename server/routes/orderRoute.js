@@ -4,7 +4,7 @@ const orderController = require("../controller/orderController");
 const router = express.Router();
 // authCurrentUser
 
-router.post('/createOrder/:id',orderController.createOrder);
+router.post('/create-order',orderController.createOrder);
 
 router.get('/get-all-order/:id', orderController.getAllOrderDetails);
 router.get('/get-details-order/:id', orderController.getOrderDetails);

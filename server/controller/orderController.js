@@ -10,9 +10,9 @@ class orderController {
     async createOrder (req, res){
         try {
             //user: id
-            const {orderItems, shippingAddress, itemsPrice, shippingPrice,totalPrice, user} = req.body;
-            console.log(orderItems);
-            if (!itemsPrice || !shippingAddress || !shippingPrice || !totalPrice) {
+            const {orderItems, shippingAddress ,totalPrice, userId} = req.body;
+            // console.log(orderItems);
+            if (!shippingAddress || !totalPrice) {
                 return res.status(200).json({
                     success: 'false',
                     message: 'The input is required'
@@ -20,7 +20,7 @@ class orderController {
             }
 
             const promises = await orderItems.map(async (order)=>{
-                console.log('order', order);
+                // console.log('order', order);
                 const productData = await Product.findByIdAndUpdate(
                     {
                         _id: order.product,
@@ -74,10 +74,8 @@ class orderController {
                     //     size: JSON.parse(size)
                     // },
                     shippingAddress,
-                    itemsPrice,
-                    shippingPrice,
                     totalPrice,
-                    user: user,
+                    user: userId,
                 });
                 // console.log(newOrder);
                 await newOrder.save();

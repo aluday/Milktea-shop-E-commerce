@@ -9,7 +9,7 @@ const JwtServices = require("../middlerware/JwtServices");
 class userController {
   async createUser(req, res) {
     try {
-      const { name, email, phone, username, password, confirmPassword } =
+      const { name, email, phone,address, username, password, confirmPassword } =
         req.body;
       const checkExist = await Customer.findOne({ email });
       const saltRounds = 10;
@@ -49,6 +49,7 @@ class userController {
         name,
         email,
         phone,
+        address,
         username,
         password: hashedPassword,
       });
@@ -274,7 +275,6 @@ class userController {
   }
 
   async logoutUser(req, res) {
-    // console.log(req.cookies);
     try {
       res.clearCookie("refresh_token");
       return res.status(200).json({

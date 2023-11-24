@@ -10,7 +10,7 @@ router.get("/product-detail/:id", productController.getOne);
 router.get("/type", productController.getAllType);
 // router.get("/:id", productController.getofType);
 
-router.post("/sign-up", userController.createUser);
+router.post("/create-user", userController.createUser);
 router.post("/sign-in", userController.loginUser);
 router.post("/refresh-token", userController.refreshToken);
 router.post("/log-out", userController.logoutUser);

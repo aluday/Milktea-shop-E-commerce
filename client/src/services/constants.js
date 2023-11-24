@@ -10,7 +10,7 @@ export const PRODUCT_TYPES = [
 export const EndpointConstants = {
   USER: {
     SIGN_IN: "/sign-in",
-    SIGN_UP: "/sign-up",
+    SIGN_UP: "/create-user",
     AUTHORIZE: "/authorize",
     PRODUCT_DETAILS: "/product-detail",
   },

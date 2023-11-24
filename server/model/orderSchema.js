@@ -6,14 +6,12 @@ const orderSchema = new Schema(
     orderItems: [
       {
         productName: { type: String, required: true },
-        image: { type: String, required: true },
+        // image: { type: String, required: true },
         amount: {type: Number, required: true},
-        size: [
-          {
+        size: {
             sizeValue: {type: String},
-            price: {type: Number,require: true},
           },
-        ],
+        
         discount: { type: Number },
         product: {
           type: mongoose.Schema.Types.ObjectId,
@@ -23,13 +21,8 @@ const orderSchema = new Schema(
       },
     ],
     shippingAddress: {
-      fullname: { type: String },
-      address: { type: String},
-      city: { type: String },
-      phone: { type: String },
+      address: { type: String, required: true}
     },
-    itemsPrice: { type: Number, required: true },
-    shippingPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,
