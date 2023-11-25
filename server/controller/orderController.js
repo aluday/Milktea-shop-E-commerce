@@ -2,6 +2,7 @@ const {
     mutipleMongooseToObject,
     mongooseToObject,
   } = require("../middlerware/Mongoose");
+const Customer = require("../model/customerSchema");
 const Order = require("../model/orderSchema");
 const Product = require("../model/productSchema");
 
@@ -105,17 +106,22 @@ class orderController {
                 });
             }
             const order = await Order.findById({ _id: orderId });
+            // console.log(order);
             if(!order){
                 return res.status(200).json({
                     success: 'false',
                     message: 'The order is not defined'
                 });
             }
-    
+            const userId = await order.user;
+            // console.log(userId);
+            const user = await Customer.findById({_id: userId},"-password -isAdmin");
+            console.log(user);
             return res.status(200).json({
                 success: 'true',
                 message: 'Order detail',
-                data: order
+                data: order,
+                user: user
             });
         } catch (error) {
             console.log(error);

@@ -174,12 +174,12 @@ export const Product = () => {
 
   const displayedColumns = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "productName",
       ...getColumnSearchProps("productName"),
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "basicPrice",
     },
     {
@@ -187,11 +187,11 @@ export const Product = () => {
       dataIndex: "discount",
     },
     {
-      title: "Count In Stock",
+      title: "Hàng trong kho",
       dataIndex: "countInStock",
     },
     {
-      title: "Action",
+      title: "Chỉnh sửa",
       dataIndex: "action",
       render: renderActions,
     },
