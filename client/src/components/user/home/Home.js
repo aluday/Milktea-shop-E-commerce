@@ -20,7 +20,8 @@ export const HomePage = () => {
   const [products, setProducts] = useState([]);
   // const [limit, setLimit] = useState(4);
   // const { currentUser } = useContext(UserContext);
-  const { setCountNoOrders, setListOfOrders } = useContext(OrderContext);
+  const { listOfOrders, countNoOrders, setCountNoOrders, setListOfOrders } =
+    useContext(OrderContext);
   const [productDetails, setProductDetails] = useState(null);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
@@ -28,13 +29,15 @@ export const HomePage = () => {
 
   const handleConfirmOrderModal = () => {
     setOpenOrderModal(false);
-    setCountNoOrders((cur) => cur + 1);
     const prepareOrderData = {
       productDetails,
       amount,
-      selectedSize
+      selectedSize,
     };
-    setListOfOrders((cur) => ([...cur, prepareOrderData]));
+    setCountNoOrders((cur) => cur + 1);
+    setListOfOrders((cur) => [...cur, prepareOrderData]);
+    localStorage.setItem("countNoOrders", countNoOrders);
+    localStorage.setItem("listOfOrders", JSON.stringify(listOfOrders));
     resetData();
   };
 
@@ -46,26 +49,28 @@ export const HomePage = () => {
   const handleOpenOrderModal = (productDetails) => {
     setOpenOrderModal(true);
     setProductDetails(productDetails);
-  }
+  };
 
   const handleSizeChange = (sizeVal) => {
     setSelectedSize(sizeVal);
     setAmount(0);
-  }
+  };
 
-  const handleIncreaseItem = () => {
-    setAmount((cur) => cur + 1);
-  }
+  const handleIncreaseItem = (maxAmount) => {
+    if (amount <= maxAmount) {
+      setAmount((cur) => cur + 1);
+    }
+  };
 
   const handleDecreaseItem = () => {
-    setAmount((cur) => cur - 1);
-  }
+    setAmount((cur) => (cur > 0 ? cur - 1 : 0));
+  };
 
   const resetData = () => {
     setProductDetails(null);
     setSelectedSize("");
     setAmount(0);
-  }
+  };
 
   useEffect(() => {
     getAllProducts()
@@ -92,7 +97,9 @@ export const HomePage = () => {
                   return (
                     <CardProduct
                       product={product}
-                      handleClick={() => { handleOpenOrderModal(product) }}
+                      handleClick={() => {
+                        handleOpenOrderModal(product);
+                      }}
                     />
                   );
                 })
@@ -100,7 +107,9 @@ export const HomePage = () => {
                   return (
                     <CardProduct
                       product={product}
-                      handleClick={() => { handleOpenOrderModal(product) }}
+                      handleClick={() => {
+                        handleOpenOrderModal(product);
+                      }}
                     />
                   );
                 })}

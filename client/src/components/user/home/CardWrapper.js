@@ -14,7 +14,6 @@ export const WrapperCardStyle = styled(Card)`
     background-color: ${(props) => (props.disabled ? "#ccc" : "#fff")};
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}
 `;
-
 export const StyleNameProduct = styled.div`
   font-size: 14px;
   line-height: 20px;
@@ -22,9 +21,14 @@ export const StyleNameProduct = styled.div`
   font-weight: 500;
 `;
 export const WrapperPriceText = styled.div`
-  color: rgb(255, 66, 78);
-  font-size: 16px;
-  font-weight: 500;
+  .priceText {
+    color: rgb(255, 66, 78);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .inStockText {
+    font-style: italic;
+  }
 `;
 
 // export const WrapperReportText = styled.div`

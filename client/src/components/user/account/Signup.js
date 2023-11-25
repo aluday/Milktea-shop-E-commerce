@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Flex, Input, Button } from "antd";
 import * as messages from "../../../services/messages";
-import { signup, handleError } from "../../../services/endpoint-services";
+import { createUser, handleError } from "../../../services/endpoint-services";
 import "./Account.css";
 import Header from "../../shared-components/Header";
 
@@ -26,7 +26,7 @@ export const SignupPage = () => {
       password,
       confirmPassword,
     };
-    signup(preparedUserData)
+    createUser(preparedUserData)
       .then((res) => {
         if (res.status === 200) {
           messages.success();

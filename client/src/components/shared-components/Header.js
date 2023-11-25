@@ -40,7 +40,7 @@ export const Header = ({ isAdminPage }) => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
   // const { currentUser } = useContext(UserContext);
-  const currentUser = JSON.parse(localStorage.getItem('current_user'));
+  const currentUser = JSON.parse(localStorage.getItem("current_user"));
   const { countNoOrders } = useContext(OrderContext);
 
   const handleOnClickCatalog = (e) => {
@@ -212,10 +212,15 @@ export const Header = ({ isAdminPage }) => {
                           <UserOutlined
                             onClick={() => setIsOpenPopup((prev) => !prev)}
                           />
-                          <span className="accountText">{currentUser.name}</span>
+                          <span className="accountText">
+                            {currentUser.name}
+                          </span>
                         </Flex>
                       </Popover>
                     </Space>
+                  </WrapperAccountBtnGroup>
+                ) : (
+                  <WrapperAccountBtnGroup>
                     <Space className="shoppingCartContainer">
                       <Badge
                         count={countNoOrders}
@@ -228,22 +233,19 @@ export const Header = ({ isAdminPage }) => {
                       </Badge>
                       <span className="accountText">Giỏ hàng</span>
                     </Space>
-                  </WrapperAccountBtnGroup>
-                ) : (
-                  <WrapperAccountBtnGroup>
                     <Space>
-                      <LoginOutlined 
+                      <LoginOutlined
                         onClick={() => {
                           navigate("/sign-in");
-                        }} 
+                        }}
                       />
                       <p className="accountText">Đăng nhập</p>
                     </Space>
                     <Space>
-                      <UserAddOutlined 
+                      <UserAddOutlined
                         onClick={() => {
                           navigate("/sign-up");
-                        }} 
+                        }}
                       />
                       <p className="accountText">Đăng ký</p>
                     </Space>

@@ -12,8 +12,8 @@ export const signin = async (data) => {
   const res = await axios.post(endpoint, data);
   return res;
 };
-export const signup = async (data) => {
-  const endpoint = getBaseURL() + EndpointConstants.USER.SIGN_UP;
+export const createUser = async (data) => {
+  const endpoint = getBaseURL() + EndpointConstants.USER.CREATE_USER;
   const res = await axios.post(endpoint, data);
   return res;
 };
@@ -34,6 +34,11 @@ export const getUserDetail = async (id) => {
       token: `Bearer ${accessToken}`,
     },
   });
+  return res;
+};
+export const createOrder = async (data) => {
+  const endpoint = getBaseURL() + EndpointConstants.USER.CREATE_ORDER;
+  const res = await axios.post(endpoint, data);
   return res;
 };
 /* ENDING USER REST DEFINATIONS */

@@ -11,11 +11,10 @@ const orderSchema = new Schema(
           required: true,
         },
         amount: { type: Number, required: true },
-        size: { type: String },
+        size: { type: String, required: true },
         discount: { type: Number },
       },
     ],
-    shippingAddress: { type: String, required: true },
     totalPrice: { type: Number, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,

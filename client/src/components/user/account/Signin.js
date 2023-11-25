@@ -8,7 +8,8 @@ import Header from "../../shared-components/Header";
 
 export const SigninPage = () => {
   const navigate = useNavigate();
-  const { username, setUsername, password, setPassword, handleSignin } = useContext(UserContext);
+  const { username, setUsername, password, setPassword, handleSignin } =
+    useContext(UserContext);
 
   return (
     <>
@@ -31,8 +32,10 @@ export const SigninPage = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
-              />
+              iconRender={(visible) =>
+                visible ? <EyeFilled /> : <EyeInvisibleFilled />
+              }
+            />
             <Button
               type="primary"
               className="signinBtn"
@@ -41,12 +44,19 @@ export const SigninPage = () => {
                 handleSignin();
                 navigate("/");
               }}
-              >
+            >
               ĐĂNG NHẬP
             </Button>
           </Flex>
           <Flex justify="space-between">
-            <p onClick={() => { navigate("/sign-up") }} className="text-link">Tạo tài khoản?</p>
+            <p
+              onClick={() => {
+                navigate("/sign-up");
+              }}
+              className="text-link"
+            >
+              Tạo tài khoản?
+            </p>
           </Flex>
         </div>
       </Flex>

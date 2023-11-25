@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, Flex} from 'antd';
-import mockData from "../../../mockData.json";
-import { CreditCardOutlined, EuroOutlined } from "@ant-design/icons";
+import { Form, Input, Flex} from 'antd';
+// import mockData from "../../../mockData.json";
 
 const layout = {
   labelCol: {
@@ -23,20 +22,15 @@ const validateMessages = {
   },
 };
 
-const UserInfo = () => {
-  const [userInfoForm] = Form.useForm();
-  const userInfo = mockData.currentUser;
-  console.log(userInfo);
-  const onFinish = (values) => {
-    console.log(values);
-  };
+const UserInfo = ({ userInfoForm }) => {
+  // const userInfo = mockData.currentUser;
 
-  useEffect(() => {
-    userInfoForm.setFieldValue("fullName", userInfo.name);
-    userInfoForm.setFieldValue("email", userInfo.email);
-    userInfoForm.setFieldValue("phone", userInfo.phone);
-    userInfoForm.setFieldValue("address", userInfo.address);
-  }, [userInfo]);
+  // useEffect(() => {
+  //   userInfoForm.setFieldValue("fullName", userInfo.name);
+  //   userInfoForm.setFieldValue("email", userInfo.email);
+  //   userInfoForm.setFieldValue("phone", userInfo.phone);
+  //   userInfoForm.setFieldValue("address", userInfo.address);
+  // }, [userInfo]);
 
   return (
     <div>
@@ -44,7 +38,6 @@ const UserInfo = () => {
       <Form
         {...layout}
         name="userInfoForm"
-        onFinish={onFinish}
         validateMessages={validateMessages}
         form={userInfoForm}
         className='userInfoForm'
@@ -59,17 +52,6 @@ const UserInfo = () => {
           ]}
         >
           <Input name="fullName" />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[
-            {
-              type: 'email',
-            },
-          ]}
-        >
-          <Input name="email" />
         </Form.Item>
         <Form.Item
           name="phone"

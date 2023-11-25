@@ -26,16 +26,26 @@
 /* ENDING HOME COMPONENT STYLINGS */
 
 /* STARTING CARD COMPONENT STYLINGS */
-.card {
+.body .container .ant-card .ant-card-cover img {
+  width: 200px;
+  height: 300px;
+  margin: 0 auto;
+}
+.body .container .ant-card {
   text-align: center;
 }
 .orderModalRow .nameAndPriceWrapper {
   height: 100%;
+  margin-left: 16px;
+}
+.orderModalRow img {
+  width: 180px;
+  height: 200px;
 }
 .orderModalRow .nameAndPriceWrapper .productNameText {
   font-size: 18px;
 }
-.orderModalRow .nameAndPriceWrapper .productNameText, 
+.orderModalRow .nameAndPriceWrapper .productNameText,
 .orderModalRow .nameAndPriceWrapper .priceText {
   font-weight: bold;
 }
@@ -54,6 +64,9 @@
 }
 .sizeAndAmountWrapper .orderAmountInput {
   max-width: 92px;
+}
+.sizeAndAmountWrapper .orderAmountInput .ant-input-group-addon:hover {
+  cursor: pointer;
 }
 .sizeAndAmountWrapper .sizeAndAmountText {
   font-weight: bold;
