@@ -10,7 +10,6 @@ const Product = require("../model/productSchema");
 class orderController {
     async createOrder (req, res){
         try {
-            //user: id
             const {orderItems, shippingAddress ,totalPrice, userId} = req.body;
             // console.log(orderItems);
             if (!shippingAddress || !totalPrice) {
@@ -70,15 +69,10 @@ class orderController {
             else{
                 const newOrder = new Order({
                     orderItems,
-                    // :{
-                    //     ...rest,
-                    //     size: JSON.parse(size)
-                    // },
                     shippingAddress,
                     totalPrice,
                     user: userId,
                 });
-                // console.log(newOrder);
                 await newOrder.save();
                 return res.status(200).json({
                     success: 'true',

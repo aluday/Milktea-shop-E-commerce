@@ -6,16 +6,18 @@ const store = require("../middlerware/multer");
 const userController = require("../controller/userController");
 // const { authMidlerware } = require("../middlerware/authMidlerware");
 
-// router.post("/createType", adminController.storeType);
+router.post("/create-type", adminController.storeType);
 router.post(
-  "/createProduct",
+  "/create-product",
   store.single("image"),
   adminController.addProduct
 );
-router.put("/updateProduct/:id", adminController.updateProduct);
-router.delete("/deleteProduct/:id", adminController.deleteProduct);
+router.put("/update-type/:id", adminController.updateType);
+router.put("/update-product/:id", adminController.updateProduct);
+router.delete("/delete-product/:id", adminController.deleteProduct);
+router.delete("/delete-type/:id", adminController.deleteType);
 
 router.delete("/delete-user/:id", userController.deleteUser);
-router.get("/getAll", userController.getAllUser);
+router.get("/get-all-user", userController.getAllUser);
 
 module.exports = router;
