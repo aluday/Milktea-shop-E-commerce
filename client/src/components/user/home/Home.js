@@ -10,18 +10,10 @@ import {
   getAllProducts,
   handleError,
 } from "../../../services/endpoint-services";
-// using mockData because it haven't integrated yet
-import mockData from "../../../mockData.json";
-// import { UserContext } from "../../../providers/UserProvider";
-import { OrderContext } from "../../../providers/OrderProvider";
 import OrderModal from "./OrderModal";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
-  // const [limit, setLimit] = useState(4);
-  // const { currentUser } = useContext(UserContext);
-  const { listOfOrders, countNoOrders, setCountNoOrders, setListOfOrders } =
-    useContext(OrderContext);
   const [productDetails, setProductDetails] = useState(null);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
@@ -29,15 +21,22 @@ export const HomePage = () => {
 
   const handleConfirmOrderModal = () => {
     setOpenOrderModal(false);
+    const currentListOfOrders = JSON.parse(
+      localStorage.getItem("listOfOrders")
+    );
     const prepareOrderData = {
       productDetails,
       amount,
       selectedSize,
     };
-    setCountNoOrders((cur) => cur + 1);
-    setListOfOrders((cur) => [...cur, prepareOrderData]);
-    localStorage.setItem("countNoOrders", countNoOrders);
-    localStorage.setItem("listOfOrders", JSON.stringify(listOfOrders));
+    if (currentListOfOrders && currentListOfOrders.length > 0) {
+      localStorage.setItem(
+        "listOfOrders",
+        JSON.stringify([...currentListOfOrders, prepareOrderData])
+      );
+    } else {
+      localStorage.setItem("listOfOrders", JSON.stringify([prepareOrderData]));
+    }
     resetData();
   };
 
@@ -92,27 +91,18 @@ export const HomePage = () => {
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
           <WrapperProducts>
-            {products && products.length > 0
-              ? products?.map((product) => {
-                  return (
-                    <CardProduct
-                      product={product}
-                      handleClick={() => {
-                        handleOpenOrderModal(product);
-                      }}
-                    />
-                  );
-                })
-              : mockData.products.map((product) => {
-                  return (
-                    <CardProduct
-                      product={product}
-                      handleClick={() => {
-                        handleOpenOrderModal(product);
-                      }}
-                    />
-                  );
-                })}
+            {products &&
+              products.length > 0 &&
+              products.map((product) => {
+                return (
+                  <CardProduct
+                    product={product}
+                    handleClick={() => {
+                      handleOpenOrderModal(product);
+                    }}
+                  />
+                );
+              })}
           </WrapperProducts>
         </div>
       </div>

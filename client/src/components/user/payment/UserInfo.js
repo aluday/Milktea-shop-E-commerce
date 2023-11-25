@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Flex} from 'antd';
+import React, { useEffect } from "react";
+import { Form, Input, Flex } from "antd";
 // import mockData from "../../../mockData.json";
 
 const layout = {
@@ -12,13 +12,13 @@ const layout = {
 };
 
 const validateMessages = {
-  required: '${label} is required!',
+  required: "${label} is required!",
   types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
+    email: "${label} is not a valid email!",
+    number: "${label} is not a valid number!",
   },
   number: {
-    range: '${label} must be between ${min} and ${max}',
+    range: "${label} must be between ${min} and ${max}",
   },
 };
 
@@ -40,7 +40,7 @@ const UserInfo = ({ userInfoForm }) => {
         name="userInfoForm"
         validateMessages={validateMessages}
         form={userInfoForm}
-        className='userInfoForm'
+        className="userInfoForm"
       >
         <Form.Item
           name="fullName"
@@ -69,10 +69,8 @@ const UserInfo = ({ userInfoForm }) => {
         </Form.Item>
       </Form>
 
-      <h3>
-        Hình thức thanh toán
-      </h3>
-      <Flex className='paymentMethod' align="center">
+      <h3>Hình thức thanh toán</h3>
+      <Flex className="paymentMethod" align="center">
         <p>Thanh toán khi nhận hàng (COD)</p>
       </Flex>
     </div>

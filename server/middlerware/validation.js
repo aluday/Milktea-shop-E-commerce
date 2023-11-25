@@ -1,7 +1,7 @@
 const Customer = require("../model/customerSchema");
 
 class Validation {
-  async validateUser(req, res) {
+  async validateUser(req, res, next) {
     try {
       if (req.body.email) {
         const isEmailExisted = await Customer.findOne({

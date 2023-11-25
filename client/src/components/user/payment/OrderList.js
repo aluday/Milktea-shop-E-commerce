@@ -4,13 +4,12 @@ import { OrderContext } from "../../../providers/OrderProvider";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const OrderList = ({
+  listOfOrders,
   totalPrice,
   updateAmount,
   updateSelectedSize,
   deleteOrder,
 }) => {
-  const { listOfOrders } = useContext(OrderContext);
-
   return (
     <>
       <List

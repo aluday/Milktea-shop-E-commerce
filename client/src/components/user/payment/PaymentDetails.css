@@ -14,7 +14,11 @@
   margin-top: 24px;
   margin-left: 32px;
 }
-.paymentContainer .paymentStepperContainer .ant-list .ant-list-item-meta .ant-avatar {
+.paymentContainer
+  .paymentStepperContainer
+  .ant-list
+  .ant-list-item-meta
+  .ant-avatar {
   width: 100px;
   height: 100px;
 }
@@ -22,7 +26,10 @@
   color: red;
   padding: 6px;
 }
-.paymentContainer .paymentStepperContainer .ant-list .ant-input-group-addon:hover,
+.paymentContainer
+  .paymentStepperContainer
+  .ant-list
+  .ant-input-group-addon:hover,
 .paymentContainer .paymentStepperContainer .ant-list .anticon-delete:hover {
   cursor: pointer;
 }
