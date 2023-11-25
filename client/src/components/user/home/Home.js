@@ -10,17 +10,10 @@ import {
   getAllProducts,
   handleError,
 } from "../../../services/endpoint-services";
-// using mockData because it haven't integrated yet
-import mockData from "../../../mockData.json";
-// import { UserContext } from "../../../providers/UserProvider";
-import { OrderContext } from "../../../providers/OrderProvider";
 import OrderModal from "./OrderModal";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
-  // const [limit, setLimit] = useState(4);
-  // const { currentUser } = useContext(UserContext);
-  const { setCountNoOrders, setListOfOrders } = useContext(OrderContext);
   const [productDetails, setProductDetails] = useState(null);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
@@ -28,13 +21,22 @@ export const HomePage = () => {
 
   const handleConfirmOrderModal = () => {
     setOpenOrderModal(false);
-    setCountNoOrders((cur) => cur + 1);
+    const currentListOfOrders = JSON.parse(
+      localStorage.getItem("listOfOrders")
+    );
     const prepareOrderData = {
       productDetails,
       amount,
-      selectedSize
+      selectedSize,
     };
-    setListOfOrders((cur) => ([...cur, prepareOrderData]));
+    if (currentListOfOrders && currentListOfOrders.length > 0) {
+      localStorage.setItem(
+        "listOfOrders",
+        JSON.stringify([...currentListOfOrders, prepareOrderData])
+      );
+    } else {
+      localStorage.setItem("listOfOrders", JSON.stringify([prepareOrderData]));
+    }
     resetData();
   };
 
@@ -46,26 +48,28 @@ export const HomePage = () => {
   const handleOpenOrderModal = (productDetails) => {
     setOpenOrderModal(true);
     setProductDetails(productDetails);
-  }
+  };
 
   const handleSizeChange = (sizeVal) => {
     setSelectedSize(sizeVal);
     setAmount(0);
-  }
+  };
 
-  const handleIncreaseItem = () => {
-    setAmount((cur) => cur + 1);
-  }
+  const handleIncreaseItem = (maxAmount) => {
+    if (amount <= maxAmount) {
+      setAmount((cur) => cur + 1);
+    }
+  };
 
   const handleDecreaseItem = () => {
-    setAmount((cur) => cur - 1);
-  }
+    setAmount((cur) => (cur > 0 ? cur - 1 : 0));
+  };
 
   const resetData = () => {
     setProductDetails(null);
     setSelectedSize("");
     setAmount(0);
-  }
+  };
 
   useEffect(() => {
     getAllProducts()
@@ -87,23 +91,18 @@ export const HomePage = () => {
         <SliderComponent arrImg={[slider1, slider2]} />
         <div className="container">
           <WrapperProducts>
-            {products && products.length > 0
-              ? products?.map((product) => {
-                  return (
-                    <CardProduct
-                      product={product}
-                      handleClick={() => { handleOpenOrderModal(product) }}
-                    />
-                  );
-                })
-              : mockData.products.map((product) => {
-                  return (
-                    <CardProduct
-                      product={product}
-                      handleClick={() => { handleOpenOrderModal(product) }}
-                    />
-                  );
-                })}
+            {products &&
+              products.length > 0 &&
+              products.map((product) => {
+                return (
+                  <CardProduct
+                    product={product}
+                    handleClick={() => {
+                      handleOpenOrderModal(product);
+                    }}
+                  />
+                );
+              })}
           </WrapperProducts>
         </div>
       </div>

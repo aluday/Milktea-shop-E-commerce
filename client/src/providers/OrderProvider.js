@@ -2,17 +2,18 @@ import React, { useState } from "react";
 
 export const OrderContext = React.createContext();
 
+
 export const OrderProvider = ({ children }) => {
-  const [countNoOrders, setCountNoOrders] = useState(0);
-  const [listOfOrders, setListOfOrders] = useState([]);
+  const orderItems = JSON.parse(localStorage.getItem("listOfOrders"));
+  const [listOfOrders, setListOfOrders] = useState(
+    orderItems && orderItems.length > 0 ? orderItems : []
+  );
 
   return (
     <OrderContext.Provider
       value={{
-        countNoOrders,
-        setCountNoOrders,
-        listOfOrders, 
-        setListOfOrders
+        listOfOrders,
+        setListOfOrders,
       }}
     >
       {children}

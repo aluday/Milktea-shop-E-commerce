@@ -17,7 +17,7 @@ const CustomerSchema = new Schema(
       require: true,
     },
     address: {
-      type: String
+      type: String,
     },
     username: {
       type: String,
@@ -26,13 +26,11 @@ const CustomerSchema = new Schema(
     },
     password: {
       type: String,
-      // require: true,
     },
     isAdmin: {
       type: Boolean,
-      require: true,
       default: false,
-    }
+    },
     // acces_token: {
     //   type: String,
     //   require: true,

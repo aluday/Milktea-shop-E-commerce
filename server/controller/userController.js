@@ -9,52 +9,27 @@ const JwtServices = require("../middlerware/JwtServices");
 class userController {
   async createUser(req, res) {
     try {
-      const { name, email, phone,address, username, password, confirmPassword } =
-        req.body;
-      const checkExist = await Customer.findOne({ email });
-      const saltRounds = 10;
-      const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-      const isCheckEmail = reg.test(email);
-      if (
-        !name ||
-        !email ||
-        !phone ||
-        !username ||
-        !password ||
-        !confirmPassword
-      ) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Input is required",
+      let newUser;
+      if (req.body.password) {
+        const saltRounds = 10;
+        const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
+        newUser = new Customer({
+          name: req.body.name,
+          phone: req.body.phone,
+          address: req.body.address,
+          password: hashedPassword,
+          ...res.body,
         });
-      } else if (!isCheckEmail) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Email is in wrong format",
-        });
-      } else if (checkExist) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Email is already",
-        });
-      } else if (password !== confirmPassword) {
-        return res.status(200).json({
-          status: "false",
-          message: "The password is equal confirmPassword",
+      } else {
+        newUser = new Customer({
+          name: req.body.name,
+          phone: req.body.phone,
+          address: req.body.address,
         });
       }
 
-      const hashedPassword = bcrypt.hashSync(password, saltRounds);
-      const newUser = new Customer({
-        name,
-        email,
-        phone,
-        address,
-        username,
-        password: hashedPassword,
-      });
-
       await newUser.save();
+
       return res.status(200).send({
         status: "true",
         messeage: "Sign-up statusfully",

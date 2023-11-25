@@ -1,8 +1,14 @@
 import React from "react";
 import { Button, Steps } from "antd";
 
-export const PaymentSteppers = ({ steps, current, handleClickNextStep, handleClickPreviousStep, handleComplete }) => {
-
+export const PaymentSteppers = ({
+  steps,
+  current,
+  isDisabledNextStepBtn,
+  handleClickNextStep,
+  handleClickPreviousStep,
+  handleComplete,
+}) => {
   const items = steps.map((item) => ({
     key: item.title,
     title: item.title,
@@ -18,7 +24,11 @@ export const PaymentSteppers = ({ steps, current, handleClickNextStep, handleCli
         }}
       >
         {current < steps.length - 1 && (
-          <Button type="primary" onClick={handleClickNextStep}>
+          <Button
+            type="primary"
+            onClick={handleClickNextStep}
+            disabled={isDisabledNextStepBtn}
+          >
             Tiếp theo
           </Button>
         )}
@@ -30,7 +40,7 @@ export const PaymentSteppers = ({ steps, current, handleClickNextStep, handleCli
         {current > 0 && (
           <Button
             style={{
-              margin: '0 8px',
+              margin: "0 8px",
             }}
             onClick={handleClickPreviousStep}
           >

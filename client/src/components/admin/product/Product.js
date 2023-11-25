@@ -319,7 +319,7 @@ export const Product = () => {
 
   return (
     <div>
-      <h1>Quản lý sản phẩm</h1>
+      <h2>Quản lý sản phẩm</h2>
       {/* Starting Add Product Form modal */}
       <ProductForm
         title="Thêm sản phẩm"
