@@ -55,13 +55,13 @@ export const PaymentDetails = () => {
 
   const deleteOrder = (itemIndex) => {
     let listOfCloneOrders = cloneDeep(listOfOrders);
-    listOfCloneOrders.splice(itemIndex);
-    if (listOfCloneOrders && listOfCloneOrders.length === 0) {
+    if (listOfCloneOrders && listOfCloneOrders.length === 1) {
       reset();
     } else {
+      listOfCloneOrders.splice(itemIndex);
       localStorage.setItem("listOfOrders", JSON.stringify(listOfCloneOrders));
+      setForceRerender((cur) => cur + 1);
     }
-    setForceRerender((cur) => cur + 1);
   };
 
   const calTotalPrice = () => {

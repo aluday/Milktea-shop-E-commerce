@@ -1,6 +1,6 @@
 /* STARTING SHARED SIGNIN & SIGNUP PAGE STYLINGS */
 .accountContainer {
-  height: 100vh;
+  height: calc(100vh - 78px);
   width: 100vw;
   background-color: #faf8f1;
 }
