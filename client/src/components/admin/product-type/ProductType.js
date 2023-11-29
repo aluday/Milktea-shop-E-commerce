@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TableComponent from "../../shared-components/Table";
 import {
   DeleteOutlined,
@@ -6,14 +6,19 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { Form } from "antd";
-import mockData from '../../../mockData.json';
+import mockData from "../../../mockData.json";
 import ProductTypeForm from "./ProductTypeForm";
-import { createProductType, handleError } from '../../../services/endpoint-services';
+import {
+  createProductType,
+  getAllProductTypes,
+  handleError,
+} from "../../../services/endpoint-services";
 
 export const ProductType = () => {
   const [productTypeForm] = Form.useForm();
-  const [typeName, setTypeName] = useState('');
+  const [typeName, setTypeName] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
+  // const [productTypes, setProductTypes] = useState([]);
 
   const renderActions = (_, record) => {
     return (
@@ -54,7 +59,7 @@ export const ProductType = () => {
 
   const productTypes = mockData.types.map((item, index) => ({
     columnNo: index + 1,
-    typeName: item.type_name
+    typeName: item.type_name,
   }));
 
   const handleSelectRow = (record, index) => {
@@ -63,15 +68,25 @@ export const ProductType = () => {
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setIsOpenModal(false);
-  }
+  };
 
-  const handleChange = () => {}
+  const handleChange = () => {};
 
-  const handleCreateAndUpdateType = () => {}
+  const handleCreateAndUpdateType = () => {};
+
+  useEffect(() => {
+    getAllProductTypes()
+      .then((res) => {
+        console.log("res:", res);
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  }, []);
 
   return (
     <div>

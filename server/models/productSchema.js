@@ -17,7 +17,7 @@ const ProductSchema = new Schema({
   },
   discount: {
     type: Number,
-    require: true
+    require: false
   },
   countInStock: {
     type: Number,
@@ -27,6 +27,7 @@ const ProductSchema = new Schema({
     {
       sizeValue: {
         type: String,
+        require: true,
       },
       price: {
         type: Number,

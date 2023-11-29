@@ -1,4 +1,4 @@
-const Customer = require("../model/customerSchema");
+const Customer = require("../models/customerSchema");
 
 class Validation {
   async validateUser(req, res, next) {

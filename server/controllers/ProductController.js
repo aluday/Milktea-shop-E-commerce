@@ -1,12 +1,12 @@
 const {
   mutipleMongooseToObject,
   mongooseToObject,
-} = require("../middlerware/Mongoose");
+} = require("../services/Mongoose");
 
 const baseUrl = "http://localhost:3001";
-const Product = require("../model/productSchema");
+const Product = require("../models/productSchema");
 
-class productController {
+class ProductController {
   async getAllProduct(req, res) {
     try {
       const total = await Product.count();
@@ -136,4 +136,4 @@ class productController {
   // }
 }
 
-module.exports = new productController();
+module.exports = new ProductController();

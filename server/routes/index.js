@@ -1,11 +1,11 @@
-const adminRoute = require("./adminRoute");
-const userRoute = require("./userRoute");
-const orderRoute = require("./orderRoute");
+const adminRoutes = require("./adminRoutes");
+const userRoutes = require("./userRoutes");
+const orderRoutes = require("./orderRoutes");
 
 function route(app) {
-  app.use("/api/admin", adminRoute);
-  app.use("/api", userRoute);
-  app.use("/api/order", orderRoute);
+  app.use("/api/admin", adminRoutes);
+  app.use("/api", userRoutes);
+  app.use("/api/order", orderRoutes);
 }
 
 module.exports = route;

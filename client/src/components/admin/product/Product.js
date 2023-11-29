@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import InputComponent from "../../shared-components/Input";
 import ModalComponent from "../../shared-components/Modal";
-import Loading from '../../shared-components/Loading';
+import Loading from "../../shared-components/Loading";
 import { ProductForm } from "./ProductForm";
 import { ProductList } from "./ProductList";
 import * as messages from "../../../services/messages";
@@ -96,10 +96,7 @@ export const Product = () => {
             productData.countInStock
           );
           setDiscount(productData.discount);
-          productDetailsForm.setFieldValue(
-            "discount",
-            productData.discount
-          );
+          productDetailsForm.setFieldValue("discount", productData.discount);
           setCountInStock(productData.countInStock);
           productDetailsForm.setFieldValue("type", productData.type);
           setType(productData.type);

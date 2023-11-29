@@ -1,15 +1,11 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {
-  mutipleMongooseToObject,
-  mongooseToObject,
-} = require("../middlerware/Mongoose");
 const baseUrl = "http://localhost:3001";
 
-const Product = require("../model/productSchema");
-const Type = require("../model/typeSchema");
+const Product = require("../models/productSchema");
+const Type = require("../models/typeSchema");
 
-class adminController {
+class AdminController {
   async storeType(req, res) {
     try {
       const { type_name } = req.body;
@@ -146,4 +142,4 @@ class adminController {
   }
 }
 
-module.exports = new adminController();
+module.exports = new AdminController();

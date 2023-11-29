@@ -1,12 +1,12 @@
 const bcrypt = require("bcrypt");
-const Customer = require("../model/customerSchema");
+const Customer = require("../models/customerSchema.js");
 const {
-  genneralAccessToken,
-  genneralRefreshToken,
-} = require("../middlerware/JwtServices.js");
-const JwtServices = require("../middlerware/JwtServices");
+  getRefreshToken,
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../services/JwtServices.js");
 
-class userController {
+class UserController {
   async createUser(req, res) {
     try {
       let newUser;
@@ -69,12 +69,12 @@ class userController {
           messeage: "Password is not correct",
         });
       }
-      const access_token = await genneralAccessToken({
+      const access_token = await generateAccessToken({
         id: checkExist.id,
         isAdmin: checkExist.isAdmin,
       });
 
-      const refresh_token = await genneralRefreshToken({
+      const refresh_token = await generateRefreshToken({
         id: checkExist.id,
         isAdmin: checkExist.isAdmin,
       });
@@ -235,7 +235,7 @@ class userController {
           messeage: "Token not found",
         });
       }
-      const response = await JwtServices.refreshTokenService(token);
+      const response = await getRefreshToken(token);
       return res.status(200).send({
         response,
       });
@@ -264,4 +264,4 @@ class userController {
   }
 }
 
-module.exports = new userController();
+module.exports = new UserController();
