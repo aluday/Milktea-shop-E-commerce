@@ -42,17 +42,3 @@
   display: block;
 }
 /* ENDING PRODUCT MODAL STYLINGS */
-
-/* STARTING PRODUCT LIST STYLINGS */
-.productActions .edit {
-  color: orange;
-  font-size: 18px;
-  cursor: pointer;
-  padding-right: 20px;
-}
-.productActions .delete {
-  color: red;
-  font-size: 18px;
-  cursor: pointer;
-}
-/* ENDING PRODUCT LIST STYLINGS */

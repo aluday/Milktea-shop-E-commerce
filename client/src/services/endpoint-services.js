@@ -79,6 +79,41 @@ export const deleteProduct = async (productId) => {
   const res = await axios.delete(endpoint);
   return res;
 };
+export const createProductType = async (data) => {
+  const endpoint = getBaseURL() + EndpointConstants.ADMIN.CREATE_PRODUCT_TYPE;
+  const res = await axios.post(endpoint, data);
+  return res;
+};
+// export const getAllProductTypes = async (search, limit) => {
+//   let endpoint;
+//   if (search?.length > 0) {
+//     endpoint =
+//       getBaseURL() +
+//       `/product?filter=productName&filter=${search}&limit=${limit}`;
+//   } else {
+//     endpoint = getBaseURL() + `/product?limit=${limit}`;
+//   }
+//   const res = await axios.get(endpoint);
+//   return res;
+// };
+// export const getProductTypeDetails = async (productId) => {
+//   const endpoint =
+//     getBaseURL() + EndpointConstants.USER.PRODUCT_DETAILS + `/${productId}`;
+//   const res = await axios.get(endpoint);
+//   return res;
+// };
+export const updateProductType = async (data, productId) => {
+  const endpoint =
+    getBaseURL() + EndpointConstants.ADMIN.UPDATE_PRODUCT_TYPE + `/${productId}`;
+  const res = await axios.put(endpoint, data);
+  return res;
+};
+export const deleteProductType = async (productId) => {
+  const endpoint =
+    getBaseURL() + EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE + `/${productId}`;
+  const res = await axios.delete(endpoint);
+  return res;
+};
 /* ENDING ADMIN REST DEFINATIONS */
 
 export const handleError = (error) => {
