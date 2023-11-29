@@ -1,12 +1,8 @@
-const {
-  mutipleMongooseToObject,
-  mongooseToObject,
-} = require("../middlerware/Mongoose");
-const Customer = require("../model/customerSchema");
-const Order = require("../model/orderSchema");
-const Product = require("../model/productSchema");
+const Customer = require("../models/customerSchema");
+const Order = require("../models/orderSchema");
+const Product = require("../models/productSchema");
 
-class orderController {
+class OrderController {
   async createOrder(req, res) {
     try {
       const { orderItems, totalPrice, user } = req.body;
@@ -176,4 +172,4 @@ class orderController {
   }
 }
 
-module.exports = new orderController();
+module.exports = new OrderController();

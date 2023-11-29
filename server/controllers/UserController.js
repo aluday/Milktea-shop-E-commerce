@@ -1,12 +1,16 @@
 const bcrypt = require("bcrypt");
-const Customer = require("../model/customerSchema");
+const Customer = require("../models/customerSchema.js");
 const {
-  genneralAccessToken,
-  genneralRefreshToken,
-} = require("../middlerware/JwtServices.js");
-const JwtServices = require("../middlerware/JwtServices");
+  getRefreshToken,
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../services/JwtService.js");
+const {
+  errorResponse,
+  successResponseWithData,
+} = require("../services/ResponseService.js");
 
-class userController {
+class UserController {
   async createUser(req, res) {
     try {
       let newUser;
@@ -30,74 +34,39 @@ class userController {
 
       await newUser.save();
 
-      return res.status(200).send({
-        status: "true",
-        messeage: "Sign-up statusfully",
-        newUser,
-      });
+      return successResponseWithData(
+        res,
+        "The user has successfully registered!",
+        newUser
+      );
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while registing user",
-        error,
-      });
+      return errorResponse(res, "Error while registering user!", error);
     }
   }
 
   async loginUser(req, res) {
     try {
-      const { username, password } = req.body;
-      // console.log(username, password);
-      const checkExist = await Customer.findOne({ username });
-      if (!username || !password) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Username or password is required",
-        });
-      } else if (!checkExist) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Username does not exist",
-        });
-      }
+      const user = req.user;
 
-      const comparePassword = bcrypt.compareSync(password, checkExist.password);
-      if (!comparePassword) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Password is not correct",
-        });
-      }
-      const access_token = await genneralAccessToken({
-        id: checkExist.id,
-        isAdmin: checkExist.isAdmin,
+      const access_token = await generateAccessToken({
+        id: user.id,
+      });
+      const refresh_token = await generateRefreshToken({
+        id: user.id,
       });
 
-      const refresh_token = await genneralRefreshToken({
-        id: checkExist.id,
-        isAdmin: checkExist.isAdmin,
-      });
-
-      const response = { access_token, status: "true", message: "success" };
-      const { ...newRespone } = response;
-      res.cookie("refresh_token", refresh_token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        path: "/",
-      });
-      return res.status(200).send({
-        ...newRespone,
-        refresh_token,
-      });
+      return successResponseWithData(
+        res,
+        "The user has successfully logged in!",
+        {
+          access_token,
+          refresh_token,
+        }
+      );
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while login user",
-        error,
-      });
+      return errorResponse(res, "Error while user is logging in!", error);
     }
   }
 
@@ -235,7 +204,7 @@ class userController {
           messeage: "Token not found",
         });
       }
-      const response = await JwtServices.refreshTokenService(token);
+      const response = await getRefreshToken(token);
       return res.status(200).send({
         response,
       });
@@ -264,4 +233,4 @@ class userController {
   }
 }
 
-module.exports = new userController();
+module.exports = new UserController();

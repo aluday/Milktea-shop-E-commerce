@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Menu, Flex } from "antd";
+import { Menu } from "antd";
 import {
   IdcardOutlined,
   RestOutlined,
   ShoppingOutlined,
-  DashboardOutlined,
+  // DashboardOutlined,
   AppstoreAddOutlined
 } from "@ant-design/icons";
 import { getItem } from "../../services/common";
@@ -13,14 +13,14 @@ import { UserManagement } from "./user-management/UserManagement";
 import { Product } from "./product/Product";
 import { Orders } from "./orders/Orders";
 import { ProductType } from './product-type/ProductType';
-import { Dashboard } from './dashboard/Dashboard';
+// import { Dashboard } from './dashboard/Dashboard';
 import "./Admin.css";
 
 export const AdminPage = () => {
   const [keySelected, setKeySelected] = useState("");
 
   const items = [
-    getItem("Dashboard", "dashboard", <DashboardOutlined />),
+    // getItem("Dashboard", "dashboard", <DashboardOutlined />),
     getItem("Loại sản phẩm", "type", <AppstoreAddOutlined />),
     getItem("Sản phẩm", "products", <RestOutlined />),
     getItem("Đơn hàng", "orders", <ShoppingOutlined />),
@@ -31,14 +31,15 @@ export const AdminPage = () => {
     switch (key) {
       case "users":
         return <UserManagement />;
-      case "type": 
-        return <ProductType />
+      // case "type": 
+      //   return <ProductType />
       case "products":
         return <Product />;
       case "orders":
         return <Orders />;
       default:
-        return <Dashboard />;
+        // return <Dashboard />;
+        return <ProductType />
     }
   };
 

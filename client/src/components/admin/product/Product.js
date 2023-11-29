@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import InputComponent from "../../shared-components/Input";
 import ModalComponent from "../../shared-components/Modal";
+import Loading from "../../shared-components/Loading";
 import { ProductForm } from "./ProductForm";
 import { ProductList } from "./ProductList";
 import * as messages from "../../../services/messages";
@@ -21,6 +22,7 @@ import {
 } from "../../../services/endpoint-services";
 
 export const Product = () => {
+  const [isLoading, setIsLoading] = useState(false);
   /* Starting variables for AddProduct component */
   const [productForm] = Form.useForm();
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -52,7 +54,7 @@ export const Product = () => {
 
   const renderActions = (_, record) => {
     return (
-      <div className="productActions">
+      <div className="tableActions">
         <EditOutlined
           className="edit"
           onClick={() => {
@@ -72,8 +74,10 @@ export const Product = () => {
   };
 
   const handleUpdateProduct = (productId) => {
+    setIsLoading(true);
     getProductDetails(productId)
       .then((res) => {
+        setIsLoading(true);
         if (res.data && res.data.product) {
           const productData = res.data.product;
           // set product form data
@@ -92,10 +96,7 @@ export const Product = () => {
             productData.countInStock
           );
           setDiscount(productData.discount);
-          productDetailsForm.setFieldValue(
-            "discount",
-            productData.discount
-          );
+          productDetailsForm.setFieldValue("discount", productData.discount);
           setCountInStock(productData.countInStock);
           productDetailsForm.setFieldValue("type", productData.type);
           setType(productData.type);
@@ -106,6 +107,7 @@ export const Product = () => {
         }
       })
       .catch((err) => {
+        setIsLoading(true);
         handleError(err);
         resetProductFormData();
         messages.error();
@@ -197,30 +199,33 @@ export const Product = () => {
     },
   ];
 
-  const handleCreateUpdateProduct = (action) => {
+  const handleCreateOrUpdateProduct = (action) => {
+    setIsLoading(true);
     const sizeData =
       action === "add"
         ? productForm.getFieldValue("size")
         : productDetailsForm.getFieldValue("size");
     const formData = new FormData();
-    formData.append("productName", productName);
-    formData.append("basicPrice", basicPrice);
-    formData.append("discount", discount);
-    formData.append("type", type);
-    formData.append("countInStock", countInStock);
+    formData.append("productName", productForm.getFieldValue("productName"));
+    formData.append("basicPrice", productForm.getFieldValue("basicPrice"));
+    formData.append("discount", productForm.getFieldValue("discount"));
+    formData.append("type", productForm.getFieldValue("type"));
+    formData.append("countInStock", productForm.getFieldValue("countInStock"));
     formData.append("size", JSON.stringify(sizeData));
-    formData.append("image", image);
+    formData.append("image", productForm.getFieldValue("image"));
 
     if (action === "add") {
       createProduct(formData)
         .then((res) => {
           if (res.status === 200) {
+            setIsLoading(false);
             resetProductFormData("add");
             setForceRerender((cur) => cur + 1);
             messages.success();
           }
         })
         .catch((err) => {
+          setIsLoading(false);
           handleError(err);
           resetProductFormData("add");
           messages.error();
@@ -228,11 +233,13 @@ export const Product = () => {
     } else if (action === "update") {
       updateProduct(formData, productId)
         .then(() => {
+          setIsLoading(false);
           resetProductFormData("update");
           setForceRerender((cur) => cur + 1);
           messages.success();
         })
         .catch((err) => {
+          setIsLoading(false);
           handleError(err);
           resetProductFormData("update");
           messages.error();
@@ -320,6 +327,7 @@ export const Product = () => {
   return (
     <div>
       <h2>Quản lý sản phẩm</h2>
+      <Loading isLoading={isLoading} />
       {/* Starting Add Product Form modal */}
       <ProductForm
         title="Thêm sản phẩm"
@@ -342,7 +350,7 @@ export const Product = () => {
           setIsProductModalOpen(false);
         }}
         handleCreateProduct={() => {
-          handleCreateUpdateProduct("add");
+          handleCreateOrUpdateProduct("add");
         }}
       />
       {/* Ending Add Product Form modal */}
@@ -377,7 +385,7 @@ export const Product = () => {
           setIsOpenProductDetailsModal(false);
         }}
         handleCreateProduct={() => {
-          handleCreateUpdateProduct("update");
+          handleCreateOrUpdateProduct("update");
         }}
       />
       {/* Ending Update Product Form modal */}

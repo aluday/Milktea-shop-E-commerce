@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
   const handleSignin = () => {
     signin({ username, password })
       .then((res) => {
-        if (res && res.status === 200 && res.data && res.data.access_token) {
+        if (res && res.status && res.data && res.data.access_token) {
           localStorage.setItem("access_token", res.data.access_token);
           // call authorize to verify the token again to get the current user who logged in
           getCurrentUser(res.data.access_token)

@@ -1,7 +1,7 @@
 import React from "react";
 import { WrapperUploadFile } from "./ProductWrapper";
 import { Button, Form, Input, Select, Space } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import ModalComponent from "../../shared-components/Modal";
 import { PRODUCT_TYPES } from "../../../services/constants";
 import "./Product.css";
@@ -34,6 +34,7 @@ export const ProductForm = (props) => {
           type="primary"
           onClick={handleOpenProductModal}
         >
+          <PlusSquareOutlined />
           Thêm sản phẩm
         </Button>
       )}

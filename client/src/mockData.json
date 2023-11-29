@@ -78,5 +78,19 @@
     "phone": "0123456789",
     "email": "abc@gmail.com",
     "address": ""
-  }
+  },
+  "types": [
+    {
+      "_id": 1,
+      "type_name": "Trà sữa"
+    },
+    {
+      "_id": 2,
+      "type_name": "Cà phê"
+    },
+    {
+      "_id": 3,
+      "type_name": "Sữa chua"
+    }
+  ]
 }

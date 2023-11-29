@@ -10,7 +10,7 @@ const getBaseURL = () => {
 export const signin = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.SIGN_IN;
   const res = await axios.post(endpoint, data);
-  return res;
+  return res.data;
 };
 export const createUser = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.CREATE_USER;
@@ -76,6 +76,38 @@ export const updateProduct = async (data, productId) => {
 export const deleteProduct = async (productId) => {
   const endpoint =
     getBaseURL() + EndpointConstants.ADMIN.DELETE_PRODUCT + `/${productId}`;
+  const res = await axios.delete(endpoint);
+  return res;
+};
+export const createProductType = async (data) => {
+  const endpoint = getBaseURL() + EndpointConstants.ADMIN.CREATE_PRODUCT_TYPE;
+  const res = await axios.post(endpoint, data);
+  return res;
+};
+export const getAllProductTypes = async () => {
+  const endpoint = getBaseURL() + EndpointConstants.USER.PRODUCT_TYPES;
+  const res = await axios.get(endpoint);
+  return res;
+};
+// export const getProductTypeDetails = async (productId) => {
+//   const endpoint =
+//     getBaseURL() + EndpointConstants.USER.PRODUCT_DETAILS + `/${productId}`;
+//   const res = await axios.get(endpoint);
+//   return res;
+// };
+export const updateProductType = async (data, productId) => {
+  const endpoint =
+    getBaseURL() +
+    EndpointConstants.ADMIN.UPDATE_PRODUCT_TYPE +
+    `/${productId}`;
+  const res = await axios.put(endpoint, data);
+  return res;
+};
+export const deleteProductType = async (productId) => {
+  const endpoint =
+    getBaseURL() +
+    EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE +
+    `/${productId}`;
   const res = await axios.delete(endpoint);
   return res;
 };
