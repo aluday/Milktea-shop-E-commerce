@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Col,
   Row,
@@ -27,6 +27,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
 import { PRODUCT_TYPES } from "../../services/constants";
+import { UserContext } from "../../providers/UserProvider";
 
 const menuItems = PRODUCT_TYPES.map((item) => ({
   label: item.value,
@@ -37,8 +38,8 @@ export const Header = ({ isAdminPage }) => {
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
-  // const { currentUser } = useContext(UserContext);
-  const currentUser = JSON.parse(localStorage.getItem("current_user"));
+  const { getCurrentUserData } = useContext(UserContext);
+  const currentUser = getCurrentUserData();
   const listOfOrders = JSON.parse(localStorage.getItem("listOfOrders"));
 
   const handleOnClickCatalog = (e) => {
@@ -106,17 +107,15 @@ export const Header = ({ isAdminPage }) => {
       navigate("/profile");
     } else if (type === "admin") {
       navigate("/system/admin");
-    } else if (type === "my-order") {
-      // navigate("/my-order", {
-      //   state: {
-      //     id: user?.id,
-      //     token: user?.access_token,
-      //   },
-      // });
     } else {
-      // handleLogout();
+      handleLogout();
     }
     setIsOpenPopup(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
   };
 
   return (
@@ -215,6 +214,20 @@ export const Header = ({ isAdminPage }) => {
                           </span>
                         </Flex>
                       </Popover>
+                    </Space>
+                    <Space className="shoppingCartContainer">
+                      <Badge
+                        count={listOfOrders ? listOfOrders.length : 0}
+                        size="small"
+                        onClick={() => {
+                          if (listOfOrders && listOfOrders.length) {
+                            navigate("/payment");
+                          }
+                        }}
+                      >
+                        <ShoppingCartOutlined />
+                      </Badge>
+                      <span className="accountText">Giỏ hàng</span>
                     </Space>
                   </WrapperAccountBtnGroup>
                 ) : (
