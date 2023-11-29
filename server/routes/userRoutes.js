@@ -1,25 +1,32 @@
 const express = require("express");
 const router = express.Router();
 
-const userControllers = require("../controllers/UserController");
-const productControllers = require("../controllers/ProductController");
+const userController = require("../controllers/UserController");
+const productController = require("../controllers/ProductController");
 const auth = require("../middlerwares/authMidlerware");
-const validation = require("../middlerwares/validation");
+const userMiddleware = require("../middlerwares/userMiddleware");
 
-router.get("/product", productControllers.getAllProduct);
-router.get("/product-detail/:id", productControllers.getOne);
-router.get("/type", productControllers.getAllType);
-// router.get("/:id", productControllers.getofType);
+router.get("/product", productController.getAllProduct);
+router.get("/product-detail/:id", productController.getOne);
+router.get("/type", productController.getAllType);
+// router.get("/:id", productController.getofType);
 
-router.post("/create-user", validation.validateUser, userControllers.createUser);
+router.post(
+  "/create-user",
+  userMiddleware.validateForUserRegistration,
+  userController.createUser
+);
 
-router.post("/sign-in", userControllers.loginUser);
-router.post("/refresh-token", userControllers.refreshToken);
-router.post("/log-out", userControllers.logoutUser);
+router.post(
+  "/sign-in",
+  userMiddleware.validateForUserLogin,
+  userController.loginUser
+);
+router.get("/authorize", auth.authCurrentUser, userController.getCurrentUser);
 
-router.put("/update-user/:id", userControllers.updateUser);
-
-router.get("/authorize", auth.authCurrentUser, userControllers.getCurrentUser);
-router.get("/detail-user/:id", userControllers.getDetailUser);
+router.post("/refresh-token", userController.refreshToken);
+router.post("/log-out", userController.logoutUser);
+router.put("/update-user/:id", userController.updateUser);
+router.get("/detail-user/:id", userController.getDetailUser);
 
 module.exports = router;

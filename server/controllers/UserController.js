@@ -4,7 +4,11 @@ const {
   getRefreshToken,
   generateAccessToken,
   generateRefreshToken,
-} = require("../services/JwtServices.js");
+} = require("../services/JwtService.js");
+const {
+  errorResponse,
+  successResponseWithData,
+} = require("../services/ResponseService.js");
 
 class UserController {
   async createUser(req, res) {
@@ -30,74 +34,39 @@ class UserController {
 
       await newUser.save();
 
-      return res.status(200).send({
-        status: "true",
-        messeage: "Sign-up statusfully",
-        newUser,
-      });
+      return successResponseWithData(
+        res,
+        "The user has successfully registered!",
+        newUser
+      );
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while registing user",
-        error,
-      });
+      return errorResponse(res, "Error while registering user!", error);
     }
   }
 
   async loginUser(req, res) {
     try {
-      const { username, password } = req.body;
-      // console.log(username, password);
-      const checkExist = await Customer.findOne({ username });
-      if (!username || !password) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Username or password is required",
-        });
-      } else if (!checkExist) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Username does not exist",
-        });
-      }
+      const user = req.user;
 
-      const comparePassword = bcrypt.compareSync(password, checkExist.password);
-      if (!comparePassword) {
-        return res.status(200).send({
-          status: "false",
-          messeage: "Password is not correct",
-        });
-      }
       const access_token = await generateAccessToken({
-        id: checkExist.id,
-        isAdmin: checkExist.isAdmin,
+        id: user.id,
       });
-
       const refresh_token = await generateRefreshToken({
-        id: checkExist.id,
-        isAdmin: checkExist.isAdmin,
+        id: user.id,
       });
 
-      const response = { access_token, status: "true", message: "success" };
-      const { ...newRespone } = response;
-      res.cookie("refresh_token", refresh_token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        path: "/",
-      });
-      return res.status(200).send({
-        ...newRespone,
-        refresh_token,
-      });
+      return successResponseWithData(
+        res,
+        "The user has successfully logged in!",
+        {
+          access_token,
+          refresh_token,
+        }
+      );
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while login user",
-        error,
-      });
+      return errorResponse(res, "Error while user is logging in!", error);
     }
   }
 

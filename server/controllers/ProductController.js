@@ -1,7 +1,7 @@
 const {
   mutipleMongooseToObject,
   mongooseToObject,
-} = require("../services/Mongoose");
+} = require("../services/MongooseService");
 
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");

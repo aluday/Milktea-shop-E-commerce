@@ -10,7 +10,7 @@ const getBaseURL = () => {
 export const signin = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.SIGN_IN;
   const res = await axios.post(endpoint, data);
-  return res;
+  return res.data;
 };
 export const createUser = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.CREATE_USER;
