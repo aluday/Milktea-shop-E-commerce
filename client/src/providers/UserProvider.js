@@ -38,6 +38,11 @@ export const UserProvider = ({ children }) => {
       });
   };
 
+  const getCurrentUserData = () => {
+    const currentUserInfo = localStorage.getItem('current_user');
+    return currentUserInfo && JSON.parse(currentUserInfo);
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -46,7 +51,8 @@ export const UserProvider = ({ children }) => {
         password,
         setPassword,
         handleSignin,
-        currentUser
+        currentUser,
+        getCurrentUserData
       }}
     >
       {children}

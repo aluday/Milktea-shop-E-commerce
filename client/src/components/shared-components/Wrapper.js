@@ -1,16 +1,14 @@
 import { Row } from "antd";
 import styled from "styled-components";
 
-export const WrapperHeader = styled(Row)`
-
-`;
+export const WrapperHeader = styled(Row)``;
 
 export const WrapperAccount = styled.div`
   display: flex;
   align-items: center;
-  color: #8B7D6B;
+  color: #8b7d6b;
   gap: 10px;
-`
+`;
 
 export const WrapperContentPopup = styled.p`
   cursor: pointer;
@@ -26,9 +24,13 @@ export const WrapperContentPopup = styled.p`
   .ant-flex .anticon {
     font-size: 16px;
   }
-`
-export const WrapperAccountBtnGroup = styled('ant-space')`
-  .anticon-user, .anticon-shopping-cart, .anticon-login, .anticon-user-add {
+`;
+export const WrapperAccountBtnGroup = styled("ant-space")`
+  .anticon-user,
+  .anticon-shopping-cart,
+  .anticon-login,
+  .anticon-user-add,
+  .anticon-logout {
     background-color: #faf8f1;
     padding: 8px;
     border-radius: 48px;
@@ -43,7 +45,7 @@ export const WrapperAccountBtnGroup = styled('ant-space')`
     margin-right: 6px;
   }
   .accountText {
-    color: #C58940;
+    color: #c58940;
     font-weight: bold;
   }
-`
+`;
