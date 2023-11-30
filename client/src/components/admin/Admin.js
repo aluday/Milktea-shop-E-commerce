@@ -5,14 +5,14 @@ import {
   RestOutlined,
   ShoppingOutlined,
   // DashboardOutlined,
-  AppstoreAddOutlined
+  AppstoreAddOutlined,
 } from "@ant-design/icons";
 import { getItem } from "../../services/common";
 import Header from "../shared-components/Header";
 import { UserManagement } from "./user-management/UserManagement";
 import { Product } from "./product/Product";
 import { Orders } from "./orders/Orders";
-import { ProductType } from './product-type/ProductType';
+import { ProductType } from "./product-type/ProductType";
 // import { Dashboard } from './dashboard/Dashboard';
 import "./Admin.css";
 import {
@@ -21,17 +21,16 @@ import {
 } from "../../services/endpoint-services";
 import * as messages from "../../services/messages";
 import Loading from "../shared-components/Loading";
-import mockData from "../../mockData.json";
+// import mockData from "../../mockData.json";
 
-const productTypes = mockData.types.map((item, index) => ({
-  _id: item._id,
-  columnNo: index + 1,
-  typeName: item.type_name,
-}));
+// const productTypes = mockData.types.map((item, index) => ({
+//   _id: item._id,
+//   columnNo: index + 1,
+//   typeName: item.type_name,
+// }));
 
 export const AdminPage = () => {
   const [keySelected, setKeySelected] = useState("");
-  // const [productTypes, setProductTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const items = [
@@ -46,41 +45,45 @@ export const AdminPage = () => {
     switch (key) {
       case "users":
         return <UserManagement />;
-      // case "type": 
+      // case "type":
       //   return <ProductType />
       case "products":
-        return <Product productTypes={productTypes} />;
+        return <Product />;
       case "orders":
         return <Orders />;
       default:
         // return <Dashboard />;
-        return <ProductType productTypes={productTypes} />
+        return <ProductType />;
     }
   };
 
   const handleOnCLick = ({ key }) => {
-    // if (key === "products") {
-    //   setIsLoading(true);
-    //   getAllProductTypes()
-    //     .then((res) => {
-    //       if (res && res.data && res.data.length > 0) {
-    //         setProductTypes(res.data);
-    //         setKeySelected(key);
-    //         setIsLoading(false);
-    //       } else {
-    //         messages.warning("Bạn không được phép truy cập vào trang Quản lý sản phẩm!", "Yêu cầu: Phải có ít nhất một mã loại sản phẩm. Bạn vui lòng nhập mã loại sản phẩm trước khi quay lại trang này.");
-    //         setIsLoading(false);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       messages.error("Rất tiếc, đã xảy ra lỗi! :(", "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ.");
-    //       handleError(err);     
-    //       setIsLoading(false);       
-    //     });
-    // } else {
-    //   setKeySelected(key);
-    // }
-    setKeySelected(key);
+    if (key === "products") {
+      setIsLoading(true);
+      getAllProductTypes()
+        .then((res) => {
+          if (res && res.status && res.data.length > 0) {
+            setKeySelected(key);
+            setIsLoading(false);
+          } else {
+            messages.warning(
+              "Bạn không được phép truy cập vào trang Quản lý sản phẩm!",
+              "Yêu cầu: Phải có ít nhất một mã loại sản phẩm. Bạn vui lòng nhập mã loại sản phẩm trước khi quay lại trang này."
+            );
+            setIsLoading(false);
+          }
+        })
+        .catch((err) => {
+          messages.error(
+            "Rất tiếc, đã xảy ra lỗi! :(",
+            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+          );
+          handleError(err);
+          setIsLoading(false);
+        });
+    } else {
+      setKeySelected(key);
+    }
   };
 
   return (
@@ -94,7 +97,6 @@ export const AdminPage = () => {
           items={items}
           onClick={handleOnCLick}
           selectedKeys={[keySelected]}
-          // onSelect={handleOnCLick}
         />
         <div className="adminMenuContent">{renderPage(keySelected)}</div>
       </div>

@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Form, Space, Flex } from "antd";
+import { Form } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
-  SearchOutlined,
+  // SearchOutlined,
 } from "@ant-design/icons";
-import InputComponent from "../../shared-components/Input";
+// import InputComponent from "../../shared-components/Input";
 import ModalComponent from "../../shared-components/Modal";
 import Loading from "../../shared-components/Loading";
 import { ProductForm } from "./ProductForm";
@@ -24,9 +24,9 @@ import {
   deleteProduct,
   handleError,
 } from "../../../services/endpoint-services";
-import mockData from '../../../mockData.json';
+// import mockData from "../../../mockData.json";
 
-export const Product = ({ productTypes }) => {
+export const Product = () => {
   const [isLoading, setIsLoading] = useState(false);
   /* Starting variables for AddProduct component */
   const [productForm] = Form.useForm();
@@ -43,7 +43,7 @@ export const Product = ({ productTypes }) => {
 
   /* Starting variables for ProductList component */
   const [productList, setProductList] = useState([]);
-  const [rowSelected, setRowSelected] = useState("");
+  // const [rowSelected, setRowSelected] = useState("");
   /* Ending variables for ProductList component */
 
   /* Starting variables for ProductDetails component */
@@ -54,7 +54,7 @@ export const Product = ({ productTypes }) => {
   /* Ending variables for ProductDetails component */
 
   const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
-  const searchInput = useRef(null);
+  // const searchInput = useRef(null);
   const [forceRerender, setForceRerender] = useState(1);
 
   const renderActions = (_, record) => {
@@ -119,71 +119,71 @@ export const Product = ({ productTypes }) => {
       });
   };
 
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div className="searchContainer" onKeyDown={(e) => e.stopPropagation()}>
-        <InputComponent
-          className="searchInput"
-          ref={searchInput}
-          placeholder={`Tìm kiếm tên sản phẩm`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => {
-            confirm();
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => {
-              confirm();
-            }}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-            }}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1890ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-  });
+  // const getColumnSearchProps = (dataIndex) => ({
+  //   filterDropdown: ({
+  //     setSelectedKeys,
+  //     selectedKeys,
+  //     confirm,
+  //     clearFilters,
+  //   }) => (
+  //     <div className="searchContainer" onKeyDown={(e) => e.stopPropagation()}>
+  //       <InputComponent
+  //         className="searchInput"
+  //         ref={searchInput}
+  //         placeholder={`Tìm kiếm tên sản phẩm`}
+  //         value={selectedKeys[0]}
+  //         onChange={(e) =>
+  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
+  //         }
+  //         onPressEnter={() => {
+  //           confirm();
+  //         }}
+  //       />
+  //       <Space>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => {
+  //             confirm();
+  //           }}
+  //           icon={<SearchOutlined />}
+  //           size="small"
+  //           style={{ width: 90 }}
+  //         >
+  //           Search
+  //         </Button>
+  //         <Button
+  //           onClick={() => {
+  //             clearFilters();
+  //           }}
+  //           size="small"
+  //           style={{ width: 90 }}
+  //         >
+  //           Reset
+  //         </Button>
+  //       </Space>
+  //     </div>
+  //   ),
+  //   filterIcon: (filtered) => (
+  //     <SearchOutlined
+  //       style={{
+  //         color: filtered ? "#1890ff" : undefined,
+  //       }}
+  //     />
+  //   ),
+  //   onFilter: (value, record) =>
+  //     record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+  //   onFilterDropdownOpenChange: (visible) => {
+  //     if (visible) {
+  //       setTimeout(() => searchInput.current?.select(), 100);
+  //     }
+  //   },
+  // });
 
   const displayedColumns = [
     {
       title: "Tên sản phẩm",
       dataIndex: "productName",
-      ...getColumnSearchProps("productName"),
+      // ...getColumnSearchProps("productName"),
     },
     {
       title: "Giá",
@@ -275,9 +275,9 @@ export const Product = ({ productTypes }) => {
     }
   };
 
-  const handleSelectRow = (record, index) => {
-    // console.log("record", index);
-  };
+  // const handleSelectRow = (record, index) => {
+  //   console.log("record", index);
+  // };
 
   const handleDeleteProduct = () => {
     deleteProduct(productId)
@@ -346,7 +346,7 @@ export const Product = ({ productTypes }) => {
         sizeValue={sizeValue}
         price={price}
         image={image}
-        productTypes={productTypes}
+        productTypes={[]}
         isProductModalOpen={isProductModalOpen}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
@@ -364,8 +364,8 @@ export const Product = ({ productTypes }) => {
       {/* Starting Product list */}
       <ProductList
         columns={displayedColumns}
-        dataTable={mockData.products}
-        handleSelectRow={handleSelectRow}
+        dataTable={productList}
+        // handleSelectRow={handleSelectRow}
       />
       {/* Ending Product list */}
 
@@ -382,7 +382,7 @@ export const Product = ({ productTypes }) => {
         sizeValue={sizeValue}
         price={price}
         image={image}
-        productTypes={productTypes}
+        productTypes={[]}
         isProductModalOpen={isOpenProductDetailsModal}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
@@ -396,7 +396,7 @@ export const Product = ({ productTypes }) => {
         }}
       />
       {/* Ending Update Product Form modal */}
-        
+
       <ModalComponent
         title="Xóa sản phẩm"
         open={showConfirmDeleteDialog}

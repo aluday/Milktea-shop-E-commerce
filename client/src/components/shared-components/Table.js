@@ -30,16 +30,16 @@ const TableComponent = (props) => {
 
   return (
     <div>
-      {!!rowSelectedKeys.length && (
+      {/* {!!rowSelectedKeys.length && (
         <div className="deleleAllBtn" onClick={handleDeleteAll}>
           Xóa tất cả
         </div>
-      )}
+      )} */}
       <Table
-        rowSelection={{
-          type: selectionType,
-          ...rowSelection,
-        }}
+        // rowSelection={{
+        //   type: selectionType,
+        //   ...rowSelection,
+        // }}
         columns={columns}
         dataSource={dataSource}
         {...props}

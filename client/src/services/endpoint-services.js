@@ -82,12 +82,12 @@ export const deleteProduct = async (productId) => {
 export const createProductType = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.ADMIN.CREATE_PRODUCT_TYPE;
   const res = await axios.post(endpoint, data);
-  return res;
+  return res.data;
 };
 export const getAllProductTypes = async () => {
   const endpoint = getBaseURL() + EndpointConstants.USER.PRODUCT_TYPES;
   const res = await axios.get(endpoint);
-  return res;
+  return res.data;
 };
 export const updateProductType = async (data, typeId) => {
   const endpoint =
