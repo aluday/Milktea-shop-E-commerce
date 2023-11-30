@@ -5,6 +5,7 @@ const {
 
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");
+const Type  = require("../models/typeSchema");
 
 class ProductController {
   async getAllProduct(req, res) {
@@ -93,10 +94,9 @@ class ProductController {
       });
     }
   }
-
   async getAllType(req, res) {
     try {
-      const types = await Product.find({}).distinct('type');
+      const types = await Type.find();
       return res.status(200).send({
           status: true,
           message: 'All Type Product',
@@ -112,18 +112,17 @@ class ProductController {
     }
   }
 
-  // async getofType(req, res) {
+  // async getAllOfType(req, res) {
   //   try {
   //     const typeId = req.params.id;
-  //     // console.log(id);
-  //     const products = await typeProduct
-  //       .findById({ _id: typeId })
-  //       .populate("Product");
-
+  //     const products = await Product.find({type: typeId})
+  //     products.forEach((product) => {
+  //       product.image = baseUrl + product.image;
+  //     });
   //     return res.status(200).send({
   //       status: true,
-  //       message: "",
-  //       products: products,
+  //       message: "Type product list",
+  //       data: products,
   //     });
   //   } catch (error) {
   //     console.log(error);

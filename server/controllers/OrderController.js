@@ -1,7 +1,7 @@
 const Customer = require("../models/customerSchema");
 const Order = require("../models/orderSchema");
 const Product = require("../models/productSchema");
-
+const baseUrl = "http://localhost:3001";
 class OrderController {
   async createOrder(req, res) {
     try {
@@ -37,7 +37,6 @@ class OrderController {
         });
       }
       const order = await Order.findById({ _id: orderId });
-      // console.log(order);
       if (!order) {
         return res.status(200).json({
           success: "false",
@@ -45,12 +44,10 @@ class OrderController {
         });
       }
       const userId = await order.user;
-      // console.log(userId);
       const user = await Customer.findById(
         { _id: userId },
         "-password -isAdmin"
       );
-      console.log(user);
       return res.status(200).json({
         success: "true",
         message: "Order detail",
@@ -150,17 +147,53 @@ class OrderController {
 
   async getAllOrder(req, res) {
     try {
-      const orders = await Order.find().sort({ createdAt: -1, updatedAt: -1 });
+      let orders = await Order.find()
+        .sort({ createdAt: -1, updatedAt: -1 })
+        .populate({
+          path: 'orderItems.product',
+          model: 'Product',
+          select: '-_id -size -basicPrice -countInStock'
+        })
+        .populate({
+          path: 'user',
+          select: '-_id -isAdmin -password -username',
+          model: 'Customer', 
+        });
+      
       if (!orders) {
         return res.status(200).json({
           success: "false",
           message: "Order list is empty",
         });
       }
+
+      const transformedOrders = orders.map((order) => {
+        const transformedOrderItems = order.orderItems.map((orderItem) => ({
+          productName: orderItem.product.productName,
+          image: baseUrl + orderItem.product.image,
+          discount: orderItem.product.discount,
+          amount: orderItem.amount,
+          size: orderItem.size,
+        }));
+  
+        return {
+          _id: order._id,
+          orderNo: order.orderNo,
+          orderItems: transformedOrderItems,
+          totalPrice: order.totalPrice,
+          user: order.user,
+          isPaid: order.isPaid,
+          isDelivered: order.isDelivered,
+          createdAt: order.createdAt,
+          updatedAt: order.updatedAt,
+          __v: order.__v,
+        };
+      });
+  
       return res.status(200).json({
         success: "true",
         message: "List orders",
-        data: orders,
+        data: transformedOrders,
       });
     } catch (error) {
       console.log(error);
