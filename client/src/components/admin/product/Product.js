@@ -22,12 +22,14 @@ import {
   getProductDetails,
   updateProduct,
   deleteProduct,
+  getAllProductTypes,
   handleError,
 } from "../../../services/endpoint-services";
 // import mockData from "../../../mockData.json";
 
 export const Product = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [productTypes, setProductTypes] = useState([]);
   /* Starting variables for AddProduct component */
   const [productForm] = Form.useForm();
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -109,13 +111,18 @@ export const Product = () => {
           productDetailsForm.setFieldValue("image", productData.image);
           setImage(productData.image);
           setIsOpenProductDetailsModal(true);
+        } else {
+          messages.errorNotification("Error!", res.message);
         }
       })
       .catch((err) => {
         setIsLoading(false);
         handleError(err);
         resetProductFormData();
-        messages.error();
+        messages.error(
+          "Rất tiếc, đã xảy ra lỗi! :(",
+          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+        );
       });
   };
 
@@ -203,51 +210,89 @@ export const Product = () => {
       render: renderActions,
     },
   ];
-
+  
   const handleCreateOrUpdateProduct = (action) => {
     setIsLoading(true);
-    const sizeData =
-      action === "add"
-        ? productForm.getFieldValue("size")
-        : productDetailsForm.getFieldValue("size");
-    const formData = new FormData();
-    formData.append("productName", productForm.getFieldValue("productName"));
-    formData.append("basicPrice", productForm.getFieldValue("basicPrice"));
-    formData.append("discount", productForm.getFieldValue("discount"));
-    formData.append("type", productForm.getFieldValue("type"));
-    formData.append("countInStock", productForm.getFieldValue("countInStock"));
-    formData.append("size", JSON.stringify(sizeData));
-    formData.append("image", productForm.getFieldValue("image"));
 
     if (action === "add") {
+      const sizeData = productForm.getFieldValue("size");
+      const formData = new FormData();
+      formData.append("productName", productForm.getFieldValue("productName"));
+      formData.append("basicPrice", productForm.getFieldValue("basicPrice"));
+      formData.append("discount", productForm.getFieldValue("discount"));
+      formData.append("type", productForm.getFieldValue("type"));
+      formData.append(
+        "countInStock",
+        productForm.getFieldValue("countInStock")
+      );
+      formData.append("size", JSON.stringify(sizeData));
+      formData.append("image", productForm.getFieldValue("image"));
+      
       createProduct(formData)
         .then((res) => {
           if (res.status === 200) {
             setIsLoading(false);
             resetProductFormData("add");
             setForceRerender((cur) => cur + 1);
-            messages.success();
+            messages.successNotification(
+              "Success!",
+              "Tạo sản phẩm thành công."
+            );
+          } else {
+            messages.errorNotification("Error!", res.message);
           }
         })
         .catch((err) => {
           setIsLoading(false);
           handleError(err);
           resetProductFormData("add");
-          messages.error();
+          messages.error(
+            "Rất tiếc, đã xảy ra lỗi! :(",
+            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+          );
         });
     } else if (action === "update") {
+      const sizeData = productDetailsForm.getFieldValue("size");
+      const formData = new FormData();
+      formData.append(
+        "productName",
+        productDetailsForm.getFieldValue("productName")
+      );
+      formData.append(
+        "basicPrice",
+        productDetailsForm.getFieldValue("basicPrice")
+      );
+      formData.append("discount", productDetailsForm.getFieldValue("discount"));
+      formData.append("type", productDetailsForm.getFieldValue("type"));
+      formData.append(
+        "countInStock",
+        productDetailsForm.getFieldValue("countInStock")
+      );
+      formData.append("size", JSON.stringify(sizeData));
+      formData.append("image", productDetailsForm.getFieldValue("image"));
+
       updateProduct(formData, productId)
-        .then(() => {
+        .then((res) => {
+          if (res && res.status) {
+            messages.successNotification(
+              "Success!",
+              "Cập nhật sản phẩm thành công."
+            );
+          } else {
+            messages.errorNotification("Error!", res.message);
+          }
           setIsLoading(false);
           resetProductFormData("update");
           setForceRerender((cur) => cur + 1);
-          messages.success();
         })
         .catch((err) => {
           setIsLoading(false);
           handleError(err);
           resetProductFormData("update");
-          messages.error();
+          messages.error(
+            "Rất tiếc, đã xảy ra lỗi! :(",
+            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+          );
         });
     }
   };
@@ -283,15 +328,24 @@ export const Product = () => {
     deleteProduct(productId)
       .then((res) => {
         if (res.status === 200) {
-          messages.success();
+          console.log(res);
+          messages.successNotification(
+            "Success!",
+            "Xóa sản phẩm thành công."
+          );
           setShowConfirmDeleteDialog(false);
           setForceRerender((cur) => cur + 1);
+        } else {
+          messages.errorNotification("Error!", res.message);
         }
       })
       .catch((err) => {
         handleError(err);
         resetProductFormData("update");
-        messages.error();
+        messages.error(
+          "Rất tiếc, đã xảy ra lỗi! :(",
+          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+        );
       });
   };
 
@@ -329,6 +383,31 @@ export const Product = () => {
       });
   }, [forceRerender]);
 
+  useEffect(() => {
+    getAllProductTypes()
+      .then((res) => {
+        if (res && res.status && res.data.length > 0) {
+          const productTypeData = res.data.map((item, index) => ({
+            _id: item._id,
+            typeName: item.type_name,
+          }));
+          setProductTypes(productTypeData);
+          setIsLoading(false);
+        } else {
+          messages.error("Error!", res.message);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        messages.error(
+          "Rất tiếc, đã xảy ra lỗi! :(",
+          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+        );
+        handleError(err);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div>
       <h2>Quản lý sản phẩm</h2>
@@ -346,7 +425,7 @@ export const Product = () => {
         sizeValue={sizeValue}
         price={price}
         image={image}
-        productTypes={[]}
+        productTypes={productTypes}
         isProductModalOpen={isProductModalOpen}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
@@ -382,7 +461,7 @@ export const Product = () => {
         sizeValue={sizeValue}
         price={price}
         image={image}
-        productTypes={[]}
+        productTypes={productTypes}
         isProductModalOpen={isOpenProductDetailsModal}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
