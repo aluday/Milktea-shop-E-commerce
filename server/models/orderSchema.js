@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
+    orderNo: {type: String, default: new Date().valueOf().toString()},
     orderItems: [
       {
         product: {

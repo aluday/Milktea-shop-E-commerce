@@ -35,7 +35,7 @@ const ProductSchema = new Schema({
       },
     },
   ],
-  typeId: {
+  type: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Type",
     require: true,

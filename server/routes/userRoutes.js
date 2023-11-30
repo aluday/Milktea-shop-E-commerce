@@ -9,7 +9,7 @@ const userMiddleware = require("../middlerwares/userMiddleware");
 router.get("/product", productController.getAllProduct);
 router.get("/product-detail/:id", productController.getOne);
 router.get("/type", productController.getAllType);
-// router.get("/:id", productController.getofType);
+router.get("/get-all-of-type/:id", productController.getAllOfType);
 
 router.post(
   "/create-user",
@@ -28,5 +28,6 @@ router.post("/refresh-token", userController.refreshToken);
 router.post("/log-out", userController.logoutUser);
 router.put("/update-user/:id", userController.updateUser);
 router.get("/detail-user/:id", userController.getDetailUser);
+
 
 module.exports = router;
