@@ -1,11 +1,13 @@
-import { Spin } from "antd";
+import { Spin, Flex } from "antd";
 import React from "react";
 
-const Loading = ({ children, isLoading, delay = 200 }) => {
+const Loading = ({ children, isLoading, delay = 100 }) => {
   return (
-    <Spin spinning={isLoading} delay={delay}>
-      {children}
-    </Spin>
+    <Flex className="loadingContainer" align="center" justify="center">
+      <Spin className="loading" spinning={isLoading} delay={delay} size="large">
+        {children}
+      </Spin>
+    </Flex>
   );
 };
 

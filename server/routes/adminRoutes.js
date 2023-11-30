@@ -12,7 +12,7 @@ router.post(
   adminControllers.addProduct
 );
 router.put("/update-type/:id", adminControllers.updateType);
-router.put("/update-product/:id", adminControllers.updateProduct);
+router.put("/update-product/:id", store.single("image"), adminControllers.updateProduct);
 router.delete("/delete-product/:id", adminControllers.deleteProduct);
 router.delete("/delete-type/:id", adminControllers.deleteType);
 router.delete("/delete-user/:id", userControllers.deleteUser);

@@ -17,7 +17,7 @@ const ProductSchema = new Schema({
   },
   discount: {
     type: Number,
-    require: false
+    default: 0,
   },
   countInStock: {
     type: Number,

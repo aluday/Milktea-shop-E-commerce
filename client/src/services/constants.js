@@ -14,7 +14,8 @@ export const EndpointConstants = {
     AUTHORIZE: "/authorize",
     PRODUCT_DETAILS: "/product-detail",
     CREATE_ORDER: "/order/create-order",
-    PRODUCT_TYPES: "/type"
+    PRODUCT_TYPES: "/type",
+    ORDERS: "/order/get-all-order"
   },
   ADMIN: {
     CREATE_PRODUCT: "/admin/create-product",

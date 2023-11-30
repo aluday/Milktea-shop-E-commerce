@@ -3,7 +3,6 @@ import { WrapperUploadFile } from "./ProductWrapper";
 import { Button, Form, Input, Select, Space } from "antd";
 import { PlusOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import ModalComponent from "../../shared-components/Modal";
-import { PRODUCT_TYPES } from "../../../services/constants";
 import "./Product.css";
 
 export const ProductForm = (props) => {
@@ -19,6 +18,7 @@ export const ProductForm = (props) => {
     sizeValue,
     price,
     image,
+    productTypes,
     handleChange,
     isProductModalOpen,
     handleOpenProductModal,
@@ -103,9 +103,9 @@ export const ProductForm = (props) => {
               name="type"
               value={type}
               onChange={handleChange}
-              options={PRODUCT_TYPES.map((item) => ({
-                value: item.type,
-                label: item.value,
+              options={productTypes && productTypes.length && productTypes.map((item) => ({
+                value: item._id,
+                label: item.typeName,
               }))}
             />
           </Form.Item>

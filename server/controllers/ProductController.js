@@ -5,7 +5,7 @@ const {
 
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");
-const Type  = require("../models/typeSchema");
+const Type = require("../models/typeSchema");
 
 class ProductController {
   async getAllProduct(req, res) {
@@ -71,7 +71,6 @@ class ProductController {
   async getOne(req, res) {
     try {
       const { id } = req.params;
-      console.log(req);
       const product = await Product.findById(id);
       product.image = baseUrl + product.image;
       if (!product) {
@@ -96,7 +95,7 @@ class ProductController {
   }
   async getAllType(req, res) {
     try {
-      const types = await Type.find();
+      const types = await Type.find({});
       return res.status(200).send({
           status: true,
           message: 'All Type Product',
