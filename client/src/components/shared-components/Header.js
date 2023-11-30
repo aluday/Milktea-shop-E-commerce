@@ -92,16 +92,6 @@ export const Header = ({ isAdminPage }) => {
     ];
   };
 
-  const renderAdminInfo = () => {
-    return (
-      <div className="adminInfoContainer">
-        <p>Trang cá nhân</p>
-        <Divider />
-        <p>Đăng xuất</p>
-      </div>
-    );
-  };
-
   const handleClickNavigate = (type) => {
     if (type === "profile") {
       navigate("/profile");
@@ -147,7 +137,7 @@ export const Header = ({ isAdminPage }) => {
               </Space>
               <Space>
                 <Popover
-                  content={renderAdminInfo}
+                  content={content}
                   trigger="click"
                   open={isOpenAdminInfoPopup}
                   placement="bottomLeft"

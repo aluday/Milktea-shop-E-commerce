@@ -89,12 +89,6 @@ export const getAllProductTypes = async () => {
   const res = await axios.get(endpoint);
   return res;
 };
-// export const getProductTypeDetails = async (productId) => {
-//   const endpoint =
-//     getBaseURL() + EndpointConstants.USER.PRODUCT_DETAILS + `/${productId}`;
-//   const res = await axios.get(endpoint);
-//   return res;
-// };
 export const updateProductType = async (data, typeId) => {
   const endpoint =
     getBaseURL() +
@@ -109,6 +103,11 @@ export const deleteProductType = async (typeId) => {
     EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE +
     `/${typeId}`;
   const res = await axios.delete(endpoint);
+  return res;
+};
+export const getAllOrders = async () => {
+  const endpoint = getBaseURL() + EndpointConstants.USER.ORDERS;
+  const res = await axios.get(endpoint);
   return res;
 };
 /* ENDING ADMIN REST DEFINATIONS */
