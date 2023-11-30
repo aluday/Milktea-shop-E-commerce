@@ -95,19 +95,19 @@ export const getAllProductTypes = async () => {
 //   const res = await axios.get(endpoint);
 //   return res;
 // };
-export const updateProductType = async (data, productId) => {
+export const updateProductType = async (data, typeId) => {
   const endpoint =
     getBaseURL() +
     EndpointConstants.ADMIN.UPDATE_PRODUCT_TYPE +
-    `/${productId}`;
+    `/${typeId}`;
   const res = await axios.put(endpoint, data);
   return res;
 };
-export const deleteProductType = async (productId) => {
+export const deleteProductType = async (typeId) => {
   const endpoint =
     getBaseURL() +
     EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE +
-    `/${productId}`;
+    `/${typeId}`;
   const res = await axios.delete(endpoint);
   return res;
 };

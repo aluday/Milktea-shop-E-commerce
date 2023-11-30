@@ -126,3 +126,9 @@
   font-size: 18px;
 }
 /* END ADMIN HEADER STYLINGS */
+
+.loadingContainer {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}

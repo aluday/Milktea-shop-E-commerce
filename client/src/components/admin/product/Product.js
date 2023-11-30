@@ -1,5 +1,9 @@
+/*
+ * Copyright © 2023 ICON Clinical Research Ltd.
+ * All rights reserved.
+ */
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Form, Space } from "antd";
+import { Button, Form, Space, Flex } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -20,8 +24,9 @@ import {
   deleteProduct,
   handleError,
 } from "../../../services/endpoint-services";
+import mockData from '../../../mockData.json';
 
-export const Product = () => {
+export const Product = ({ productTypes }) => {
   const [isLoading, setIsLoading] = useState(false);
   /* Starting variables for AddProduct component */
   const [productForm] = Form.useForm();
@@ -77,7 +82,7 @@ export const Product = () => {
     setIsLoading(true);
     getProductDetails(productId)
       .then((res) => {
-        setIsLoading(true);
+        setIsLoading(false);
         if (res.data && res.data.product) {
           const productData = res.data.product;
           // set product form data
@@ -107,7 +112,7 @@ export const Product = () => {
         }
       })
       .catch((err) => {
-        setIsLoading(true);
+        setIsLoading(false);
         handleError(err);
         resetProductFormData();
         messages.error();
@@ -341,6 +346,7 @@ export const Product = () => {
         sizeValue={sizeValue}
         price={price}
         image={image}
+        productTypes={productTypes}
         isProductModalOpen={isProductModalOpen}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
@@ -358,7 +364,7 @@ export const Product = () => {
       {/* Starting Product list */}
       <ProductList
         columns={displayedColumns}
-        dataTable={productList}
+        dataTable={mockData.products}
         handleSelectRow={handleSelectRow}
       />
       {/* Ending Product list */}
@@ -376,6 +382,7 @@ export const Product = () => {
         sizeValue={sizeValue}
         price={price}
         image={image}
+        productTypes={productTypes}
         isProductModalOpen={isOpenProductDetailsModal}
         handleChange={handleCreateUpdateProductFormChange}
         handleOpenProductModal={() => {
@@ -389,7 +396,7 @@ export const Product = () => {
         }}
       />
       {/* Ending Update Product Form modal */}
-
+        
       <ModalComponent
         title="Xóa sản phẩm"
         open={showConfirmDeleteDialog}
