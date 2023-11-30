@@ -6,6 +6,7 @@ const {
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");
 const Type  = require("../models/typeSchema");
+const mongoose  = require("mongoose");
 
 class ProductController {
   async getAllProduct(req, res) {
@@ -112,27 +113,27 @@ class ProductController {
     }
   }
 
-  // async getAllOfType(req, res) {
-  //   try {
-  //     const typeId = req.params.id;
-  //     const products = await Product.find({type: typeId})
-  //     products.forEach((product) => {
-  //       product.image = baseUrl + product.image;
-  //     });
-  //     return res.status(200).send({
-  //       status: true,
-  //       message: "Type product list",
-  //       data: products,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).send({
-  //       status: "false",
-  //       message: "Error while get product",
-  //       error,
-  //     });
-  //   }
-  // }
+  async getAllOfType(req, res) {
+    try {
+      const typeId = req.params.id;
+      const products = await Product.findById({type: typeId});
+      products.forEach((product) => {
+        product.image = baseUrl + product.image;
+      });
+      return res.status(200).send({
+        status: true,
+        message: "Type product list",
+        data: products,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while get product",
+        error,
+      });
+    }
+  }
 }
 
 module.exports = new ProductController();
