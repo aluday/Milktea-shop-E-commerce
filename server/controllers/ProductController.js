@@ -2,7 +2,7 @@ const {
   mutipleMongooseToObject,
   mongooseToObject,
 } = require("../services/MongooseService");
-
+const mongoose = require('mongoose');
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");
 const Type = require("../models/typeSchema");
@@ -59,6 +59,40 @@ class ProductController {
         pageCurrent: Number(page) + 1,
         totalPage: Math.ceil(total / Number(limit)),
       });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: "false",
+        message: "Error while getting product",
+        error,
+      });
+    }
+  }
+  async getProductsByType(req, res) {
+    try {
+      const typeId = new mongoose.mongo.ObjectId(req.params.id);
+      const products = await Product.find({type: typeId});
+      
+      if (!products) {
+        return res.status(404).send({
+          status: "false",
+          message: "No product found",
+        });
+      }
+
+      products.forEach((product) => {
+        product.image = baseUrl + product.image;
+      });
+      const modifiedProducts = products.map((product) => ({
+        ...product._doc
+      }));
+
+      return res.status(200).send({
+        status: true,
+        message: "All products lists",
+        products: mutipleMongooseToObject(modifiedProducts),
+      });
+
     } catch (error) {
       console.log(error);
       return res.status(500).send({

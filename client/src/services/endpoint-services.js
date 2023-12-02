@@ -61,6 +61,11 @@ export const getAllProducts = async (search, limit) => {
   const res = await axios.get(endpoint);
   return res;
 };
+export const getProductsByType = async (typeId) => {
+  const endpoint = getBaseURL() + `/product/type/${typeId}`;
+  const res = await axios.get(endpoint);
+  return res.data;
+};
 export const getProductDetails = async (productId) => {
   const endpoint =
     getBaseURL() + EndpointConstants.USER.PRODUCT_DETAILS + `/${productId}`;

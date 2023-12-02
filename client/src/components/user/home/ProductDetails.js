@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
-import slider1 from "../../../assets/slides/slider_2.webp";
-import slider2 from "../../../assets/slides/slider_3.webp";
-import SliderComponent from "../../shared-components/Slider";
+import React, { useEffect, useState } from "react";
 import { WrapperProducts } from "./HomeWrapper";
 import CardProduct from "./Card";
-import "./Home.css";
-import Header from "../../shared-components/Header";
 import {
   getAllProducts,
+  getProductsByType,
   handleError,
 } from "../../../services/endpoint-services";
+import * as message from "../../../services/messages";
 import OrderModal from "./OrderModal";
+import { useLocation } from "react-router-dom";
+import Header from "../../shared-components/Header";
+import { Empty } from "antd";
 
 export const ProductDetails = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
   const [productDetails, setProductDetails] = useState(null);
   const [openOrderModal, setOpenOrderModal] = useState(false);
@@ -72,40 +73,71 @@ export const ProductDetails = () => {
   };
 
   useEffect(() => {
-    getAllProducts()
-      .then((res) => {
-        if (res.data && res.data.products) {
-          const productData = res.data.products;
-          setProducts(productData);
-        }
-      })
-      .catch((err) => {
-        handleError(err);
-      });
-  }, []);
+    if (location.state && location.state.typeId) {
+      getProductsByType(location.state.typeId)
+        .then((res) => {
+          console.log(res);
+          if (res.status) {
+            setProducts(res.products);
+          } else {
+            message.error("Error!", res.message);
+          }
+        })
+        .catch((err) => {
+          handleError(err);
+          message.error(
+            "Rất tiếc, đã xảy ra lỗi! :(",
+            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+          );
+        });
+    } else {
+      getAllProducts()
+        .then((res) => {
+          if (res.data && res.data.products) {
+            const productData = res.data.products;
+            setProducts(productData);
+          } else {
+            message.error("Error!", res.message);
+          }
+        })
+        .catch((err) => {
+          handleError(err);
+          message.error(
+            "Rất tiếc, đã xảy ra lỗi! :(",
+            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+          );
+        });
+    }
+  }, [location.state]);
 
   return (
     <>
-      <Header />
-      <div className="body">
-        <SliderComponent arrImg={[slider1, slider2]} />
-        <div className="container">
-          <WrapperProducts>
-            {products &&
-              products.length > 0 &&
-              products.map((product) => {
-                return (
-                  <CardProduct
-                    product={product}
-                    handleClick={() => {
-                      handleOpenOrderModal(product);
-                    }}
-                  />
-                );
-              })}
-          </WrapperProducts>
-        </div>
-      </div>
+      {location.state && (
+        <>
+          <Header />
+          <h2 className="magin-left-32 magin-top-32">
+            {location.state.typeName}
+          </h2>
+        </>
+      )}
+      <WrapperProducts>
+        {products && products.length > 0 ? (
+          products.map((product) => {
+            return (
+              <div className={location.state && "magin-left-32"}>
+                <CardProduct
+                  product={product}
+                  handleClick={() => {
+                    handleOpenOrderModal(product);
+                  }}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <Empty />
+        )}
+      </WrapperProducts>
       {openOrderModal && (
         <OrderModal
           open={openOrderModal}

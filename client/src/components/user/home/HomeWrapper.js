@@ -31,6 +31,9 @@ export const WrapperProducts = styled.div`
   margin-top: 50px;
   flex-wrap: wrap;
   align-items: center;
+  .ant-empty {
+    margin: 0 auto;
+  }
 `;
 
 export const WrapperModal = styled('ant-modal')`

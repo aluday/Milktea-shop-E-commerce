@@ -4,6 +4,7 @@ import { SigninPage } from "./components/user/account/Signin";
 import { SignupPage } from "./components/user/account/Signup";
 import { Profile } from "./components/user/account/Profile";
 import { PaymentDetails } from "./components/user/payment/PaymentDetails";
+import ProductDetails from "./components/user/home/ProductDetails";
 
 export const appRoutes = [
   {
@@ -25,6 +26,10 @@ export const appRoutes = [
   {
     path: "/payment",
     page: PaymentDetails,
+  },
+  {
+    path: "/product-details",
+    page: ProductDetails,
   },
   {
     path: "/system/admin",

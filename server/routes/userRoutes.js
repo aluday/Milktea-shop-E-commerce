@@ -7,6 +7,7 @@ const auth = require("../middlerwares/authMidlerware");
 const userMiddleware = require("../middlerwares/userMiddleware");
 
 router.get("/product", productController.getAllProduct);
+router.get("/product/type/:id", productController.getProductsByType);
 router.get("/product-detail/:id", productController.getOne);
 router.get("/type", productController.getAllType);
 // router.get("/get-all-of-type/:id", productController.getAllOfType);

@@ -1,15 +1,5 @@
-import React, { useState, useContext } from "react";
-import {
-  Col,
-  Row,
-  Input,
-  Space,
-  Flex,
-  Popover,
-  Badge,
-  Divider,
-  Menu,
-} from "antd";
+import React, { useState, useContext, useEffect } from "react";
+import { Col, Row, Input, Space, Flex, Popover, Badge, Menu } from "antd";
 import { WrapperContentPopup, WrapperAccountBtnGroup } from "./Wrapper";
 import logo from "../../assets/cute-bubble-tea-logo-removebg.png";
 import logo1 from "../../assets/logo_1-removebg.png";
@@ -26,15 +16,26 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
-import { PRODUCT_TYPES } from "../../services/constants";
+// import { PRODUCT_TYPES } from "../../services/constants";
 import { UserContext } from "../../providers/UserProvider";
+import {
+  getAllProductTypes,
+  handleError,
+} from "../../services/endpoint-services";
+import * as message from "../../services/messages";
+import Loading from "./Loading";
 
-const menuItems = PRODUCT_TYPES.map((item) => ({
-  label: item.value,
-  key: item.type,
-}));
+function getItem(label, key, children) {
+  return {
+    key,
+    children,
+    label,
+  };
+}
 
 export const Header = ({ isAdminPage }) => {
+  const [productTypes, setProductTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [isOpenAdminInfoPopup, setIsOpenAdminInfoPopup] = useState(false);
@@ -47,8 +48,41 @@ export const Header = ({ isAdminPage }) => {
       case "home":
         navigate("/");
         break;
+      case "contact":
+        break;
+      default: // for clicking on sub-menu items
+        navigate("/product-details", {
+          state: {
+            typeId: e.key,
+            typeName: productTypes.find((type) => type.key === e.key).label,
+          },
+        });
     }
   };
+
+  useEffect(() => {
+    getAllProductTypes()
+      .then((res) => {
+        if (res && res.status && res.data.length > 0) {
+          const productTypeData = res.data.map((item) =>
+            getItem(item.type_name, item._id, null)
+          );
+          setProductTypes(productTypeData);
+          setIsLoading(false);
+        } else {
+          message.error("Error!", res.message);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        message.error(
+          "Rất tiếc, đã xảy ra lỗi! :(",
+          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+        );
+        handleError(err);
+        setIsLoading(false);
+      });
+  }, []);
 
   const content = (
     <div>
@@ -74,23 +108,11 @@ export const Header = ({ isAdminPage }) => {
     </div>
   );
 
-  const renderHomeCatalog = () => {
-    return [
-      {
-        label: "Trang chủ",
-        key: "home",
-      },
-      {
-        label: "Menu",
-        key: "menu",
-        children: menuItems,
-      },
-      {
-        label: "Liên hệ",
-        key: "contact",
-      },
-    ];
-  };
+  const menuItems = [
+    getItem("Trang chủ", "home", null),
+    getItem("Menu", "menu", productTypes),
+    getItem("Liên hệ", "contact", null),
+  ];
 
   const handleClickNavigate = (type) => {
     if (type === "profile") {
@@ -110,6 +132,7 @@ export const Header = ({ isAdminPage }) => {
 
   return (
     <>
+      <Loading isLoading={isLoading} />
       {isAdminPage ? (
         <div className="adminHeaderWrapper">
           <Flex className="logoContainer" align="center" justify="center">
@@ -176,7 +199,7 @@ export const Header = ({ isAdminPage }) => {
                 <Menu
                   onClick={handleOnClickCatalog}
                   mode="horizontal"
-                  items={renderHomeCatalog()}
+                  items={menuItems}
                 />
               </Flex>
             </Col>
