@@ -1,7 +1,3 @@
-/*
- * Copyright © 2023 ICON Clinical Research Ltd.
- * All rights reserved.
- */
 import React, { useEffect, useRef, useState } from "react";
 import { Form } from "antd";
 import {
