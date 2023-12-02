@@ -77,7 +77,6 @@ export const ProductDetails = () => {
       if (location.state.typeId) {
         getProductsByType(location.state.typeId)
           .then((res) => {
-            console.log(res);
             if (res.status) {
               setProducts(res.products);
             } else {
