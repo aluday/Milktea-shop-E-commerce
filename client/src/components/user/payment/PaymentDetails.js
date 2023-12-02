@@ -120,7 +120,7 @@ export const PaymentDetails = () => {
     };
     createUser(prepareUserInfo)
       .then((res) => {
-        if (res && res.status === 200 && res.data.newUser) {
+        if (res && res.status) {
           const prepareOrderItems = listOfOrders.map((item) => {
             return {
               product: item.productDetails._id,
@@ -131,24 +131,39 @@ export const PaymentDetails = () => {
           const prepareOrderData = {
             orderItems: prepareOrderItems,
             totalPrice,
-            user: res.data.newUser._id,
+            user: res.data._id,
           };
           createOrder(prepareOrderData)
             .then((res) => {
               if (res && res.status === 200) {
-                messages.success();
+                messages.successNotification(
+                  "Success!",
+                  "Đặt hàng thành công"
+                );
                 reset();
+              } else {
+                messages.errorNotification("Error!", res.message);
               }
             })
             .catch((err) => {
               handleError(err);
-              messages.error();
+              messages.error(
+                "Rất tiếc, đã xảy ra lỗi! :(",
+                "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+              );
+              reset();
             });
+        } else {
+          messages.errorNotification("Error!", res.message);
         }
       })
       .catch((err) => {
         handleError(err);
-        messages.error();
+        reset();
+        messages.error(
+          "Rất tiếc, đã xảy ra lỗi! :(",
+          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+        );
       });
   };
 

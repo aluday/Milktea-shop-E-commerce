@@ -194,8 +194,9 @@ export const ProductForm = (props) => {
             name="image"
             type="file"
             rules={[
-              { required: true, message: "Please input your count image!" },
+              { required: true, message: "Please input your image!" },
             ]}
+            value={image}
           >
             <WrapperUploadFile onChange={handleChange} maxCount={1}>
               <Button>Select File</Button>

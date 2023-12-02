@@ -15,7 +15,7 @@ export const signin = async (data) => {
 export const createUser = async (data) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.CREATE_USER;
   const res = await axios.post(endpoint, data);
-  return res;
+  return res.data;
 };
 export const getCurrentUser = async (accessToken) => {
   const endpoint = getBaseURL() + EndpointConstants.USER.AUTHORIZE;
@@ -113,7 +113,12 @@ export const deleteProductType = async (typeId) => {
 export const getAllOrders = async () => {
   const endpoint = getBaseURL() + EndpointConstants.USER.ORDERS;
   const res = await axios.get(endpoint);
-  return res;
+  return res.data;
+};
+export const getAllUsers = async () => {
+  const endpoint = getBaseURL() + EndpointConstants.ADMIN.USERS;
+  const res = await axios.get(endpoint);
+  return res.data;
 };
 /* ENDING ADMIN REST DEFINATIONS */
 

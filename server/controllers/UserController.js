@@ -130,12 +130,18 @@ class UserController {
     }
   }
 
-  async getAllUser(req, res) {
+  async getAllUsers(req, res) {
     try {
-      const users = await Customer.find({});
+      const users = await Customer.find({}, "-password");
+      if (!users) {
+        return res.status(404).json({
+          status: "false",
+          message: "No user found",
+        });
+      }
       return res.status(200).send({
         status: "true",
-        messeage: "List user",
+        messeage: "List of users",
         users,
       });
     } catch (error) {

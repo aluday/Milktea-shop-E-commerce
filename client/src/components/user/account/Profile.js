@@ -15,7 +15,7 @@ export const Profile = () => {
         <div className="userInfoWrapper">
           <Flex vertical align="center" justify="center">
             <Avatar size={72} icon={<UserOutlined />} />
-            <h1>Anh Luu</h1>
+            <h1>{currentUser && currentUser.name}</h1>
             <p className="text-link"> Chỉnh sửa thông tin </p>
           </Flex>
           <Divider />

@@ -210,7 +210,7 @@ export const Product = () => {
       render: renderActions,
     },
   ];
-  
+
   const handleCreateOrUpdateProduct = (action) => {
     setIsLoading(true);
 
@@ -226,13 +226,14 @@ export const Product = () => {
         productForm.getFieldValue("countInStock")
       );
       formData.append("size", JSON.stringify(sizeData));
-      formData.append("image", productForm.getFieldValue("image"));
-      
+      formData.append("image", image);
+
       createProduct(formData)
         .then((res) => {
           if (res.status === 200) {
             setIsLoading(false);
-            resetProductFormData("add");
+            setIsProductModalOpen(false);
+            resetProductFormData();
             setForceRerender((cur) => cur + 1);
             messages.successNotification(
               "Success!",
@@ -245,7 +246,8 @@ export const Product = () => {
         .catch((err) => {
           setIsLoading(false);
           handleError(err);
-          resetProductFormData("add");
+          resetProductFormData();
+          setIsProductModalOpen(false);
           messages.error(
             "Rất tiếc, đã xảy ra lỗi! :(",
             "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
@@ -269,7 +271,7 @@ export const Product = () => {
         productDetailsForm.getFieldValue("countInStock")
       );
       formData.append("size", JSON.stringify(sizeData));
-      formData.append("image", productDetailsForm.getFieldValue("image"));
+      formData.append("image", image);
 
       updateProduct(formData, productId)
         .then((res) => {
@@ -282,13 +284,15 @@ export const Product = () => {
             messages.errorNotification("Error!", res.message);
           }
           setIsLoading(false);
-          resetProductFormData("update");
+          resetProductFormData();
+          setIsOpenProductDetailsModal(false);
           setForceRerender((cur) => cur + 1);
         })
         .catch((err) => {
           setIsLoading(false);
           handleError(err);
-          resetProductFormData("update");
+          resetProductFormData();
+          setIsOpenProductDetailsModal(false);
           messages.error(
             "Rất tiếc, đã xảy ra lỗi! :(",
             "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
@@ -314,7 +318,8 @@ export const Product = () => {
         setPrice(value);
       }
     } else if (typeof e === "object") {
-      setImage(e.file.originFileObj);
+      
+      setImage(e.file);
     } else {
       setType(e);
     }
@@ -328,11 +333,7 @@ export const Product = () => {
     deleteProduct(productId)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
-          messages.successNotification(
-            "Success!",
-            "Xóa sản phẩm thành công."
-          );
+          messages.successNotification("Success!", "Xóa sản phẩm thành công.");
           setShowConfirmDeleteDialog(false);
           setForceRerender((cur) => cur + 1);
         } else {
@@ -341,7 +342,6 @@ export const Product = () => {
       })
       .catch((err) => {
         handleError(err);
-        resetProductFormData("update");
         messages.error(
           "Rất tiếc, đã xảy ra lỗi! :(",
           "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
@@ -349,14 +349,9 @@ export const Product = () => {
       });
   };
 
-  const resetProductFormData = (action) => {
-    if (action === "add") {
-      productForm.resetFields();
-      setIsProductModalOpen(false);
-    } else if (action === "update") {
-      productDetailsForm.resetFields();
-      setIsOpenProductDetailsModal(false);
-    }
+  const resetProductFormData = () => {
+    productForm.resetFields();
+    productDetailsForm.resetFields();
     setProductName("");
     setBasicPrice("");
     setDiscount("");
@@ -364,7 +359,7 @@ export const Product = () => {
     setCountInStock(0);
     setSizeValue("");
     setPrice("");
-    setImage("");
+    setImage(null);
   };
 
   useEffect(() => {
@@ -433,6 +428,7 @@ export const Product = () => {
         }}
         handleCloseProductModal={() => {
           setIsProductModalOpen(false);
+          resetProductFormData();
         }}
         handleCreateProduct={() => {
           handleCreateOrUpdateProduct("add");
@@ -469,6 +465,7 @@ export const Product = () => {
         }}
         handleCloseProductModal={() => {
           setIsOpenProductDetailsModal(false);
+          resetProductFormData();
         }}
         handleCreateProduct={() => {
           handleCreateOrUpdateProduct("update");

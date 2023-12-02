@@ -161,9 +161,9 @@ class OrderController {
         });
       
       if (!orders) {
-        return res.status(200).json({
-          success: "false",
-          message: "Order list is empty",
+        return res.status(404).json({
+          status: "false",
+          message: "No order found",
         });
       }
 
@@ -191,14 +191,14 @@ class OrderController {
       });
   
       return res.status(200).json({
-        success: "true",
-        message: "List orders",
+        status: "true",
+        message: "List of orders",
         data: transformedOrders,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        success: "false",
+        status: "false",
         message: "Error",
       });
     }

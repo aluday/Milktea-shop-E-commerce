@@ -53,7 +53,7 @@ export const SignupPage = () => {
               onChange={(e) => {
                 setName(e.target.value);
               }}
-              />
+            />
             <Input
               className="emailField"
               placeholder="Email"
@@ -61,7 +61,7 @@ export const SignupPage = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              />
+            />
             <Input
               className="phoneNoField"
               placeholder="Số điện thoại"
@@ -69,7 +69,7 @@ export const SignupPage = () => {
               onChange={(e) => {
                 setPhone(e.target.value);
               }}
-              />
+            />
             <Input
               className="usernameField"
               placeholder="Tên đăng nhập"
@@ -85,8 +85,10 @@ export const SignupPage = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
-              />
+              iconRender={(visible) =>
+                visible ? <EyeFilled /> : <EyeInvisibleFilled />
+              }
+            />
             <Input.Password
               className="confirmPasswordField"
               placeholder="Nhập lại mật khẩu"
@@ -94,8 +96,10 @@ export const SignupPage = () => {
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
               }}
-              iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
-              />
+              iconRender={(visible) =>
+                visible ? <EyeFilled /> : <EyeInvisibleFilled />
+              }
+            />
             <Button
               type="primary"
               className="signupBtn"
@@ -108,12 +112,19 @@ export const SignupPage = () => {
                 !confirmPassword.length
               }
               onClick={hanleRegisterAccount}
-              >
+            >
               ĐĂNG KÝ
             </Button>
           </Flex>
           <Flex justify="space-between">
-            <p onClick={() => { navigate("/sign-in") }} className="text-link">Đăng nhập</p>
+            <p
+              onClick={() => {
+                navigate("/sign-in");
+              }}
+              className="text-link"
+            >
+              Đăng nhập
+            </p>
           </Flex>
         </div>
       </Flex>

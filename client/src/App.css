@@ -79,3 +79,12 @@
 .pointer {
   cursor: pointer;
 }
+.primary-text {
+  font-weight: bold;
+  font-size: 16px;
+}
+.secondary-text {
+  color: #595959;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}

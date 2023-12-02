@@ -24,6 +24,7 @@ export const EndpointConstants = {
     CREATE_PRODUCT_TYPE: "/admin/create-type",
     UPDATE_PRODUCT_TYPE: "/admin/update-type",
     DELETE_PRODUCT_TYPE: "/admin/delete-type",
+    USERS: "/admin/get-all-user"
   },
 };
 /* ENDING ENDPOINT URL DEFINITIONS */
