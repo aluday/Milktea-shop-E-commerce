@@ -73,23 +73,42 @@ export const ProductDetails = () => {
   };
 
   useEffect(() => {
-    if (location.state && location.state.typeId) {
-      getProductsByType(location.state.typeId)
-        .then((res) => {
-          console.log(res);
-          if (res.status) {
-            setProducts(res.products);
-          } else {
-            message.error("Error!", res.message);
-          }
-        })
-        .catch((err) => {
-          handleError(err);
-          message.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
-        });
+    if (location.state) {
+      if (location.state.typeId) {
+        getProductsByType(location.state.typeId)
+          .then((res) => {
+            console.log(res);
+            if (res.status) {
+              setProducts(res.products);
+            } else {
+              message.error("Error!", res.message);
+            }
+          })
+          .catch((err) => {
+            handleError(err);
+            message.error(
+              "Rất tiếc, đã xảy ra lỗi! :(",
+              "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+            );
+          });
+      } else {
+        getAllProducts(location.state.keyword)
+          .then((res) => {
+            if (res.data && res.data.products) {
+              const productData = res.data.products;
+              setProducts(productData);
+            } else {
+              message.error("Error!", res.message);
+            }
+          })
+          .catch((err) => {
+            handleError(err);
+            message.error(
+              "Rất tiếc, đã xảy ra lỗi! :(",
+              "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
+            );
+          });
+      }
     } else {
       getAllProducts()
         .then((res) => {
@@ -115,9 +134,13 @@ export const ProductDetails = () => {
       {location.state && (
         <>
           <Header />
-          <h2 className="magin-left-32 magin-top-32">
-            {location.state.typeName}
-          </h2>
+          {location.state.typeName ? (
+            <h2>{location.state.typeName}</h2>
+          ) : (
+            <h2 className="magin-left-32 magin-top-32">
+              Kết quả tìm kiếm "{location.state.keyword}"
+            </h2>
+          )}
         </>
       )}
       <WrapperProducts>

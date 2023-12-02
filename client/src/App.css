@@ -76,3 +76,6 @@
 .magin-top-32 {
   margin-top: 24px;
 }
+.pointer {
+  cursor: pointer;
+}

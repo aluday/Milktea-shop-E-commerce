@@ -34,6 +34,7 @@ function getItem(label, key, children) {
 }
 
 export const Header = ({ isAdminPage }) => {
+  const [searchInput, setSearchInput] = useState("");
   const [productTypes, setProductTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -130,6 +131,14 @@ export const Header = ({ isAdminPage }) => {
     window.location.reload();
   };
 
+  const handleSearchProduct = () => {
+    navigate("/product-details", {
+      state: {
+        keyword: searchInput,
+      },
+    });
+  };
+
   return (
     <>
       <Loading isLoading={isLoading} />
@@ -205,7 +214,19 @@ export const Header = ({ isAdminPage }) => {
             </Col>
             <Col className="gutter-row">
               <Flex align="center" justify="center">
-                <Input placeholder="Tìm kiếm..." suffix={<SearchOutlined />} />
+                <Input
+                  placeholder="Tìm kiếm..."
+                  onChange={(e) => {
+                    setSearchInput(e.target.value);
+                  }}
+                  suffix={
+                    <SearchOutlined
+                      className="pointer"
+                      onClick={handleSearchProduct}
+                      disabled={searchInput.length === 0}
+                    />
+                  }
+                />
               </Flex>
             </Col>
             <Col className="gutter-row">
