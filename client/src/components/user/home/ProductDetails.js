@@ -122,7 +122,9 @@ export const ProductDetails = () => {
         <>
           <Header />
           {location.state.typeName ? (
-            <h2>{location.state.typeName}</h2>
+            <h2 className="magin-left-32 magin-top-32">
+              {location.state.typeName}
+            </h2>
           ) : (
             <h2 className="magin-left-32 magin-top-32">
               Kết quả tìm kiếm "{location.state.keyword}"
