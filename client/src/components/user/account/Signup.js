@@ -35,7 +35,6 @@ export const SignupPage = () => {
       })
       .catch((err) => {
         handleError(err);
-        messages.error();
       });
   };
 

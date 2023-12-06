@@ -50,9 +50,9 @@ class AdminController {
 
   async addProduct(req, res) {
     try {
+      console.log(req.file);
       const pathToFile =
         req.file && req.file.filename ? `/uploads/${req.file.filename}` : "";
-      // const { productName, size, type, basicPrice, countInStock } = req.body;
 
       const checkProduct = await Product.findOne({
         productName: req.body.productName,
