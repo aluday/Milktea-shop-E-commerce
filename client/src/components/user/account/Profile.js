@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../../providers/UserProvider";
 import Header from "../../shared-components/Header";
-import { Flex, Avatar, Card, Row, Col, Divider, Space, Empty } from "antd";
+import { Flex, Avatar, Card, Row, Col, Divider, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 export const Profile = () => {
