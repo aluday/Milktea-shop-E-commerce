@@ -21,10 +21,10 @@ class UserController {
         const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
         newUser = new Customer({
           name: req.body.name,
+          email: req.body.email,
           phone: req.body.phone,
-          address: req.body.address,
+          username: req.body.username,
           password: hashedPassword,
-          ...res.body,
         });
       } else {
         newUser = new Customer({

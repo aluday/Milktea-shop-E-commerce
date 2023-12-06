@@ -10,15 +10,17 @@ class UserMiddleware {
     try {
       if (req && req.body) {
         if (req.body.email) {
-          const isEmailExisted = await Customer.findOne({
-            email: req.body.email,
-          });
           const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
           const isEmail = reg.test(req.body.email);
           if (!isEmail) {
             return invalidResponse(res, "Sai định dạng email!");
-          } else if (isEmailExisted) {
-            return invalidResponse(res, "Email đã tồn tại!");
+          } else {
+            const isEmailExisted = await Customer.findOne({
+              email: req.body.email,
+            });
+            if (isEmailExisted) {
+              return invalidResponse(res, "Email đã tồn tại!");
+            }
           }
         } else if (req.body.password && req.body.confirmPassword) {
           if (req.body.password !== req.body.confirmPassword) {
@@ -27,10 +29,9 @@ class UserMiddleware {
               "Mật khẩu không giống mật khẩu xác nhận!"
             );
           }
-        } else {
-          next();
         }
       }
+      next();
     } catch (error) {
       console.log(error);
       return errorResponse(res, error);
