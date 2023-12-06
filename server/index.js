@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 dotenv.config();
 const port = process.env.PORT;
 const app = express();
+
 db.connect();
 
 app.use(express.static(path.join(__dirname, "public")));
