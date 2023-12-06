@@ -147,10 +147,6 @@ export const PaymentDetails = () => {
             })
             .catch((err) => {
               handleError(err);
-              messages.error(
-                "Rất tiếc, đã xảy ra lỗi! :(",
-                "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-              );
               reset();
             });
         } else {
@@ -160,10 +156,6 @@ export const PaymentDetails = () => {
       .catch((err) => {
         handleError(err);
         reset();
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
       });
   };
 

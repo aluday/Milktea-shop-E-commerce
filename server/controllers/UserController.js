@@ -7,7 +7,9 @@ const {
 } = require("../services/JwtService.js");
 const {
   errorResponse,
+  invalidResponse,
   successResponseWithData,
+  successResponse,
 } = require("../services/ResponseService.js");
 
 class UserController {
@@ -36,12 +38,12 @@ class UserController {
 
       return successResponseWithData(
         res,
-        "The user has successfully registered!",
+        "Người dùng đã đăng ký tài khoản thành công!",
         newUser
       );
     } catch (error) {
       console.log(error);
-      return errorResponse(res, "Error while registering user!", error);
+      return errorResponse(res, error);
     }
   }
 
@@ -58,7 +60,7 @@ class UserController {
 
       return successResponseWithData(
         res,
-        "The user has successfully logged in!",
+        "Người dùng đã đăng nhập thành công!",
         {
           access_token,
           refresh_token,
@@ -66,7 +68,7 @@ class UserController {
       );
     } catch (error) {
       console.log(error);
-      return errorResponse(res, "Error while user is logging in!", error);
+      return errorResponse(res, error);
     }
   }
 
@@ -77,56 +79,38 @@ class UserController {
       const checkUser = await Customer.findOne({ _id: userId });
 
       if (!checkUser) {
-        return res.status(404).send({
-          status: "false",
-          messeage: "User is not exist",
-        });
+        return invalidResponse(res, "Người dùng không tồn tại");
       }
 
-      const newUpdate = await Customer.findByIdAndUpdate(userId, data, {
+      const newUser = await Customer.findByIdAndUpdate(userId, data, {
         new: "true",
       });
 
-      return res.status(200).send({
-        status: "true",
-        messeage: "Update user statusfully",
-        newUpdate,
-      });
+      return successResponseWithData(
+        res,
+        "Cập nhật thông tin người dùng thành công!",
+        newUser
+      );
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while login user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
   async deleteUser(req, res) {
     try {
       const userId = req.params.id;
-      // const token = req.headers;
-      // console.log(token);
+
       const checkUser = await Customer.findById({ _id: userId });
       if (!checkUser) {
-        return res.status(404).send({
-          status: "false",
-          messeage: "User is not exist",
-        });
+        return invalidResponse(res, "Người dùng không tồn tại");
       }
 
       await Customer.findByIdAndDelete(userId);
-      return res.status(200).send({
-        status: "true",
-        messeage: "Delete user statusfully",
-      });
+      return successResponse(res, "Xóa người dùng thành công!");
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while login user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -136,21 +120,17 @@ class UserController {
       if (!users) {
         return res.status(404).json({
           status: "false",
-          message: "No user found",
+          message: "Không tìm thấy người dùng!",
         });
       }
       return res.status(200).send({
         status: "true",
-        messeage: "List of users",
+        messeage: "Danh sách người dùng!",
         users,
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while get user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -160,16 +140,12 @@ class UserController {
       const currentUser = await Customer.findById({ _id: userId }, "-password");
       return res.status(200).send({
         status: "true",
-        messeage: "User detail",
+        message: "Thông tin người dùng chi tiết",
         currentUser,
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while get user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -180,23 +156,19 @@ class UserController {
       const checkUser = await Customer.findOne({ _id: userId });
       console.log(checkUser);
       if (!checkUser) {
-        return res.status(200).send({
+        return res.status(400).send({
           status: "false",
-          messeage: "User dose not exist",
+          message: "Người dùng không tồn tại!",
         });
       }
       return res.status(200).send({
         status: "true",
-        messeage: "User detail",
+        message: "User detail",
         checkUser,
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        messeage: "Error while get user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -216,11 +188,7 @@ class UserController {
       });
     } catch (error) {
       console.log(error);
-      return res.status(404).send({
-        status: "false",
-        messeage: "Error while get user",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -232,9 +200,8 @@ class UserController {
         message: "Logout successfully",
       });
     } catch (error) {
-      return res.status(404).json({
-        message: error,
-      });
+      console.log(error);
+      return errorResponse(res, error);
     }
   }
 }

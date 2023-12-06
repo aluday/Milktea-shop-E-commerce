@@ -1,6 +1,7 @@
 import axios from "axios";
 import environment from "../assets/environment.json";
 import { EndpointConstants } from "./constants";
+import * as messages from "./messages";
 
 const getBaseURL = () => {
   return environment.baseUrl;
@@ -96,17 +97,13 @@ export const getAllProductTypes = async () => {
 };
 export const updateProductType = async (data, typeId) => {
   const endpoint =
-    getBaseURL() +
-    EndpointConstants.ADMIN.UPDATE_PRODUCT_TYPE +
-    `/${typeId}`;
+    getBaseURL() + EndpointConstants.ADMIN.UPDATE_PRODUCT_TYPE + `/${typeId}`;
   const res = await axios.put(endpoint, data);
   return res;
 };
 export const deleteProductType = async (typeId) => {
   const endpoint =
-    getBaseURL() +
-    EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE +
-    `/${typeId}`;
+    getBaseURL() + EndpointConstants.ADMIN.DELETE_PRODUCT_TYPE + `/${typeId}`;
   const res = await axios.delete(endpoint);
   return res;
 };
@@ -127,11 +124,13 @@ export const handleError = (error) => {
     // status code out of the range of 2xx
     console.log("Data :", error.response.data);
     console.log("Status :" + error.response.status);
+    messages.errorNotification("Error!", error.response.data.message);
   } else if (error.request) {
     // The request was made but no response was received
     console.log(error.request);
   } else {
     // Error on setting up the request
     console.log("Error", error.message);
+    messages.errorNotification("Error!", error.response.data.message);
   }
 };

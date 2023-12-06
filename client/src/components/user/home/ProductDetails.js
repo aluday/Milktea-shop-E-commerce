@@ -85,10 +85,6 @@ export const ProductDetails = () => {
           })
           .catch((err) => {
             handleError(err);
-            message.error(
-              "Rất tiếc, đã xảy ra lỗi! :(",
-              "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-            );
           });
       } else {
         getAllProducts(location.state.keyword)
@@ -102,10 +98,6 @@ export const ProductDetails = () => {
           })
           .catch((err) => {
             handleError(err);
-            message.error(
-              "Rất tiếc, đã xảy ra lỗi! :(",
-              "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-            );
           });
       }
     } else {
@@ -120,10 +112,6 @@ export const ProductDetails = () => {
         })
         .catch((err) => {
           handleError(err);
-          message.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
         });
     }
   }, [location.state]);

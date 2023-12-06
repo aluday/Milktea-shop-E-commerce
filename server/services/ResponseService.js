@@ -120,10 +120,10 @@ const notAcceptableResponse = (res, message) => {
  * @param {*} message: response message
  * @returns error HTTP response
  */
-const errorResponse = (res, message, error) => {
+const errorResponse = (res, error) => {
   const responseObj = {
     status: false,
-    message,
+    message: "Rất tiếc đã có lỗi xảy ra :( Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ.",
     error
   };
   return res.status(RESPONSE_STATUS.SERVER_ERROR).send(responseObj);

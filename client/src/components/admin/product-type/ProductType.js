@@ -115,10 +115,6 @@ export const ProductType = () => {
         setForceRerender((cur) => cur + 1);
       })
       .catch((err) => {
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
         handleError(err);
       });
   };
@@ -145,10 +141,6 @@ export const ProductType = () => {
           setForceRerender((cur) => cur + 1);
         })
         .catch((err) => {
-          messages.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
           handleError(err);
           resetData();
           setForceRerender((cur) => cur + 1);
@@ -168,10 +160,6 @@ export const ProductType = () => {
           setForceRerender((cur) => cur + 1);
         })
         .catch((err) => {
-          messages.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
           handleError(err);
           resetData();
           setForceRerender((cur) => cur + 1);
@@ -203,10 +191,6 @@ export const ProductType = () => {
         }
       })
       .catch((err) => {
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
         handleError(err);
         setIsLoading(false);
       });

@@ -16,15 +16,15 @@ class UserMiddleware {
           const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
           const isEmail = reg.test(req.body.email);
           if (!isEmail) {
-            return invalidResponse(res, "Email is in wrong format!");
+            return invalidResponse(res, "Sai định dạng email!");
           } else if (isEmailExisted) {
-            return invalidResponse(res, "Email already exists!");
+            return invalidResponse(res, "Email đã tồn tại!");
           }
         } else if (req.body.password && req.body.confirmPassword) {
           if (req.body.password !== req.body.confirmPassword) {
             return invalidResponse(
               res,
-              "The password is not equal to the confirm password!"
+              "Mật khẩu không giống mật khẩu xác nhận!"
             );
           }
         } else {
@@ -33,7 +33,7 @@ class UserMiddleware {
       }
     } catch (error) {
       console.log(error);
-      return errorResponse(res, "Error while registering user!", error);
+      return errorResponse(res, error);
     }
   }
 
@@ -41,18 +41,21 @@ class UserMiddleware {
     try {
       if (req && req.body) {
         if (!req.body.username || !req.body.password) {
-          return invalidResponse(res, "Missing Username or password!");
+          return invalidResponse(
+            res,
+            "Thiếu thông tin trường tên người dùng hoặc mật khẩu!"
+          );
         } else {
           const user = await Customer.findOne({ username: req.body.username });
           if (!user) {
-            return invalidResponse(res, "User does not exist!");
+            return invalidResponse(res, "Người dùng không tồn tại!");
           } else {
             const comparePassword = bcrypt.compareSync(
               req.body.password,
               user.password
             );
             if (!comparePassword) {
-              return invalidResponse(res, "Incorrect password!");
+              return invalidResponse(res, "Mật khẩu không chính xác!");
             } else {
               req.user = user;
               next();
@@ -62,7 +65,7 @@ class UserMiddleware {
       }
     } catch (error) {
       console.log(error);
-      return errorResponse(res, "Error while user is logging in!", error);
+      return errorResponse(res, error);
     }
   }
 }

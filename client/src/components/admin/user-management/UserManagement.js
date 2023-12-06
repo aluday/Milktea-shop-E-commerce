@@ -61,10 +61,6 @@ export const UserManagement = () => {
         }
       })
       .catch((err) => {
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
         handleError(err);
       });
   }, []);

@@ -1,6 +1,9 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 dotenv.config();
+const {
+  unauthorizedResponse,
+} = require("../services/ResponseService");
 
 exports.authMidlerware = (req, res, next) => {
   const token = req.headers.token.split(" ")[1];
@@ -28,10 +31,10 @@ exports.authCurrentUser = (req, res, next) => {
   const token = req.headers.token.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
     if (err) {
-      return res.status(404).json({
-        message: "Token authentication failed",
-        status: "ERROR",
-      });
+      return unauthorizedResponse(
+        res,
+        "Xác thực người dùng không thành công!"
+      );
     } else {
       req.userId = user.id;
       next();

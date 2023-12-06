@@ -115,10 +115,6 @@ export const Product = () => {
         setIsLoading(false);
         handleError(err);
         resetProductFormData();
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
       });
   };
 
@@ -244,10 +240,6 @@ export const Product = () => {
           handleError(err);
           resetProductFormData();
           setIsProductModalOpen(false);
-          messages.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
         });
     } else if (action === "update") {
       const sizeData = productDetailsForm.getFieldValue("size");
@@ -289,10 +281,6 @@ export const Product = () => {
           handleError(err);
           resetProductFormData();
           setIsOpenProductDetailsModal(false);
-          messages.error(
-            "Rất tiếc, đã xảy ra lỗi! :(",
-            "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-          );
         });
     }
   };
@@ -338,10 +326,6 @@ export const Product = () => {
       })
       .catch((err) => {
         handleError(err);
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
       });
   };
 
@@ -390,10 +374,6 @@ export const Product = () => {
         }
       })
       .catch((err) => {
-        messages.error(
-          "Rất tiếc, đã xảy ra lỗi! :(",
-          "Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ."
-        );
         handleError(err);
         setIsLoading(false);
       });

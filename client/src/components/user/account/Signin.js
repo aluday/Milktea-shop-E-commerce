@@ -5,11 +5,48 @@ import { Flex, Input, Button } from "antd";
 import "./Account.css";
 import { UserContext } from "../../../providers/UserProvider";
 import Header from "../../shared-components/Header";
+import {
+  signin,
+  getCurrentUser,
+  handleError,
+} from "../../../services/endpoint-services";
+import * as messages from "../../../services/messages";
 
 export const SigninPage = () => {
   const navigate = useNavigate();
-  const { username, setUsername, password, setPassword, handleSignin } =
+  const { username, setUsername, password, setPassword, setCurrentUser } =
     useContext(UserContext);
+
+  const handleSignin = () => {
+    signin({ username, password })
+      .then((res) => {
+        if (res && res.status && res.data && res.data.access_token) {
+          localStorage.setItem("access_token", res.data.access_token);
+          // call authorize to verify the token again to get the current user who logged in
+          getCurrentUser(res.data.access_token)
+            .then((res) => {
+              if (res && res.data && res.data.currentUser) {
+                setCurrentUser(res.data.currentUser);
+                localStorage.setItem(
+                  "current_user",
+                  JSON.stringify(res.data.currentUser)
+                );
+                navigate("/");
+              } else {
+                messages.errorNotification("Error!", res.message);
+              }
+            })
+            .catch((err) => {
+              handleError(err);
+            });
+        } else {
+          messages.errorNotification("Error!", res.message);
+        }
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  };
 
   return (
     <>
@@ -40,10 +77,7 @@ export const SigninPage = () => {
               type="primary"
               className="signinBtn"
               disabled={!username || !password}
-              onClick={() => {
-                handleSignin();
-                navigate("/");
-              }}
+              onClick={handleSignin}
             >
               ĐĂNG NHẬP
             </Button>
