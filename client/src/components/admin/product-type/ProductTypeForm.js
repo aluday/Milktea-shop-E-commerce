@@ -60,7 +60,7 @@ export const ProductTypeForm = ({
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Thêm
+              Submit
             </Button>
           </Form.Item>
         </Form>
