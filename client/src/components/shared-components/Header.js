@@ -13,6 +13,7 @@ import {
   UserAddOutlined,
   InfoCircleOutlined,
   LogoutOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./shared.css";
@@ -92,7 +93,10 @@ export const Header = ({ isAdminPage }) => {
       {currentUser && currentUser.isAdmin && (
         <>
           <WrapperContentPopup onClick={() => handleClickNavigate("admin")}>
-            Quản lí hệ thống
+            <Flex align="center" gap={8}>
+              <UsergroupAddOutlined />
+              <span>Quản lí hệ thống</span>
+            </Flex>
           </WrapperContentPopup>
         </>
       )}

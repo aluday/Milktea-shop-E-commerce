@@ -205,7 +205,7 @@ export const Product = () => {
 
   const handleCreateOrUpdateProduct = (action) => {
     setIsLoading(true);
-
+    
     if (action === "add") {
       const sizeData = productForm.getFieldValue("size");
       const formData = new FormData();
@@ -218,7 +218,10 @@ export const Product = () => {
         productForm.getFieldValue("countInStock")
       );
       formData.append("size", JSON.stringify(sizeData));
-      formData.append("image", image);
+      formData.append(
+        "image",
+        productForm.getFieldValue("image").file.originFileObj
+      );
 
       createProduct(formData)
         .then((res) => {
@@ -259,7 +262,10 @@ export const Product = () => {
         productDetailsForm.getFieldValue("countInStock")
       );
       formData.append("size", JSON.stringify(sizeData));
-      formData.append("image", image);
+      formData.append(
+        "image",
+        productDetailsForm.getFieldValue("image").file.originFileObj
+      );
 
       updateProduct(formData, productId)
         .then((res) => {
@@ -302,7 +308,6 @@ export const Product = () => {
         setPrice(value);
       }
     } else if (typeof e === "object") {
-      
       setImage(e.file);
     } else {
       setType(e);
