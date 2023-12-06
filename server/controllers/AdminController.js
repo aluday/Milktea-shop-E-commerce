@@ -1,9 +1,10 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const baseUrl = "http://localhost:3001";
-
 const Product = require("../models/productSchema");
 const Type = require("../models/typeSchema");
+const {
+  errorResponse,
+  invalidResponse,
+  successResponse,
+} = require("../services/ResponseService.js");
 
 class AdminController {
   async storeType(req, res) {
@@ -11,25 +12,14 @@ class AdminController {
       const { type_name } = req.body;
       const checkType = await Type.findOne({ type_name: type_name });
       if (checkType) {
-        return res.status(200).send({
-          status: "false",
-          message: "Type is existed",
-        });
+        return invalidResponse(res, `Loại sản phẩm "${type_name}" đã tồn tại!`);
       }
       const newType = new Type({ type_name });
       await newType.save();
-      return res.status(200).send({
-        status: "true",
-        message: "Create new type statusfully",
-        newType,
-      });
+      return successResponse(res, "Tạo loại sản phẩm thành công!");
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while add type product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -41,13 +31,10 @@ class AdminController {
         { ...req.body },
         { new: true }
       );
-      return res.status(201).send({
-        status: "true",
-        message: "Update type statusfully",
-        type,
-      });
+        
+      return successResponse(res, "Cập nhật loại sản phẩm thành công!");
     } catch (error) {
-      console.log(error);
+      return errorResponse(res, error);
     }
   }
 
@@ -55,12 +42,9 @@ class AdminController {
     try {
       const typeId = req.params.id;
       await Type.findByIdAndDelete({ _id: typeId });
-      return res.status(201).send({
-        status: "true",
-        message: "Delete type statusfully",
-      });
+      return successResponse(res, "Xóa loại sản phẩm thành công!");
     } catch (error) {
-      console.log(error);
+      return errorResponse(res, error);
     }
   }
 
@@ -74,10 +58,7 @@ class AdminController {
         productName: req.body.productName,
       });
       if (checkProduct) {
-        return res.status(403).send({
-          status: "false",
-          message: "Product is existed",
-        });
+        return invalidResponse(res, `Sản phẩm "${req.body.productName}" đã tồn tại!`);
       }
       const newSize = JSON.parse(req.body.size);
       const newProduct = new Product({
@@ -91,17 +72,10 @@ class AdminController {
       });
       await newProduct.save();
 
-      return res.status(200).send({
-        status: "true",
-        message: "Create product successfully",
-      });
+      return successResponse(res, "Tạo sản phẩm thành công!");
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while adding new product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -128,18 +102,11 @@ class AdminController {
         { new: "true" }
       );
 
-      return res.status(200).send({
-        status: "true",
-        message: "Update product successfully",
-      });
+      return successResponse(res, "Cập nhật sản phẩm thành công!");
 
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while updating product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -147,17 +114,10 @@ class AdminController {
     try {
       const productId = req.params.id;
       await Product.findByIdAndDelete({ _id: productId });
-      return res.status(200).send({
-        status: "true",
-        message: "Delete product statusfully",
-      });
+      return successResponse(res, "Xóa sản phẩm thành công!");
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "error",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
 }

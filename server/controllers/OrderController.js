@@ -2,6 +2,13 @@ const Customer = require("../models/customerSchema");
 const Order = require("../models/orderSchema");
 const Product = require("../models/productSchema");
 const baseUrl = "http://localhost:3001";
+const {
+  errorResponse,
+  notFoundResponse,
+  successResponse,
+  successResponseWithData,
+} = require("../services/ResponseService.js");
+
 class OrderController {
   async createOrder(req, res) {
     try {
@@ -13,17 +20,10 @@ class OrderController {
       });
       await newOrder.save();
 
-      return res.status(200).json({
-        success: "true",
-        message: "Create order successfully",
-        data: newOrder,
-      });
+      return successResponse(res, "Đặt hàng thành công!");
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
-        success: "false",
-        message: "Error",
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -56,10 +56,7 @@ class OrderController {
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
-        success: "false",
-        message: "Error",
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -112,10 +109,7 @@ class OrderController {
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
-        success: "false",
-        message: "Error",
-      });
+      return errorResponse(res, error);
     }
   }
 
@@ -161,10 +155,7 @@ class OrderController {
         });
       
       if (!orders) {
-        return res.status(404).json({
-          status: "false",
-          message: "No order found",
-        });
+        return notFoundResponse(res, "Không tìm thấy đơn hàng nào!");
       }
 
       const transformedOrders = orders.map((order) => {
@@ -189,18 +180,11 @@ class OrderController {
           __v: order.__v,
         };
       });
-  
-      return res.status(200).json({
-        status: "true",
-        message: "List of orders",
-        data: transformedOrders,
-      });
+      
+      return successResponseWithData(res, "Danh sách đơn hàng", transformedOrders);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
-        status: "false",
-        message: "Error",
-      });
+      return errorResponse(res, error);
     }
   }
 }

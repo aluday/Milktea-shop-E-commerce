@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const baseUrl = "http://localhost:3001";
 const Product = require("../models/productSchema");
 const Type = require("../models/typeSchema");
+const {
+  errorResponse,
+  notFoundResponse,
+} = require("../services/ResponseService.js");
 
 class ProductController {
   async getAllProduct(req, res) {
@@ -26,7 +30,7 @@ class ProductController {
         });
         return res.status(200).send({
           status: "true",
-          message: "All products lists",
+          message: "Danh sách sản phẩm",
           total,
           products: mutipleMongooseToObject(allObjectFilters),
           pageCurrent: Number(page) + 1,
@@ -45,15 +49,12 @@ class ProductController {
         ...product._doc
       }));
 
-      if (!products) {
-        return res.status(200).send({
-          status: "false",
-          message: "No product found",
-        });
+      if (!products) {;
+        return notFoundResponse(res, "Không tìm thấy sản phẩm nào!");
       }
       return res.status(200).send({
         status: true,
-        message: "All products lists",
+        message: "Danh sách sản phẩm",
         total,
         products: mutipleMongooseToObject(modifiedProducts),
         pageCurrent: Number(page) + 1,
@@ -61,11 +62,7 @@ class ProductController {
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while getting product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
   async getProductsByType(req, res) {
@@ -74,10 +71,7 @@ class ProductController {
       const products = await Product.find({type: typeId});
       
       if (!products) {
-        return res.status(404).send({
-          status: "false",
-          message: "No product found",
-        });
+        return notFoundResponse(res, "Không tìm thấy sản phẩm nào!");
       }
 
       products.forEach((product) => {
@@ -89,17 +83,13 @@ class ProductController {
 
       return res.status(200).send({
         status: true,
-        message: "All products lists",
+        message: "Danh sách sản phẩm",
         products: mutipleMongooseToObject(modifiedProducts),
       });
 
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while getting product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
   async getOne(req, res) {
@@ -108,23 +98,16 @@ class ProductController {
       const product = await Product.findById(id);
       product.image = baseUrl + product.image;
       if (!product) {
-        return res.status(404).send({
-          status: "false",
-          message: "product not found",
-        });
+        return notFoundResponse(res, "Không tìm thấy sản phẩm nào!");
       }
       return res.status(200).send({
         status: true,
-        message: "fetch single product",
+        message: "Thông tin sản phẩm",
         product: mongooseToObject(product),
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-        status: "false",
-        message: "Error while get single product",
-        error,
-      });
+      return errorResponse(res, error);
     }
   }
   async getAllType(req, res) {
@@ -132,16 +115,12 @@ class ProductController {
       const types = await Type.find({});
       return res.status(200).send({
           status: true,
-          message: 'All Type Product',
+          message: 'Danh sách loại sản phẩm',
           data: types
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({
-          status: 'false',
-          message: 'Error while get type',
-          error
-      });
+      return errorResponse(res, error);
     }
   }
 
