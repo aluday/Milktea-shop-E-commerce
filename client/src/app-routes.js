@@ -89,6 +89,10 @@ export const userRoutes = [
     page: SigninPage,
   },
   {
+    path: "/product-details",
+    page: ProductDetails,
+  },
+  {
     path: "*",
     page: NotFound,
   },

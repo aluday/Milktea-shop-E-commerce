@@ -27,8 +27,8 @@
 
 /* STARTING CARD COMPONENT STYLINGS */
 .body .container .ant-card .ant-card-cover img {
-  width: 200px;
-  height: 300px;
+  width: 180px;
+  height: 200px;
   margin: 0 auto;
 }
 .body .container .ant-card {
