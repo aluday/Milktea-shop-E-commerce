@@ -71,4 +71,7 @@
 .sizeAndAmountWrapper .sizeAndAmountText {
   font-weight: bold;
 }
+.ant-card img {
+  height: 280px;
+}
 /* ENDING CARD COMPONENT STYLINGS */

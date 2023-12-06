@@ -29,8 +29,10 @@ export const WrapperProducts = styled.div`
   display: flex;
   gap: 20px;
   margin-top: 50px;
+  margin-right: 32px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   .ant-empty {
     margin: 0 auto;
   }
