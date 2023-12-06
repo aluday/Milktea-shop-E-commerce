@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Flex, Input, Button } from "antd";
-import * as messages from "../../../services/messages";
+import * as message from "../../../services/messages";
 import { createUser, handleError } from "../../../services/endpoint-services";
 import "./Account.css";
 import Header from "../../shared-components/Header";
@@ -28,9 +28,11 @@ export const SignupPage = () => {
     };
     createUser(preparedUserData)
       .then((res) => {
-        if (res.status === 200) {
-          messages.success();
+        if (res.status) {
+          message.successNotification("Success!", "Tạo tài khoản thành công!");
           navigate("/sign-in");
+        } else {
+          message.error("Error!", res.message);
         }
       })
       .catch((err) => {
