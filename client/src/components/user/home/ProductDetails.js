@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 import Header from "../../shared-components/Header";
 import { Empty } from "antd";
 
-export const ProductDetails = () => {
+export const ProductDetails = ({ setForceRerender }) => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [productDetails, setProductDetails] = useState(null);
@@ -39,6 +39,7 @@ export const ProductDetails = () => {
       localStorage.setItem("listOfOrders", JSON.stringify([prepareOrderData]));
     }
     resetData();
+    setForceRerender((cur) => cur + 1);
   };
 
   const handleCancelOrderModal = () => {

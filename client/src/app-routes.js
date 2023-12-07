@@ -89,6 +89,10 @@ export const userRoutes = [
     page: SigninPage,
   },
   {
+    path: "/payment",
+    page: PaymentDetails,
+  },
+  {
     path: "/product-details",
     page: ProductDetails,
   },

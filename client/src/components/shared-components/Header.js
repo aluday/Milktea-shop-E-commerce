@@ -127,6 +127,7 @@ export const Header = ({ isAdminPage }) => {
   };
 
   const handleLogout = () => {
+    navigate("/");
     localStorage.clear();
     window.location.reload();
   };

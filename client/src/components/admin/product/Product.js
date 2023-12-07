@@ -205,7 +205,7 @@ export const Product = () => {
 
   const handleCreateOrUpdateProduct = (action) => {
     setIsLoading(true);
-    
+
     if (action === "add") {
       const sizeData = productForm.getFieldValue("size");
       const formData = new FormData();
@@ -262,10 +262,16 @@ export const Product = () => {
         productDetailsForm.getFieldValue("countInStock")
       );
       formData.append("size", JSON.stringify(sizeData));
-      formData.append(
-        "image",
+      if (
+        productDetailsForm.getFieldValue("image") &&
+        productDetailsForm.getFieldValue("image").file &&
         productDetailsForm.getFieldValue("image").file.originFileObj
-      );
+      ) {
+        formData.append(
+          "image",
+          productDetailsForm.getFieldValue("image").file.originFileObj
+        );
+      }
 
       updateProduct(formData, productId)
         .then((res) => {

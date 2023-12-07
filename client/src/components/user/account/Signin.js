@@ -27,25 +27,35 @@ export const SigninPage = () => {
             .then((res) => {
               if (res && res.data && res.data.currentUser) {
                 setCurrentUser(res.data.currentUser);
+                navigate("/");
                 localStorage.setItem(
                   "current_user",
                   JSON.stringify(res.data.currentUser)
                 );
-                navigate("/");
+                window.location.reload();
               } else {
                 messages.errorNotification("Error!", res.message);
+                handleNavigate();
               }
             })
             .catch((err) => {
               handleError(err);
+              handleNavigate();
             });
         } else {
           messages.errorNotification("Error!", res.message);
+          handleNavigate();
         }
       })
       .catch((err) => {
         handleError(err);
+        handleNavigate();
       });
+  };
+
+  const handleNavigate = () => {
+    navigate("/");
+    window.location.reload();
   };
 
   return (

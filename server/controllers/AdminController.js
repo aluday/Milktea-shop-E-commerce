@@ -31,7 +31,7 @@ class AdminController {
         { ...req.body },
         { new: true }
       );
-        
+
       return successResponse(res, "Cập nhật loại sản phẩm thành công!");
     } catch (error) {
       return errorResponse(res, error);
@@ -58,7 +58,10 @@ class AdminController {
         productName: req.body.productName,
       });
       if (checkProduct) {
-        return invalidResponse(res, `Sản phẩm "${req.body.productName}" đã tồn tại!`);
+        return invalidResponse(
+          res,
+          `Sản phẩm "${req.body.productName}" đã tồn tại!`
+        );
       }
       const newSize = JSON.parse(req.body.size);
       const newProduct = new Product({
@@ -87,23 +90,32 @@ class AdminController {
         req.file && req.file.filename ? `/uploads/${req.file.filename}` : "";
 
       const newSize = JSON.parse(req.body.size);
-      const newProduct = {
-        productName: req.body.productName,
-        image: pathToFile,
-        basicPrice: req.body.basicPrice,
-        countInStock: req.body.countInStock,
-        size: newSize,
-        type: req.body.type,
-      };
 
-      const product = await Product.findByIdAndUpdate(
-        { _id: id },
-        newProduct,
-        { new: "true" }
-      );
+      let newProduct;
+      if (pathToFile) {
+        newProduct = {
+          productName: req.body.productName,
+          image: pathToFile,
+          basicPrice: req.body.basicPrice,
+          countInStock: req.body.countInStock,
+          size: newSize,
+          type: req.body.type,
+        };
+      } else {
+        newProduct = {
+          productName: req.body.productName,
+          basicPrice: req.body.basicPrice,
+          countInStock: req.body.countInStock,
+          size: newSize,
+          type: req.body.type,
+        };
+      }
+
+      const product = await Product.findByIdAndUpdate({ _id: id }, newProduct, {
+        new: "true",
+      });
 
       return successResponse(res, "Cập nhật sản phẩm thành công!");
-
     } catch (error) {
       console.log(error);
       return errorResponse(res, error);
