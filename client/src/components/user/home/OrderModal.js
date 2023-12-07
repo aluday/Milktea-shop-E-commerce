@@ -32,6 +32,7 @@ export const OrderModal = ({
         open={open}
         onOk={handleConfirm}
         onCancel={handleCancel}
+        okButtonProps={{ disabled: !selectedSize || !amount }}
       >
         <Row className="orderModalRow">
           <Col>
