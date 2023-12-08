@@ -35,27 +35,18 @@ export const SigninPage = () => {
                 window.location.reload();
               } else {
                 messages.errorNotification("Error!", res.message);
-                handleNavigate();
               }
             })
             .catch((err) => {
               handleError(err);
-              handleNavigate();
             });
         } else {
           messages.errorNotification("Error!", res.message);
-          handleNavigate();
         }
       })
       .catch((err) => {
         handleError(err);
-        handleNavigate();
       });
-  };
-
-  const handleNavigate = () => {
-    navigate("/");
-    window.location.reload();
   };
 
   return (
