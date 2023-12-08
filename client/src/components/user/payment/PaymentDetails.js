@@ -241,9 +241,9 @@ export const PaymentDetails = () => {
             current={currentStep}
             isDisabledNextStepBtn={listOfOrders && listOfOrders.length === 0}
             isDisabledCompleteStepBtn={
-              fullName.length === 0 ||
-              phone.length === 0 ||
-              address.length === 0
+              (fullName && fullName.length === 0) ||
+              (phone && phone.length === 0) ||
+              (address && address.length === 0)
             }
             handleClickNextStep={nextStep}
             handleClickPreviousStep={prevStep}
