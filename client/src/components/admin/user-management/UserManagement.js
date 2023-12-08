@@ -10,6 +10,7 @@ export const UserManagement = () => {
     {
       title: "#",
       dataIndex: "columnNo",
+      width: 50,
     },
     {
       title: "Họ tên",

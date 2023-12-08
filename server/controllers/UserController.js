@@ -82,9 +82,14 @@ class UserController {
         return invalidResponse(res, "Người dùng không tồn tại");
       }
 
-      const newUser = await Customer.findByIdAndUpdate(userId, data, {
-        new: "true",
-      });
+      const newUser = await Customer.findByIdAndUpdate(
+        userId,
+        data,
+        {
+          new: "true",
+        },
+        "-password"
+      );
 
       return successResponseWithData(
         res,
@@ -173,7 +178,6 @@ class UserController {
   }
 
   async refreshToken(req, res) {
-    // console.log(req.cookies);
     try {
       const token = req.cookies.refresh_token;
       if (!token) {

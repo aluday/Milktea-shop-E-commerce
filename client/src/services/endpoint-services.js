@@ -42,6 +42,12 @@ export const createOrder = async (data) => {
   const res = await axios.post(endpoint, data);
   return res;
 };
+export const updateUser = async (data, userId) => {
+  const endpoint =
+    getBaseURL() + EndpointConstants.USER.UPDATE_USER + `/${userId}`;
+  const res = await axios.put(endpoint, data);
+  return res.data;
+};
 /* ENDING USER REST DEFINATIONS */
 
 /* STARTING ADMIN REST DEFINATIONS */

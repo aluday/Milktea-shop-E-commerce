@@ -12,6 +12,7 @@ export const Orders = () => {
     {
       title: "#",
       dataIndex: "columnNo",
+      width: 50,
     },
     {
       title: "Mã đơn hàng",

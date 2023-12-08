@@ -180,6 +180,11 @@ export const Product = () => {
 
   const displayedColumns = [
     {
+      title: "#",
+      dataIndex: "columnNo",
+      width: 50,
+    },
+    {
       title: "Tên sản phẩm",
       dataIndex: "productName",
       // ...getColumnSearchProps("productName"),
@@ -357,9 +362,14 @@ export const Product = () => {
     getAllProducts()
       .then((res) => {
         if (res.data && res.data.products) {
-          const productData = res.data.products.map((obj) => ({
+          const productData = res.data.products.map((obj, index) => ({
             key: obj._id,
-            ...obj,
+            columnNo: index + 1,
+            productName: obj.productName,
+            basicPrice: obj.basicPrice,
+            discount: obj.discount,
+            countInStock: obj.countInStock,
+            ...obj
           }));
           setProductList(productData);
         }

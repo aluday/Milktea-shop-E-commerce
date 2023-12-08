@@ -15,7 +15,8 @@ export const EndpointConstants = {
     PRODUCT_DETAILS: "/product-detail",
     CREATE_ORDER: "/order/create-order",
     PRODUCT_TYPES: "/type",
-    ORDERS: "/order/get-all-order"
+    ORDERS: "/order/get-all-order",
+    UPDATE_USER: "/update-user",
   },
   ADMIN: {
     CREATE_PRODUCT: "/admin/create-product",
@@ -24,7 +25,7 @@ export const EndpointConstants = {
     CREATE_PRODUCT_TYPE: "/admin/create-type",
     UPDATE_PRODUCT_TYPE: "/admin/update-type",
     DELETE_PRODUCT_TYPE: "/admin/delete-type",
-    USERS: "/admin/get-all-user"
+    USERS: "/admin/get-all-user",
   },
 };
 /* ENDING ENDPOINT URL DEFINITIONS */

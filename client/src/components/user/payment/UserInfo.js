@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Input, Flex } from "antd";
-// import mockData from "../../../mockData.json";
 
 const layout = {
   labelCol: {
@@ -12,26 +11,17 @@ const layout = {
 };
 
 const validateMessages = {
-  required: "${label} is required!",
-  types: {
-    email: "${label} is not a valid email!",
-    number: "${label} is not a valid number!",
-  },
-  number: {
-    range: "${label} must be between ${min} and ${max}",
-  },
+  required: "${label} là bắt buộc!",
 };
 
-const UserInfo = ({ userInfoForm }) => {
-  // const userInfo = mockData.currentUser;
-
-  // useEffect(() => {
-  //   userInfoForm.setFieldValue("fullName", userInfo.name);
-  //   userInfoForm.setFieldValue("email", userInfo.email);
-  //   userInfoForm.setFieldValue("phone", userInfo.phone);
-  //   userInfoForm.setFieldValue("address", userInfo.address);
-  // }, [userInfo]);
-
+const UserInfo = ({
+  userInfoForm,
+  fullName,
+  phone,
+  address,
+  isDisabledFullName,
+  handleChange,
+}) => {
   return (
     <div>
       <h3>Thông tin vận chuyển</h3>
@@ -51,7 +41,12 @@ const UserInfo = ({ userInfoForm }) => {
             },
           ]}
         >
-          <Input name="fullName" />
+          <Input
+            name="fullName"
+            value={fullName}
+            onChange={handleChange}
+            disabled={isDisabledFullName}
+          />
         </Form.Item>
         <Form.Item
           name="phone"
@@ -62,10 +57,18 @@ const UserInfo = ({ userInfoForm }) => {
             },
           ]}
         >
-          <Input name="phone" />
+          <Input name="phone" value={phone} onChange={handleChange} />
         </Form.Item>
-        <Form.Item name="address" label="Địa chỉ">
-          <Input name="address" />
+        <Form.Item
+          name="address"
+          label="Địa chỉ"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input name="address" value={address} onChange={handleChange} />
         </Form.Item>
       </Form>
 

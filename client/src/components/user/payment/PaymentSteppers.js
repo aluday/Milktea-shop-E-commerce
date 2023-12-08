@@ -5,6 +5,7 @@ export const PaymentSteppers = ({
   steps,
   current,
   isDisabledNextStepBtn,
+  isDisabledCompleteStepBtn,
   handleClickNextStep,
   handleClickPreviousStep,
   handleComplete,
@@ -33,7 +34,11 @@ export const PaymentSteppers = ({
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={handleComplete}>
+          <Button
+            type="primary"
+            onClick={handleComplete}
+            disabled={isDisabledCompleteStepBtn}
+          >
             Hoàn thành
           </Button>
         )}

@@ -42,6 +42,15 @@ const TableComponent = (props) => {
         // }}
         columns={columns}
         dataSource={dataSource}
+        pagination={{
+          defaultPageSize: 5,
+          showSizeChanger: true,
+          pageSizeOptions: ["5", "10", "15", "20"],
+        }}
+        scroll={{
+          x: 500,
+          y: 300,
+        }}
         {...props}
       />
     </div>

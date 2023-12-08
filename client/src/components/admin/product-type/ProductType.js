@@ -56,6 +56,7 @@ export const ProductType = () => {
     {
       title: "#",
       dataIndex: "columnNo",
+      width: 50,
     },
     {
       title: "Tên loại",

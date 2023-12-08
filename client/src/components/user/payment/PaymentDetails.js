@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../../shared-components/Header";
 import { Flex, Form } from "antd";
 import PaymentSteppers from "./PaymentSteppers";
 import OrderList from "./OrderList";
 import UserInfo from "./UserInfo";
 import "./PaymentDetails.css";
-import { cloneDeep } from "lodash";
+import { add, cloneDeep } from "lodash";
 import {
   createUser,
+  updateUser,
   createOrder,
   handleError,
 } from "../../../services/endpoint-services";
@@ -21,6 +22,10 @@ export const PaymentDetails = () => {
   const [userInfoForm] = Form.useForm();
   const listOfOrders = JSON.parse(localStorage.getItem("listOfOrders"));
   const [forceRerender, setForceRerender] = useState(1);
+  const currentUser = JSON.parse(localStorage.getItem("current_user"));
+  const [fullName, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   const updateAmount = (itemIndex, action) => {
     let listOfCloneOrders = cloneDeep(listOfOrders);
@@ -80,6 +85,17 @@ export const PaymentDetails = () => {
     localStorage.removeItem("listOfOrders");
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "fullName") {
+      setFullName(value);
+    } else if (name === "phone") {
+      setPhone(value);
+    } else if (name === "address") {
+      setAddress(value);
+    }
+  };
+
   useEffect(() => {
     const total = calTotalPrice();
     setTotalPrice(total);
@@ -100,7 +116,16 @@ export const PaymentDetails = () => {
     },
     {
       title: "Đặt hàng",
-      content: <UserInfo userInfoForm={userInfoForm} />,
+      content: (
+        <UserInfo
+          userInfoForm={userInfoForm}
+          fullName={fullName}
+          phone={phone}
+          address={address}
+          isDisabledFullName={currentUser}
+          handleChange={handleChange}
+        />
+      ),
     },
   ];
 
@@ -118,46 +143,92 @@ export const PaymentDetails = () => {
       phone: userInfoForm.getFieldValue("phone"),
       address: userInfoForm.getFieldValue("address"),
     };
-    createUser(prepareUserInfo)
-      .then((res) => {
-        if (res && res.status) {
-          const prepareOrderItems = listOfOrders.map((item) => {
-            return {
-              product: item.productDetails._id,
-              amount: item.amount,
-              size: item.selectedSize,
+    const prepareOrderItems = listOfOrders.map((item) => {
+      return {
+        product: item.productDetails._id,
+        amount: item.amount,
+        size: item.selectedSize,
+      };
+    });
+    if (currentUser) {
+      updateUser(prepareUserInfo, currentUser._id)
+        .then((res) => {
+          if (res && res.status) {
+            // reset the updated user info in localStorage
+            localStorage.setItem("current_user", JSON.stringify(res.data));
+            const prepareOrderData = {
+              orderItems: prepareOrderItems,
+              totalPrice,
+              user: res.data._id,
             };
-          });
-          const prepareOrderData = {
-            orderItems: prepareOrderItems,
-            totalPrice,
-            user: res.data._id,
-          };
-          createOrder(prepareOrderData)
-            .then((res) => {
-              if (res && res.status === 200) {
-                messages.successNotification(
-                  "Success!",
-                  "Đặt hàng thành công"
-                );
+            createOrder(prepareOrderData)
+              .then((res) => {
+                if (res && res.status === 200) {
+                  messages.successNotification(
+                    "Success!",
+                    "Đặt hàng thành công"
+                  );
+                  reset();
+                } else {
+                  messages.errorNotification("Error!", res.message);
+                }
+              })
+              .catch((err) => {
+                handleError(err);
                 reset();
-              } else {
-                messages.errorNotification("Error!", res.message);
-              }
-            })
-            .catch((err) => {
-              handleError(err);
-              reset();
-            });
-        } else {
-          messages.errorNotification("Error!", res.message);
-        }
-      })
-      .catch((err) => {
-        handleError(err);
-        reset();
-      });
+              });
+          }
+        })
+        .catch((err) => {
+          handleError(err);
+          reset();
+        });
+    } else {
+      createUser(prepareUserInfo)
+        .then((res) => {
+          if (res && res.status) {
+            const prepareOrderData = {
+              orderItems: prepareOrderItems,
+              totalPrice,
+              user: res.data._id,
+            };
+            createOrder(prepareOrderData)
+              .then((res) => {
+                if (res && res.status === 200) {
+                  messages.successNotification(
+                    "Success!",
+                    "Đặt hàng thành công"
+                  );
+                  reset();
+                } else {
+                  messages.errorNotification("Error!", res.message);
+                }
+              })
+              .catch((err) => {
+                handleError(err);
+                reset();
+              });
+          } else {
+            messages.errorNotification("Error!", res.message);
+          }
+        })
+        .catch((err) => {
+          handleError(err);
+          reset();
+        });
+    }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      userInfoForm.setFieldValue("fullName", currentUser.name);
+      setFullName(currentUser.name);
+      userInfoForm.setFieldValue("phone", currentUser.phone);
+      setPhone(currentUser.phone);
+      userInfoForm.setFieldValue("address", currentUser.address);
+      setAddress(currentUser.address);
+    }
+  }, []);
 
   return (
     <>
@@ -169,6 +240,11 @@ export const PaymentDetails = () => {
             steps={steps}
             current={currentStep}
             isDisabledNextStepBtn={listOfOrders && listOfOrders.length === 0}
+            isDisabledCompleteStepBtn={
+              fullName.length === 0 ||
+              phone.length === 0 ||
+              address.length === 0
+            }
             handleClickNextStep={nextStep}
             handleClickPreviousStep={prevStep}
             handleComplete={completeStep}
