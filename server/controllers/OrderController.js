@@ -159,6 +159,9 @@ class OrderController {
       }
 
       const transformedOrders = orders.map((order) => {
+        // if (order.orderItems && typeof order.orderItems === 'object') {
+        //   order.orderItems = [order.orderItems];
+        // }
         const transformedOrderItems = order.orderItems.map((orderItem) => ({
           productName: orderItem.product.productName,
           image: baseUrl + orderItem.product.image,

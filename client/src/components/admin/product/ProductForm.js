@@ -62,7 +62,7 @@ export const ProductForm = (props) => {
             label="Tên sản phẩm"
             name="productName"
             rules={[
-              { required: true, message: "Please input your product name!" },
+              { required: true, message: "Vui lòng nhập tên sản phẩm!" },
             ]}
           >
             <Input
@@ -77,7 +77,7 @@ export const ProductForm = (props) => {
           <Form.Item
             label="Giá cơ bản"
             name="basicPrice"
-            rules={[{ required: true, message: "Please input your price!" }]}
+            rules={[{ required: true, message: "Vui lòng nhập giá sản phẩm!" }]}
           >
             <Input
               value={basicPrice}
@@ -97,7 +97,7 @@ export const ProductForm = (props) => {
           <Form.Item
             label="Type"
             name="type"
-            rules={[{ required: true, message: "Please input your type!" }]}
+            rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}
           >
             <Select
               name="type"
@@ -116,7 +116,7 @@ export const ProductForm = (props) => {
             label="Hàng trong kho"
             name="countInStock"
             rules={[
-              { required: true, message: "Please input your countInStock!" },
+              { required: true, message: "Vui lòng nhập hàng trong kho của sản phẩm!" },
             ]}
           >
             <Input
@@ -194,12 +194,12 @@ export const ProductForm = (props) => {
             name="image"
             type="file"
             rules={[
-              { required: true, message: "Please input your image!" },
+              { required: true, message: "Chọn ảnh của sản phẩm" },
             ]}
             value={image}
           >
             <WrapperUploadFile onChange={handleChange} maxCount={1}>
-              <Button>Select File</Button>
+              <Button>Chọn File</Button>
               {image && <img className="productImg" src={image} alt="image" />}
             </WrapperUploadFile>
           </Form.Item>

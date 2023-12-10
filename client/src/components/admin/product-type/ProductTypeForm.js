@@ -49,7 +49,7 @@ export const ProductTypeForm = ({
             label="Tên loại sản phẩm"
             name="typeName"
             rules={[
-              { required: true, message: "Please input your product type name!" },
+              { required: true, message: "Vui lòng nhập tên loại sản phẩm!" },
             ]}
           >
             <Input

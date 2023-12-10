@@ -22,7 +22,8 @@ class UserMiddleware {
               return invalidResponse(res, "Email đã tồn tại!");
             }
           }
-        } else if (req.body.password && req.body.confirmPassword) {
+        }
+        if (req.body.password && req.body.confirmPassword) {
           if (req.body.password !== req.body.confirmPassword) {
             return invalidResponse(
               res,
