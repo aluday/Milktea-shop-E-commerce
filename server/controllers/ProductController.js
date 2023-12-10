@@ -16,7 +16,7 @@ class ProductController {
     try {
       const total = await Product.count();
       let { limit, page, filter } = req.query;
-      limit = Number(limit) || 8;
+      limit = Number(limit) || 6;
       page = Number(page) || 0;
       if (filter) {
         const label = filter[0];
